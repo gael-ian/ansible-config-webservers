@@ -1,0 +1,14 @@
+---
+# Managed servers definition
+
+- name: 'ruby'
+  ssh: |
+    Host ruby
+      User administrator
+      IdentityFile ~/ansible/host_vars/keys/administrator.php.rsa
+
+- name: 'php'
+  ssh: |
+    Host php
+      User administrator
+      IdentityFile ~/ansible/host_vars/keys/administrator.php.rsa
