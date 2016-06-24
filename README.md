@@ -1,3 +1,26 @@
 # ansible-config-webservers
 
+Sample Ansible configuration to provision PHP and Ruby enabled web servers.
+
+Can be tested with (or be used to test) my [`ansible-vagrant-playground` settings](https://github.com/gael-ian/ansible-vagrant-playground).
+
+## Installation
+
+Some Ansible roles used in these settings come from [Ansible Galaxy](https://galaxy.ansible.com/).
+To install these roles, run:
+
+    ansible-galaxy install -r roles-requirements.yml -p ./roles/externals/
+
+## Configurations
+
+Configurations are dispatched in 3 playbooks:
+
+* `playbook-01-make-remotes-administrable`
+* `playbook-02-setup-servers`
+* `playbook-01-setup-apps`
+
+These 3 playbooks should be applied sequentialy for servers first setup.
+They after can be used independantly to apply later modifications.
+
+Comments on top of each playbook provide details on usage and applied configurations.
 
