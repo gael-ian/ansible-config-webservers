@@ -1,0 +1,39 @@
+---
+# Initial setup for ansible managment
+# 
+# On first run, use:
+#
+#     ansible-playbook playbook-01-make-remotes-administrable.yml \
+#       --ask-pass \
+#       --extra-vars "hosts={{servername}},remote_user={{username}}"
+# 
+# `{{servername}}` have to be resolvable. Use /etc/hosts aliases if needed.
+# Account named `{{username}}` must exist on remote.
+# 
+# After this initial setup, configure SSH to use the administrator account and its key.
+# 
+# On subsequent runs, use ansible-playbook without extra arguments:
+# 
+#     ansible-playbook playbook-01-make-remotes-administrable.yml
+# 
+# Applied configurations:
+# 
+# - Ensure some basic packages are installed.  
+#   See `roles/base-packages/defaults/main.yml` for a list of installed packages.
+# - An `admins` user group.
+# - An `administrator` user account, used for server administration.  
+#   Credentials and authentication keys are defined per server in `host_vars`.
+# - Disable SSH root login and password authentication
+# - Install fail2ban with default configuration
+# - Enable automatic security updates
+#
+- name: Make remotes administrable and (basically) secured
+  become: true
+  hosts: "{{ hosts | default('webservers') }}"
+  remote_user: "{{ remote_user | default('administrator') }}"
+  become_method: "{{ become_method | default('sudo') }}"
+  roles:
+    - base-packages
+    - administrable
+    - security
+

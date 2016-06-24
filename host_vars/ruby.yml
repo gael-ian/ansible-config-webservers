@@ -1,0 +1,36 @@
+---
+# Server configuration for `ruby`
+# ==============================
+
+
+## User accounts
+
+### Administrator account
+# Password : administrator
+administrator_password: "$6$pv/TEfxaBcz$bYlBpO4FwIv83D6yFmAc3A1VBFgPYzoA7f0b0EUlmP.R0GcQvCN.CxJI7miMNZZ4mp/cxBDwS73AV7KaJMcR3."
+administrator_public_key: "host_vars/keys/administrator.ruby.rsa.pub"
+
+#### MySQL configuration
+mysql_root_password: "administrator"
+
+### Deployer account
+# Password : deployer
+deployer_password: "$6$aRHeOaYHNAJbC$ol6fUK7kNRDVT1jfNmwRt2yzY6FuTSQ8BDAmDD/K2j6iMJ3oVA.F.4aBFWDTjSzYvLH2titRKyHRA04lPd.7.0"
+deployer_public_key: "host_vars/keys/deployer.ruby.rsa.pub"
+
+
+## Nginx configuration
+
+# Should be set to the number of cores on your machine
+nginx_worker_processes: "1"
+
+## Vhosts configuration
+vhosts:
+  - name: ruby-dummy
+    type: ruby
+    environment: production
+    domains:
+      main:   www.ruby-dummy.com
+      assets: ^assets\d+\.ruby-dummy\.com$
+      additionals: 
+        - ruby-dummy.com

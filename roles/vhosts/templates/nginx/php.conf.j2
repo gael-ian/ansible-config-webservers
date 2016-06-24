@@ -1,0 +1,75 @@
+# {{ ansible_managed }}
+server {
+
+  server_name {{ vhost.domains.main }};
+  root {{ directories.root.path }};
+  index index.html index.htm index.php;
+  
+  access_log {{ directories.logs.path }}access.log;
+  error_log  {{ directories.logs.path }}error.log;
+
+  {% if 'redirections' in vhost %}
+  # Redirections
+  include {{ directories.conf.path }}redirect.conf;
+  
+  {% endif %}
+  
+  location / {
+    try_files $uri $uri/ @rewrite;
+  }
+  
+  location @rewrite {
+    
+    # Examples :
+    # -- Limonade :
+    # rewrite ^/(.*)$ /index.php?u=$1&$args;
+    # -- Zend Framework :
+    # rewrite ^.*$ /index.php?$args;
+  }
+  
+  location ~ \.php$ {
+    
+    include fastcgi_params;
+    
+    fastcgi_buffer_size 64k;
+    fastcgi_buffers 4 64k;
+    
+    fastcgi_intercept_errors on;
+    fastcgi_read_timeout 14400; ## Allow 4 hrs - pass timeout responsibility to upstream
+    fastcgi_index index.php;
+
+    ## fastcgi_params redefined from :named patterns in regex.
+    fastcgi_param SCRIPT_FILENAME {{ directories.root.path }}$fastcgi_script_name;
+    fastcgi_param APPLICATION_ENV {{ vhost.environment }};
+    
+    ## Passing the request upstream to the FastCGI listener.
+    fastcgi_pass 127.0.0.1:9000;
+  }
+  
+  # Common configurations
+  include /etc/nginx/partials.d/http.conf;          # HTTP configuration
+  include /etc/nginx/partials.d/common-files.conf;  # Common files options
+  include /etc/nginx/partials.d/maintenance.conf;   # Maintenance page and rewriting
+}
+
+{% if 'additionals' in vhost.domains and vhost.domains.additionals|length > 0 %}
+# Additional domains
+server {
+  server_name {{ vhost.domains.additionals | join(" ") }};
+  rewrite ^ $scheme://{{ vhost.domains.main }}$request_uri? permanent;
+}
+
+{% endif %}
+{% if 'assets' in vhost.domains %}
+# Static assets
+server {
+  server_name ~{{ vhost.domains.assets }};
+  root {{ directories.root.path }};
+  
+  location ~* ^/(assets|system) {
+    include /etc/nginx/partials.d/assets-cache.conf;
+    break;
+  }    
+}
+
+{% endif %}

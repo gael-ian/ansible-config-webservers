@@ -1,0 +1,13 @@
+# {{ ansible_managed }}
+
+check process php-fpm with pidfile /run/php/php7.0-fpm.pid
+  group servers
+  group php
+  start program = "/bin/systemctl start php7.0-fpm.service"
+  stop program = "/bin/systemctl stop php7.0-fpm.service"
+  
+  if cpu > 60% for 2 cycles then alert
+  if cpu > 80% for 5 cycles then restart
+  if totalmem > 500.0 MB then restart
+  
+  if 5 restarts with 5 cycles then timeout

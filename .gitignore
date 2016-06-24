@@ -1,0 +1,5 @@
+
+# External roles installed from ansible-galaxy
+roles/externals/*
+!roles/externals/.gitkeep
+

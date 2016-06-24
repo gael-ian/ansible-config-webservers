@@ -1,0 +1,5 @@
+---
+# Ruby configuration
+# ==================
+
+rvm_default_ruby_version: "ruby-2.3.1"

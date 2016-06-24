@@ -1,0 +1,4 @@
+---
+base_packages:
+  - sudo
+  - git

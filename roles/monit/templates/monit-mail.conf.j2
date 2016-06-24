@@ -1,0 +1,29 @@
+# {{ ansible_managed }}
+
+# Monit e-mail alerts configuration
+# =================================
+
+{% if monit_mails_servers|length > 0 %}
+# Set the list of mail servers for alert delivery. Multiple servers may be 
+# specified using a comma separator. If the first mail server fails, Monit 
+# will use the second mail server in the list and so on. By default Monit
+# uses port 25 - it is possible to override this with the PORT option.
+set mailserver {{ monit_mails_servers|join(', ') }}
+{% endif %}
+
+{% if monit_mails_recipients|length > 0 %}
+# Set recipients for alerts
+{% for recipient in monit_mails_recipients %}
+set alert {{ recipient }}
+{% endfor %}
+{% endif %}
+
+{% if monit_mails_formats|length > 0 %}
+# Set the mail-format for alerts
+set mail-format {
+{% for option in monit_mails_formats %}
+  {{ option.name }}: {{ option.value }}
+{% endfor %}
+}
+{% endif %}
+

@@ -1,0 +1,8 @@
+---
+
+# Install Ruby
+- include: install-ruby.yml
+  
+# Install Passenger
+- include: install-passenger.yml
+

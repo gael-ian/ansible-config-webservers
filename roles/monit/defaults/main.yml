@@ -1,0 +1,18 @@
+---
+monit_enable_status: true
+
+monit_services: {}
+  # Specify monitored services
+  # {service_name}:
+  #   name: {service-name}
+  #   config: |
+  #     # Your configuration
+  #     # Will be saved in /etc/monit/conf.d/{service-name}
+
+monit_mails_servers: []
+  # - "backup.bar.baz port 10025"
+monit_mails_recipients: []
+  # - "your-name@your.domain not on { instance, action }"
+monit_mails_formats: []
+  # - name:  "from"
+  #   value: "monit@foo.bar" 

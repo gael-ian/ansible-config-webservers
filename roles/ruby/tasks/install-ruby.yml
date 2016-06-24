@@ -1,0 +1,29 @@
+---
+- name: checking that RVM is installed
+  stat:
+    path: "/etc/profile.d/rvm.sh"
+  ignore_errors: True
+  register: rvm_install_result
+
+- include: ./install-rvm.yml
+  when: rvm_install_result.stat.exists != true
+
+- name: updating RVM
+  shell: "{{ rvm.path }} get stable executable=/bin/bash"
+  when: rvm_auto_update_rvm and rvm_install_result.stat.exists == true
+
+- name: check installed versions of Ruby
+  shell: "{{ rvm.path }} list strings executable=/bin/bash"
+  register: rubies
+
+- name: check default version of Ruby
+  shell: "{{ rvm.path }} list default string executable=/bin/bash"
+  register: default_ruby
+
+- name: installing required Ruby version
+  shell: "{{ rvm.path }} install {{rvm_default_ruby_version}} executable=/bin/bash"
+  when: rubies.stdout.find(rvm_default_ruby_version) == -1
+
+- name: set default Ruby version
+  shell: "{{ rvm.path }} use {{rvm_default_ruby_version}} --default executable=/bin/bash"
+  when: default_ruby.stdout.find(rvm_default_ruby_version) == -1

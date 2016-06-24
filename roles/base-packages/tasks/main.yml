@@ -1,0 +1,6 @@
+---
+- name: Ensure some basic packages are installed
+  apt:
+    name: "{{ item }}"
+    state: installed
+  with_items: "{{ base_packages }}"

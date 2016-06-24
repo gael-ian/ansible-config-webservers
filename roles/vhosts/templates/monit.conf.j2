@@ -1,0 +1,7 @@
+
+check file access.log with path {{ directories.logs.path }}/access.log
+  if size > 250 MB then exec "/usr/sbin/logrotate -f {{ vhost.name }}.{{ vhost.environment }}"
+
+check file error.log with path {{ directories.logs.path }}/error.log
+  if size > 250 MB then exec "/usr/sbin/logrotate -f {{ vhost.name }}.{{ vhost.environment }}"
+

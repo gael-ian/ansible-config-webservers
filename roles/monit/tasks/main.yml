@@ -1,0 +1,32 @@
+---
+- name: Ensure Monit is installed
+  apt:
+    pkg: monit
+    state: installed
+
+- name: Configure Monit alerts
+  template:
+    src: "monit-mail.conf.j2"
+    dest: "/etc/monit/conf.d/monit-mail.conf"
+    owner: root
+    group: root
+    mode: 0600
+  notify:
+    - restart monit
+
+- name: Configure Monit status server
+  copy:
+    src: "monit-status.conf"
+    dest: "/etc/monit/conf.d/monit-status.conf"
+    owner: root
+    group: root
+    mode: 0600
+  when: monit_enable_status
+  notify:
+    - restart monit
+
+- include: setup-service.yml
+  with_dict: "{{ monit_services }}"
+  loop_control:
+    loop_var: service
+

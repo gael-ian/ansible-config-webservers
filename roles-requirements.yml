@@ -1,0 +1,24 @@
+---
+##
+# External roles from https://galaxy.ansible.com/
+# To install dependencies:
+#
+#   ansible-galaxy install -r roles-requirements.yml -p ./roles/externals/
+#
+##
+
+- src: geerlingguy.security
+  version: 1.2.0
+  name: security
+  
+- src: geerlingguy.nginx
+  version: 1.9.2
+  name: nginx
+  
+- src: geerlingguy.mysql
+  version: 2.2.1
+  name: mysql
+  
+- src: geerlingguy.php
+  version: 3.2.2
+  name: php

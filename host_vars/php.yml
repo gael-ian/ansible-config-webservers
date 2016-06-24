@@ -1,0 +1,52 @@
+---
+# Server configuration for `php`
+# ==============================
+
+
+## User accounts
+
+### Administrator account
+# Password : administrator
+administrator_password: "$6$pv/TEfxaBcz$bYlBpO4FwIv83D6yFmAc3A1VBFgPYzoA7f0b0EUlmP.R0GcQvCN.CxJI7miMNZZ4mp/cxBDwS73AV7KaJMcR3."
+administrator_public_key: "host_vars/keys/administrator.php.rsa.pub"
+
+#### MySQL configuration
+mysql_root_password: "administrator"
+
+### Deployer account
+# Password : deployer
+deployer_password: "$6$aRHeOaYHNAJbC$ol6fUK7kNRDVT1jfNmwRt2yzY6FuTSQ8BDAmDD/K2j6iMJ3oVA.F.4aBFWDTjSzYvLH2titRKyHRA04lPd.7.0"
+deployer_public_key: "host_vars/keys/deployer.php.rsa.pub"
+
+
+## Nginx configuration
+
+# Should be set to the number of cores on your machine
+nginx_worker_processes: "1"
+
+
+## Monit additional services
+monit_services:
+  phpfpm:
+    name: php-fpm
+    template: monit/php-fpm.j2
+
+
+## Vhosts configuration
+vhosts:
+  - name: php-dummy
+    type: php
+    environment: production
+    domains:
+      main: www.php-dummy.com
+      additionals:
+        - php-dummy.com
+  
+  - name: prestashop-dummy
+    type: prestashop-1.4
+    environment: production
+    domains:
+      main: www.prestashop-dummy.com
+      additionals:
+        - prestashop-dummy.com
+

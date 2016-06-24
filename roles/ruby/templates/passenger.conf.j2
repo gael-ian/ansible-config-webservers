@@ -1,0 +1,17 @@
+# Passenger configuration
+# =======================
+
+# Paths
+passenger_root {{ passenger_root_path.stdout_lines[0] }};
+passenger_ruby {{ passenger_ruby_path.stdout_lines[0] }};
+
+# Allowed ressources
+passenger_pool_idle_time 300;           # Keep app process running for 5mn (min_instances keeped for ever)
+passenger_max_preloader_idle_time 1800; # Keep apps preloaded for 30mn. Reduce launch time to 10%
+passenger_max_requests 10000;           # Restart process after 10k queries
+
+passenger_log_level 1;
+
+# Security
+passenger_show_version_in_header off;
+passenger_friendly_error_pages off;

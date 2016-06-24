@@ -1,0 +1,22 @@
+; Ansible hosts inventory
+
+; -- Remotes
+;    Remote machines without administrator account
+;    Use raw IP address
+[remotes]
+192.168.50.20
+192.168.50.21
+
+; -- Servers
+;    Remote machine with administrator account
+;    Use hostnames defined in /etc/hosts and SSH config set in ~/.ssh/config
+[webservers]
+ruby
+php
+
+[phpservers]
+php
+
+[rubyservers]
+ruby
+

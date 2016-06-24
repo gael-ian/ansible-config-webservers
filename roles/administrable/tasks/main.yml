@@ -1,0 +1,22 @@
+---
+- name: Create group "administrators"
+  group:
+    name: admins
+    state: present
+
+- name: Create administrator account
+  user:
+    name: administrator
+    comment: "Administrator account"
+    password: "{{ administrator_password }}"
+    groups: admins
+    append: yes
+    shell: "/bin/bash"
+    state: present
+
+- name: Authorize key for SSH connections
+  authorized_key:
+    user: administrator
+    key: "{{ lookup('file', administrator_public_key) }}"
+    state: present
+

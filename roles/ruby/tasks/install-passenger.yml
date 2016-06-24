@@ -1,0 +1,47 @@
+---
+- name: install system requirements
+  apt:
+    name: "{{ item }}"
+    state: installed
+  with_items:
+    - apt-transport-https
+    - ca-certificates
+
+- name: add Phusion Passenger APT Key
+  apt_key:
+    keyserver: keyserver.ubuntu.com
+    id: 561F9B9CAC40B2F7
+    state: present
+
+- name: add Phusion Passenger repository
+  apt_repository:
+    repo: deb https://oss-binaries.phusionpassenger.com/apt/passenger jessie main
+    state: present
+
+- name: update apt cache.
+  apt:
+    update_cache: yes
+    cache_valid_time: 86400
+
+- name: install Phusion Passenger
+  apt:
+    name: "{{ item }}"
+    state: installed
+  with_items:
+    - nginx-extras
+    - passenger
+
+- shell: "passenger-config --root"
+  register: passenger_root_path
+
+- shell: "passenger-config about ruby-command | egrep 'Command:' | cut -d':' -f2"
+  register: passenger_ruby_path
+
+- name: configure Phusion Passenger for nginx
+  template:
+    src: passenger.conf.j2
+    dest: /etc/nginx/conf.d/passenger.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart nginx
