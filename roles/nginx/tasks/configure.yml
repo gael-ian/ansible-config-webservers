@@ -1,0 +1,75 @@
+---
+- name: Ensure nginx configuration directories exists
+  file:
+    path: "/etc/nginx/{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  with_items:
+    - "conf.d"
+    - "partials.d"
+    - "upstreams"
+
+- name: Copy nginx main configuration file
+  copy:
+    src: nginx.conf
+    dest: /etc/nginx/nginx.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - reload nginx
+    
+- name: Copy additional MIME types definition file
+  copy:
+    src: additional-mime.types
+    dest: /etc/nginx/additional-mime.types
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - reload nginx    
+
+- name: Synchronize nginx configuration files
+  synchronize:
+    src: "{{ item }}"
+    dest: "/etc/nginx/{{ item }}"
+    delete: yes
+  with_items:
+    - conf.d
+    - partials.d
+  notify:
+    - reload nginx
+
+- name: Copy nginx upstreams configuration files
+  copy:
+    src: "upstreams/{{ item }}"
+    dest: /etc/nginx/upstreams/{{ item }}
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+    - "{{ nginx_upstreams }}"
+  notify:
+    - reload nginx
+    
+- name: Ensure correct permissions on nginx configuration directories
+  file:
+    path: "/etc/nginx/{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+    recurse: yes
+  with_items:
+    - "conf.d"
+    - "partials.d"
+    - "upstreams"
+    
+- name: Remove default nginx vhost config file
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+  notify:
+    - reload nginx

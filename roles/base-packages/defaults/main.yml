@@ -2,3 +2,4 @@
 base_packages:
   - sudo
   - git
+  - rsync

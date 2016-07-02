@@ -1,0 +1,47 @@
+# Additional MIME types
+#
+# Extracted from https://github.com/nginx-boilerplate/nginx-boilerplate/blob/master/boilerplate/mime.types
+
+types {
+
+  # Data interchange
+  application/json                      json map topojson;
+  application/ld+json                   jsonld;
+  application/vnd.geo+json              geojson;
+  application/xml                       rdf xml;
+
+  # Manifest files
+  application/manifest+json             webmanifest;
+  application/x-web-app-manifest+json   webapp;
+  text/cache-manifest                   appcache;
+
+  # Media files
+  audio/mp4                             aac f4a f4b m4a;
+  audio/ogg                             oga ogg opus;
+  audio/x-wav                           wav;
+    
+  image/x-icon                          cur ico;
+  image/bmp                             bmp;
+  image/tiff                            tif tiff;
+  
+  video/mp4                             f4p f4v m4v mp4;
+  video/ogg                             ogv;
+
+  # Web fonts
+  application/font-woff2                woff2;
+  application/x-font-ttf                ttc ttf;
+  font/opentype                         otf;
+
+  # Other
+  application/x-bb-appworld             bbaw;
+  application/x-bittorrent              torrent;
+  application/x-chrome-extension        crx;
+  application/x-opera-extension         oex;
+  application/octet-stream              safariextz;
+  application/xslt+xml                  xsl;
+  
+  text/vcard                            vcard vcf;
+  text/vnd.rim.location.xloc            xloc;
+  text/vtt                              vtt;
+}
+

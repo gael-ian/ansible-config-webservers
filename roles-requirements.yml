@@ -11,10 +11,6 @@
   version: 1.2.0
   name: security
   
-- src: geerlingguy.nginx
-  version: 1.9.2
-  name: nginx
-  
 - src: geerlingguy.mysql
   version: 2.2.1
   name: mysql

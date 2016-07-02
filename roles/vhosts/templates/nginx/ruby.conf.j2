@@ -16,10 +16,7 @@ server {
   
   {% endif %}
   # Common configurations
-  include /etc/nginx/partials.d/http.conf;          # HTTP configuration
-  include /etc/nginx/partials.d/common-files.conf;  # Common files options
-  include /etc/nginx/partials.d/system-files.conf;  # System files protection
-  include /etc/nginx/partials.d/maintenance.conf;   # Maintenance page and rewriting
+  include /etc/nginx/partials.d/presets/main-server.conf;
   
   # Phusion Passenger
   passenger_enabled on;
@@ -50,8 +47,11 @@ server {
   server_name ~{{ vhost.domains.assets }};
   root {{ directories.root.path }}/public;
   
+  # Common configurations
+  include /etc/nginx/partials.d/presets/assets-server.conf;
+  
   location ~* ^/(assets|system) {
-    include /etc/nginx/partials.d/strong-cache.conf;
+    include /etc/nginx/partials.d/enable/strong-cache.conf;
     break;
   }    
 }

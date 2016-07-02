@@ -30,29 +30,15 @@ server {
   }
   
   location ~ \.php$ {
-    
-    include fastcgi_params;
-    
-    fastcgi_buffer_size 64k;
-    fastcgi_buffers 4 64k;
-    
-    fastcgi_intercept_errors on;
-    fastcgi_read_timeout 14400; ## Allow 4 hrs - pass timeout responsibility to upstream
-    fastcgi_index index.php;
-
-    ## fastcgi_params redefined from :named patterns in regex.
+    # Default PHP configuration
+    include /etc/nginx/partials.d/enable/php.conf;
     fastcgi_param SCRIPT_FILENAME {{ directories.root.path }}$fastcgi_script_name;
     fastcgi_param APPLICATION_ENV {{ vhost.environment }};
-    
-    ## Passing the request upstream to the FastCGI listener.
-    fastcgi_pass 127.0.0.1:9000;
+    fastcgi_pass php.fpm;
   }
   
   # Common configurations
-  include /etc/nginx/partials.d/http.conf;          # HTTP configuration
-  include /etc/nginx/partials.d/common-files.conf;  # Common files options
-  include /etc/nginx/partials.d/system-files.conf;  # System files protection
-  include /etc/nginx/partials.d/maintenance.conf;   # Maintenance page and rewriting
+  include /etc/nginx/partials.d/presets/main-server.conf;
 }
 
 {% if 'additionals' in vhost.domains and vhost.domains.additionals|length > 0 %}
@@ -75,8 +61,11 @@ server {
   server_name ~{{ vhost.domains.assets }};
   root {{ directories.root.path }};
   
+  # Common configurations
+  include /etc/nginx/partials.d/presets/assets-server.conf;
+  
   location ~* ^/(assets|system) {
-    include /etc/nginx/partials.d/strong-cache.conf;
+    include /etc/nginx/partials.d/enable/strong-cache.conf;
     break;
   }    
 }

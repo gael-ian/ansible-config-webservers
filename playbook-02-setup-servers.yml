@@ -46,7 +46,6 @@
   become: yes
   roles:
     - nginx
-    - nginx-extra
 
 - name: Configure Monit
   hosts: webservers

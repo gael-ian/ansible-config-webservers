@@ -7,16 +7,6 @@
 # Administrable
 security_sudoers_passwordless: [ administrator ]
 
-
-# Nginx configuration
-nginx_client_max_body_size: "20M"
-nginx_server_names_hash_bucket_size: "256"
-nginx_remove_default_vhost: true
-
-# Compatibility with nginx 1.10.1-dotdeb
-nginx_extra_conf_options: |
-  include /etc/nginx/modules-enabled/*.conf;
-
 # Monit services
 monit_services:
   system:     { name: system,         template: monit/system.j2         }

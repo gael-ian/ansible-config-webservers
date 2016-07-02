@@ -1,0 +1,7 @@
+---
+# Install Nginx
+- include: install.yml
+
+# Configure Nginx
+- include: configure.yml
+

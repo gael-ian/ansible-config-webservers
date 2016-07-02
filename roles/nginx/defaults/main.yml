@@ -1,0 +1,4 @@
+---
+# Nginx upstreams to set up
+nginx_upstreams: []
+
