@@ -1,5 +1,7 @@
 # {{ ansible_managed }}
 server {
+  listen [::]:80 deferred;
+  listen 80 deferred;
 
   server_name {{ vhost.domains.main }};
   root {{ directories.root.path }};
@@ -45,25 +47,32 @@ server {
   # Common configurations
   include /etc/nginx/partials.d/http.conf;          # HTTP configuration
   include /etc/nginx/partials.d/common-files.conf;  # Common files options
+  include /etc/nginx/partials.d/system-files.conf;  # System files protection
   include /etc/nginx/partials.d/maintenance.conf;   # Maintenance page and rewriting
 }
 
 {% if 'additionals' in vhost.domains and vhost.domains.additionals|length > 0 %}
 # Additional domains
 server {
+  listen [::]:80 deferred;
+  listen 80 deferred;
+  
   server_name {{ vhost.domains.additionals | join(" ") }};
-  rewrite ^ $scheme://{{ vhost.domains.main }}$request_uri? permanent;
+  return 301 $scheme://{{ vhost.domains.main }}$request_uri;
 }
 
 {% endif %}
 {% if 'assets' in vhost.domains %}
 # Static assets
 server {
+  listen [::]:80 deferred;
+  listen 80 deferred;
+  
   server_name ~{{ vhost.domains.assets }};
   root {{ directories.root.path }};
   
   location ~* ^/(assets|system) {
-    include /etc/nginx/partials.d/assets-cache.conf;
+    include /etc/nginx/partials.d/strong-cache.conf;
     break;
   }    
 }
