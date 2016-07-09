@@ -5,7 +5,7 @@
 #
 #     ansible-playbook playbook-01-make-remotes-administrable.yml \
 #       --ask-pass \
-#       --extra-vars "hosts={{servername}},remote_user={{username}}"
+#       --extra-vars "hosts={{servername}} remote_user={{username}}"
 # 
 # `{{servername}}` have to be resolvable. Use /etc/hosts aliases if needed.
 # Account named `{{username}}` must exist on remote.
