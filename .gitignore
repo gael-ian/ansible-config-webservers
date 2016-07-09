@@ -3,3 +3,5 @@
 roles/externals/*
 !roles/externals/.gitkeep
 
+# Failed playbook
+*.retry
