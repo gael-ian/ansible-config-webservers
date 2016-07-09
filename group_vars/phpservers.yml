@@ -3,7 +3,7 @@
 # =================
 
 nginx_upstreams:
-  - php-fpm
+  - php-fpm.conf
 
 php_packages:
   - libpcre3-dev
