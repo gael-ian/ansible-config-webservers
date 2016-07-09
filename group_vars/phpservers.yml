@@ -20,6 +20,7 @@ php_packages:
   - php7.0-sqlite3
   - php7.0-mcrypt
 
+php_enable_webserver: false
 php_webserver_daemon: "nginx"
 
 # PHP fpm
