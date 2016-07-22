@@ -10,6 +10,7 @@
 #     - Configure nginx
 #     - Create directories with proper permissions
 #     - Setup log rotation
+# - Create applications databases (and users)
 #
 - name: Create web account
   hosts: webservers
@@ -19,3 +20,4 @@
     - deployable
     - extra-packages
     - vhosts
+    - databases

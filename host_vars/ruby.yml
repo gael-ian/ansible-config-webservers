@@ -35,6 +35,13 @@ vhosts:
       additionals: 
         - ruby-dummy.com
 
+databases:
+  - name: "rubydummy"
+    username: "rubydummy"
+    password: "rubydummy"
+    collation: utf8_general_ci
+    encoding: utf8
+
 ## Extra-packages
 extra_packages:
   - libmysqlclient-dev

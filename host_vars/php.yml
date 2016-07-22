@@ -50,3 +50,16 @@ vhosts:
       additionals:
         - prestashop-dummy.com
 
+databases:
+  - name: "phpdummy"
+    username: "phpdummy"
+    password: "phpdummy"
+    collation: utf8_general_ci
+    encoding: utf8
+
+  - name: "prestashopdummy"
+    username: "prestashopdummy"
+    password: "prestashopdummy"
+    collation: utf8_general_ci
+    encoding: utf8
+
