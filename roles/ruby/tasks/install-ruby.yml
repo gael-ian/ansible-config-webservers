@@ -27,3 +27,6 @@
 - name: set default Ruby version
   shell: "{{ rvm.path }} use {{rvm_default_ruby_version}} --default executable=/bin/bash"
   when: default_ruby.stdout.find(rvm_default_ruby_version) == -1
+
+- name: ensure bundler is installed for default Ruby
+  shell: "{{ rvm.sudopath }} gem install bundler executable=/bin/bash"
