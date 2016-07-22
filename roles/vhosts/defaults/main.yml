@@ -1,0 +1,11 @@
+---
+vhosts:
+#  - name: application-name
+#    type: {{ Vhost template basename }}
+#    environment: (production|staging|...)
+#    domains:
+#      main:   www.sample.com
+#      assets: ^assets\d+\.sample\.com$
+#      additionals: 
+#        - sample.com
+#        - another-domain.net
