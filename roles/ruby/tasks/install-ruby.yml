@@ -25,7 +25,7 @@
   when: rubies.stdout.find(rvm_default_ruby_version) == -1
 
 - name: set default Ruby version
-  shell: "{{ rvm.path }} use {{rvm_default_ruby_version}} --default executable=/bin/bash"
+  shell: "{{ rvm.path }} alias create default {{rvm_default_ruby_version}}"
   when: default_ruby.stdout.find(rvm_default_ruby_version) == -1
 
 - name: ensure bundler is installed for default Ruby
