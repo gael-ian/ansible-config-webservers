@@ -5,6 +5,7 @@
 # 
 # - A `deployer` user account, used for application deployment.  
 #   Credentials and authentication keys are defined per server in `host_vars`.
+# - Ensure applications dependencies available as packages are installed.
 # - Setup vhosts
 #     - Configure nginx
 #     - Create directories with proper permissions
@@ -16,4 +17,5 @@
   become: yes
   roles:
     - deployable
+    - extra-packages
     - vhosts

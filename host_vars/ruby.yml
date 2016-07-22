@@ -34,3 +34,8 @@ vhosts:
       assets: ^assets\d+\.ruby-dummy\.com$
       additionals: 
         - ruby-dummy.com
+
+## Extra-packages
+extra_packages:
+  - libmysqlclient-dev
+
