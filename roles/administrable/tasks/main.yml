@@ -1,15 +1,28 @@
 ---
+- name: Ensure sudo is installed
+  apt:
+    name: sudo
+    state: installed
+
 - name: Create group "administrators"
   group:
-    name: admins
+    name: administrators
     state: present
+
+- name: Allow members of group administrators to use sudo
+  copy:
+    src: "administrators"
+    dest: "/etc/sudoers.d/administrators"
+    owner: root
+    group: root
+    mode: 0440
 
 - name: Create administrator account
   user:
     name: administrator
     comment: "Administrator account"
     password: "{{ administrator_password }}"
-    groups: admins
+    groups: administrators
     append: yes
     shell: "/bin/bash"
     state: present

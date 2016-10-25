@@ -9,6 +9,13 @@
 # 
 # `{{servername}}` have to be resolvable. Use /etc/hosts aliases if needed.
 # Account named `{{username}}` must exist on remote.
+#
+# On servers where `{{username}}` is not a sudoer, use instead:
+#
+#     ansible-playbook playbook-01-make-remotes-administrable.yml \
+#       --ask-pass \
+#       --ask-become-pass \
+#       --extra-vars "hosts={{servername}},become_method=su,remote_user={{username}}"
 # 
 # After this initial setup, configure SSH to use the administrator account and its key.
 # 
@@ -16,24 +23,19 @@
 # 
 #     ansible-playbook playbook-01-make-remotes-administrable.yml
 # 
-# Applied configurations:
-# 
-# - Ensure some basic packages are installed.  
-#   See `roles/base-packages/defaults/main.yml` for a list of installed packages.
-# - An `admins` user group.
-# - An `administrator` user account, used for server administration.  
-#   Credentials and authentication keys are defined per server in `host_vars`.
-# - Disable SSH root login and password authentication
-# - Install fail2ban with default configuration
-# - Enable automatic security updates
-#
-- name: Make remotes administrable and (basically) secured
-  become: true
-  hosts: "{{ hosts | default('webservers') }}"
+- name: Initial setup for ansible managment
   remote_user: "{{ remote_user | default('administrator') }}"
+  become: true
   become_method: "{{ become_method | default('sudo') }}"
+  
+  # Configurations will be applied on all remotes
+  # (unless others hosts are specified on command line)
+  hosts: "{{ hosts | default('servers') }}"
+  
   roles:
-    - base-packages
+    # Create an `administrators` user group.
+    # Ensure sudo is installed and that the `administrators` group is sudoer
+    # Create an `administrator` user account (credentials and authentication
+    #   keys are defined per server in `host_vars`)
     - administrable
-    - security
 
