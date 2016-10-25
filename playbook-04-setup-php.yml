@@ -1,0 +1,25 @@
+---
+# Setup and configure PHP on PHP servers
+# 
+# Use ansible-playbook without extra arguments:
+# 
+#     ansible-playbook playbook-04-setup-php.yml
+#
+- name: Setup and configure PHP on PHP servers
+  remote_user: administrator
+  become: yes
+  
+  # Configurations will be applied only on PHP servers
+  hosts: php_servers
+  
+  roles:
+    # Install PHP and PHP-fpm
+    - php
+    # Configure Monit to watch over PHP services
+    - {
+        role: monit-service,
+        monit_services: { 
+          php-fpm: { name: php-fpm, template: monit/php-fpm.j2 }
+        }
+      }
+
