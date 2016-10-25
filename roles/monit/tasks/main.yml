@@ -25,8 +25,20 @@
   notify:
     - restart monit
 
-- include: setup-service.yml
-  with_dict: "{{ monit_services }}"
-  loop_control:
-    loop_var: service
+- name: Create dedicated directory for services definition
+  file:
+    state: directory
+    path: "/etc/monit/services.d/"
+    owner: root
+    group: root
+    mode: 0755
 
+- name: Configure Monit to load services for the dedicated directory
+  copy:
+    src: "services.conf"
+    dest: "/etc/monit/conf.d/services.conf"
+    owner: root
+    group: root
+    mode: 0600
+  notify:
+    - restart monit

@@ -2,7 +2,7 @@
 - name: "Configure Monit for {{ service.value.name }}"
   template:
     src: "{{ service.value.template }}"
-    dest: "/etc/monit/conf.d/{{ service.value.name }}"
+    dest: "/etc/monit/services.d/{{ service.value.name }}"
     owner: root
     group: root
     mode: 0644

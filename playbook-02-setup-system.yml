@@ -1,0 +1,39 @@
+---
+# Basic setup for every machine
+# 
+# Use ansible-playbook without extra arguments:
+# 
+#     ansible-playbook playbook-02-setup-system.yml
+#
+- name: System setup for every machine
+  remote_user: administrator
+  become: yes
+  
+  # Configurations will be applied on all servers
+  hosts: servers
+  
+  roles:
+    # Add dotdeb.org repositories to APT sources
+    - dotdeb
+    # Apply all pending updates
+    - uptodate
+    # Ensure some basic packages are installed.  
+    # See `roles/base-packages/defaults/main.yml` 
+    # for a list of installed packages.
+    - base-packages
+    # Ensure servers are (basically) secured by
+    # - Disabling SSH root login and password authentication
+    # - Installing fail2ban with default configuration
+    # - Enabling automatic security updates
+    - security
+    # Install and globally configure Monit for monitoring
+    - monit
+    # Configure Monit with basic system watches
+    - { role: monit-service, monit_services: {
+        system:     { name: system,         template: system.j2         },
+        diskspace:  { name: disk-space,     template: disk-space.j2     },
+        cron:       { name: cron,           template: cron.j2           },
+        openssh:    { name: openssh-server, template: openssh-server.j2 },
+      }
+    }
+

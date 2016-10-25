@@ -24,7 +24,7 @@ deployer_public_key: "host_vars/keys/deployer.ruby.rsa.pub"
 # Should be set to the number of cores on your machine
 nginx_worker_processes: "1"
 
-## Vhosts configuration
+## Applications configuration
 vhosts:
   - name: ruby-dummy
     type: ruby

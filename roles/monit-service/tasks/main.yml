@@ -1,0 +1,6 @@
+---
+- include: setup-service.yml
+  with_dict: "{{ monit_services }}"
+  loop_control:
+    loop_var: service
+

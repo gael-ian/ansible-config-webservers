@@ -1,0 +1,7 @@
+---
+# Specify monitored services
+monit_services: {}
+  # {service_name}:
+  #   name: {service-name}
+  #   template: "path/to/template"
+

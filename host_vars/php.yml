@@ -25,14 +25,7 @@ deployer_public_key: "host_vars/keys/deployer.php.rsa.pub"
 nginx_worker_processes: "1"
 
 
-## Monit additional services
-monit_services:
-  phpfpm:
-    name: php-fpm
-    template: monit/php-fpm.j2
-
-
-## Vhosts configuration
+## Applications configuration
 vhosts:
   - name: php-dummy
     type: php
