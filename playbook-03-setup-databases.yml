@@ -13,10 +13,18 @@
   hosts: database_servers
   
   roles:
-    # Install MySQL  
+    # Install MySQL (MariaDB)  
     # Disable external and anonymous connexions and set up  
-    # MySQL root credentials (defined per server in `host_vars`).
-    - mysql
+    # root credentials (defined per server in `host_vars`).
+    - {
+        role: mysql,
+        
+        # Fix log paths to match default package configuration
+        # mysql_log:                "/var/log/mysql/mysql.log",
+        mysql_slow_query_log_file:  "/var/log/mysql/mysql-slow.log",
+        mysql_log_error:            "/var/log/mysql/error.log",
+        
+      }
     # Configure Monit to watch over MySQL services
     - {
         role: monit-service,
