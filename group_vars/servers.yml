@@ -1,0 +1,13 @@
+---
+# Monit configuration
+# ===================
+
+monit_mails_servers: []
+  # - "backup.bar.baz port 10025"
+
+monit_mails_formats: []
+  # - name:  "from"
+  #   value: "monit@foo.bar"
+
+monit_mails_recipients: []
+  # - "your-name@your.domain not on { instance, action }"
