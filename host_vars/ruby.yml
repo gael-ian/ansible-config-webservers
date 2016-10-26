@@ -45,4 +45,5 @@ databases:
 ## Extra-packages
 extra_packages:
   - libmysqlclient-dev
+  - imagemagick
 

@@ -13,14 +13,10 @@ To install these roles, run:
 
 ## Configurations
 
-Configurations are dispatched in 3 playbooks:
-
-* `playbook-01-make-remotes-administrable`
-* `playbook-02-setup-servers`
-* `playbook-01-setup-apps`
-
-These 3 playbooks should be applied sequentialy for servers first setup.
+Configurations are dispatched in the playbooks availables at the repository's root.
+These playbooks should be applied sequentialy for servers first setup.
 They after can be used independantly to apply later modifications.
 
-Comments on top of each playbook provide details on usage and applied configurations.
+Comments on top of each playbook provide details on usage.
+Comments in the `roles` section of each playbook provide details on applied configurations.
 
