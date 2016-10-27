@@ -28,5 +28,10 @@
   shell: "{{ rvm.path }} alias create default {{rvm_default_ruby_version}}"
   when: default_ruby.stdout.find(rvm_default_ruby_version) == -1
 
-- name: ensure bundler is installed for default Ruby
-  shell: "{{ rvm.sudopath }} gem install bundler executable=/bin/bash"
+- name: check bundler is installed for default Ruby version
+  shell: "{{ rvm.path }} {{rvm_default_ruby_version}} do gem list executable=/bin/bash"
+  register: gem_list
+
+- name: install bundler for default Ruby version
+  shell: "{{ rvm.path }} {{rvm_default_ruby_version}} do gem install bundler executable=/bin/bash"
+  when: gem_list.stdout.find('^bundler ') == -1

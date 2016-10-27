@@ -3,7 +3,7 @@
 # 
 # Use ansible-playbook without extra arguments:
 # 
-#     ansible-playbook playbook-05-setup-ruby.yml
+#     ansible-playbook playbook-04.1-setup-ruby.yml
 #
 - name: Setup and configure Ruby on Ruby servers
   remote_user: administrator
@@ -16,10 +16,10 @@
     # Install RVM, Ruby and Passenger
     - ruby
     # Configure Monit to watch over Ruby services
-    - {
-        role: monit-service,
-        monit_services: { 
-          ruby: { name: ruby, template: monit/ruby.j2 }
-        }
-      }
+    # - {
+    #     role: monit-service,
+    #     monit_services: { 
+    #       ruby: { name: ruby, template: monit/ruby.j2 }
+    #     }
+    #   }
 

@@ -31,6 +31,23 @@
     - nginx-extras
     - passenger
 
+- name: create Phusion Passenger log directory
+  file:
+    state: directory
+    path: "/var/log/passenger/"
+    owner: www-data
+    group: adm
+    mode: 0750
+
+- name: configure Phusion Passenger log rotation
+  template:
+    src: logrotate.conf.j2
+    dest: /etc/logrotate.d/passenger
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart nginx
+
 - shell: "passenger-config --root"
   register: passenger_root_path
 
@@ -39,7 +56,7 @@
 
 - name: configure Phusion Passenger for nginx
   template:
-    src: passenger.conf.j2
+    src: nginx.conf.j2
     dest: /etc/nginx/conf.d/passenger.conf
     owner: root
     group: root

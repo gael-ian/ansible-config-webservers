@@ -10,7 +10,8 @@ passenger_pool_idle_time 300;           # Keep app process running for 5mn (min_
 passenger_max_preloader_idle_time 1800; # Keep apps preloaded for 30mn. Reduce launch time to 10%
 passenger_max_requests 10000;           # Restart process after 10k queries
 
-passenger_log_level 1;
+passenger_log_level 3;
+passenger_log_file /var/log/passenger/error.log;
 
 # Security
 passenger_show_version_in_header off;
