@@ -29,7 +29,7 @@
     - {
         role: monit-service,
         monit_services: {
-          mysql: { name: mysql, template: monit/mysql.j2 }
+          mysql: { name: mysql, template: mysql.j2 }
         }
       }
 
