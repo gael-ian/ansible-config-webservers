@@ -1,0 +1,33 @@
+---
+- name: create PHP-FPM log directory
+  file:
+    state: directory
+    path: "/var/log/php7.0-fpm/"
+    owner: www-data
+    group: adm
+    mode: 0750
+
+- name: configure PHP-FPM log rotation
+  template:
+    src: logrotate.conf.j2
+    dest: /etc/logrotate.d/php7.0-fpm
+    owner: root
+    group: root
+    mode: 0644
+
+- name: setup PHP-FPM specific INI configuration
+  template:
+    src: php-fpm.ini.j2
+    dest: "/etc/php/7.0/fpm/conf.d/90-php-fpm.ini"
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart php-fpm
+  
+- name: setup PHP CLI specific INI configuration
+  template:
+    src: php-cli.ini.j2
+    dest: "/etc/php/7.0/cli/conf.d/90-php-cli.ini"
+    owner: root
+    group: root
+    mode: 0644

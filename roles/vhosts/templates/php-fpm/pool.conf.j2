@@ -1,0 +1,44 @@
+[{{ pool.name }}]
+
+
+; Additional php.ini directives
+php_value[memory_limit] = 256M
+
+php_admin_value[post_max_size] = 20M
+php_admin_value[upload_max_filesize] = 15M
+
+; Additional environment variables
+env[APPLICATION_ENV] = {{ pool.environment }}
+
+
+; Unix user/group of processes
+user = {{ pool.owner }}
+
+; The address on which to accept FastCGI requests.
+listen = /run/php/php7.0-fpm-$pool.sock
+
+; Set permissions for unix socket.
+listen.owner = www-data
+listen.group = www-data
+listen.mode = 0660
+
+; Processes management
+pm = dynamic
+pm.min_spare_servers = 1
+pm.max_spare_servers = 3
+pm.max_children = 10
+
+pm.process_idle_timeout = 300s;
+pm.max_requests = 10000;
+
+; Logs
+access.log = /var/log/php7.0-fpm/$pool/access.log
+access.format = "%R - %u %t \"%m %r%Q%q\" %s %f %{mili}d %{kilo}M %C%%"
+
+; Redirect worker stdout and stderr into main error log
+catch_workers_output = yes
+
+; Slow requests log
+;slowlog = log/$pool.log.slow
+;request_slowlog_timeout = 0
+

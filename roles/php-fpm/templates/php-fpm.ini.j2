@@ -1,0 +1,26 @@
+; PHP-FPM specific configuration
+
+[PHP]
+
+; Language options
+; ================
+
+short_open_tag = Off
+asp_tags = Off
+
+; Errors handling
+; ===============
+
+html_errors = Off
+
+log_errors = On
+log_errors_max_len = 0
+
+; Separate PHP errors from nginx error log
+error_log = /var/log/php7.0-fpm/error.log
+opcache.error_log = /var/log/php7.0-fpm/error.log
+
+; Functions
+; =========
+
+allow_url_fopen = Off

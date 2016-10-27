@@ -1,0 +1,22 @@
+---
+- name: configure PHP-FPM
+  lineinfile:
+    dest: "/etc/php/7.0/fpm/php-fpm.conf"
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: present
+  with_items:
+    - regexp: "^error_log.?=.+$"
+      line: "error_log = /var/log/php7.0-fpm/php7.0-fpm.log"
+  notify: restart php-fpm
+
+- name: configure PHP-FPM pools
+  lineinfile:
+    dest: "/etc/php/7.0/fpm/php-fpm.conf"
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: present
+  with_items:
+    - regexp: "^error_log.?=.+$"
+      line: "error_log = /var/log/php7.0-fpm/php7.0-fpm.log"
+  notify: restart php-fpm

@@ -1,0 +1,10 @@
+---
+
+# Install PHP
+- include: install-php.yml
+
+# Configure PHP
+- include: configure-php.yml
+
+# Configure PHP-FPM
+- include: configure-php-fpm.yml
