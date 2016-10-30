@@ -10,13 +10,18 @@
       line: "error_log = /var/log/php7.0-fpm/php7.0-fpm.log"
   notify: restart php-fpm
 
-- name: configure PHP-FPM pools
-  lineinfile:
-    dest: "/etc/php/7.0/fpm/php-fpm.conf"
-    regexp: "{{ item.regexp }}"
-    line: "{{ item.line }}"
-    state: present
-  with_items:
-    - regexp: "^error_log.?=.+$"
-      line: "error_log = /var/log/php7.0-fpm/php7.0-fpm.log"
+- name: Configure default PHP-FPM pool
+  template:
+    src: php-fpm-pool.conf.j2
+    dest: /etc/php/7.0/fpm/pool.d/www.conf
+    owner: root
+    group: root
+    mode: 0644
   notify: restart php-fpm
+
+- name: Ensure PHP-FPM is started and enabled to start at boot.
+  service:
+    name: php7.0-fpm
+    state: started
+    enabled: yes
+

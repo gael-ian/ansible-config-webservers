@@ -14,7 +14,3 @@
 - src: geerlingguy.mysql
   version: 2.4.0
   name: mysql
-  
-- src: geerlingguy.php
-  version: 3.3.2
-  name: php
