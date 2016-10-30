@@ -33,24 +33,12 @@
 
 - name: Synchronize nginx configuration files
   synchronize:
-    src: "{{ item }}"
-    dest: "/etc/nginx/{{ item }}"
+    src: "{{ item }}/"
+    dest: "/etc/nginx/{{ item }}/"
     delete: yes
   with_items:
     - conf.d
     - partials.d
-  notify:
-    - reload nginx
-
-- name: Copy nginx upstreams configuration files
-  copy:
-    src: "upstreams/{{ item }}"
-    dest: /etc/nginx/upstreams/{{ item }}
-    owner: root
-    group: root
-    mode: 0644
-  with_items:
-    - "{{ nginx_upstreams }}"
   notify:
     - reload nginx
     

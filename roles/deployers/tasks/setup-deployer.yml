@@ -1,0 +1,15 @@
+---
+- name: "Ensure user account for {{ deployer.name }} exists"
+  user:
+    name: "{{ deployer.name }}"
+    password: "{{ deployer.password|password_hash('sha512') }}"
+    groups: deployers
+    append: yes
+    shell: "/bin/bash"
+    state: present
+
+- name: "Authorize key for SSH connections for {{ deployer.name }}"
+  authorized_key:
+    user: "{{ deployer.name }}"
+    key: "{{ lookup('file', '{{ deployer.key }}') }}"
+    state: present

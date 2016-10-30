@@ -11,13 +11,12 @@
   notify: restart php-fpm
 
 - name: Configure default PHP-FPM pool
-  template:
-    src: php-fpm-pool.conf.j2
-    dest: /etc/php/7.0/fpm/pool.d/www.conf
-    owner: root
-    group: root
-    mode: 0644
-  notify: restart php-fpm
+  include: "../../php-fpm-pools/tasks/setup-pool.yml"
+  args:
+    pool:
+      name: www
+      user: www-data
+    handle_nginx: False
 
 - name: Ensure PHP-FPM is started and enabled to start at boot.
   service:

@@ -14,7 +14,7 @@
   
   roles:
     # Install PHP and PHP-fpm
-    - php-fpm
+    - php
     # Configure Monit to watch over PHP services
     - {
         role: monit-service,

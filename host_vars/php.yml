@@ -3,56 +3,81 @@
 # ==============================
 
 
-## User accounts
+## Administrator accounts
+## ======================
 
-### Administrator account
+### System administrator
 # Password : administrator
 administrator_password: "$6$pv/TEfxaBcz$bYlBpO4FwIv83D6yFmAc3A1VBFgPYzoA7f0b0EUlmP.R0GcQvCN.CxJI7miMNZZ4mp/cxBDwS73AV7KaJMcR3."
 administrator_public_key: "host_vars/keys/administrator.php.rsa.pub"
 
-#### MySQL configuration
+#### MySQL administrator
 mysql_root_password: "administrator"
 
-### Deployer account
-# Password : deployer
-deployer_password: "$6$aRHeOaYHNAJbC$ol6fUK7kNRDVT1jfNmwRt2yzY6FuTSQ8BDAmDD/K2j6iMJ3oVA.F.4aBFWDTjSzYvLH2titRKyHRA04lPd.7.0"
-deployer_public_key: "host_vars/keys/deployer.php.rsa.pub"
+
+## Deployers / Application owners
+## ==============================
+deployers:
+  - name: "php-dummy"
+    password: "php-dummy"
+    key:  "host_vars/keys/deployer.php.rsa.pub"
+  - name: "prestashop-dummy"
+    password: "prestashop-dummy"
+    key:  "host_vars/keys/deployer.php.rsa.pub"
 
 
-## Nginx configuration
+## PHP-FPM pools
+## =============
+php_fpm_pools:
+  - name: php-fpm.php-dummy.production
+    user: php-dummy
+  - name: php-fpm.prestashop-dummy.production
+    user: prestashop-dummy
 
-# Should be set to the number of cores on your machine
-nginx_worker_processes: "1"
 
-
-## Applications configuration
-vhosts:
+## Applications
+## ============
+applications:
   - name: php-dummy
+    user: php-dummy
     type: php
-    environment: production
-    domains:
-      main: www.php-dummy.com
-      additionals:
-        - php-dummy.com
-  
+    
+    environments:
+      - name: production
+        
+        # Databases options
+        databases:
+          - name:       "php_dummy_production"
+            collation:  "utf8_general_ci"
+            encoding:   "utf8"
+            username:   "php-dummy-production"
+            password:   "php-dummy-production"
+        
+        # Vhost options
+        upstream: php-fpm.production
+        domains:
+          main:   www.php-dummy.com
+          additionals: 
+            - php-dummy.com
+
   - name: prestashop-dummy
+    user: prestashop-dummy
     type: prestashop-1.4
-    environment: production
-    domains:
-      main: www.prestashop-dummy.com
-      additionals:
-        - prestashop-dummy.com
-
-databases:
-  - name: "phpdummy"
-    username: "phpdummy"
-    password: "phpdummy"
-    collation: utf8_general_ci
-    encoding: utf8
-
-  - name: "prestashopdummy"
-    username: "prestashopdummy"
-    password: "prestashopdummy"
-    collation: utf8_general_ci
-    encoding: utf8
+    environments:
+      - name: production
+        
+        # Databases options
+        databases:
+          - name:       "prestashop_dummy_production"
+            collation:  "utf8_general_ci"
+            encoding:   "utf8"
+            username:   "prestashop-dummy"
+            password:   "prestashop-dummy"
+        
+        # Vhost options
+        upstream: php-fpm.production
+        domains:
+          main:   www.prestashop-dummy.com
+          additionals: 
+            - prestashop-dummy.com
 

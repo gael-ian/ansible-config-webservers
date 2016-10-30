@@ -5,7 +5,7 @@
 # 
 #     ansible-playbook playbook-07-setup-apps.yml
 #
-- name: Setup applications environments for deployments
+- name: Setups applications
   remote_user: administrator
   become: yes
   
@@ -13,16 +13,16 @@
   hosts: web_servers
   
   roles:
-    # Create a `deployer` user account, used for application deployment.  
+    # Create application user accounts, used for application deployment and execution.
     # Credentials and authentication keys are defined per server in `host_vars`.
-    - deployable
-    # Setup vhosts
-    # - Configure nginx
-    # - Create directories with proper permissions
-    # - Setup log rotation
-    - vhosts
+    - deployers
+    # Create PHP-FPM pools (if applicable)
+    - php-fpm-pools
+    # Create directories with proper permissions
     # Create applications databases (and users)
-    - databases
+    # Configure nginx
+    # Setup log rotation
     # Ensure applications dependencies available as packages are installed.
-    - extra-packages
     # Configure Monit to watch over application services
+    # - applications
+

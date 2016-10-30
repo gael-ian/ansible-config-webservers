@@ -19,7 +19,7 @@
     - {
         role: monit-service,
         monit_services: { 
-          nginx: { name: nginx, template: monit/nginx.j2 }
+          nginx: { name: nginx, template: nginx.j2 }
         }
       }
 
