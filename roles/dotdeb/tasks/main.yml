@@ -1,7 +1,7 @@
 ---
 - name: Install DotDeb key
   apt_key:
-    url: 'http://www.dotdeb.org/dotdeb.gpg'
+    url: 'https://www.dotdeb.org/dotdeb.gpg'
     state: present
 
 - name: Add Dotdeb repository
