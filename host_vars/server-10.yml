@@ -1,6 +1,6 @@
 ---
-# Server configuration for `ruby`
-# ==============================
+# Server configuration for `server-10`
+# ====================================
 
 
 ## Administrator accounts
@@ -9,7 +9,7 @@
 ### System administrator
 # Password : administrator
 administrator_password: "$6$pv/TEfxaBcz$bYlBpO4FwIv83D6yFmAc3A1VBFgPYzoA7f0b0EUlmP.R0GcQvCN.CxJI7miMNZZ4mp/cxBDwS73AV7KaJMcR3."
-administrator_public_key: "host_vars/keys/administrator.ruby.rsa.pub"
+administrator_public_key: "host_vars/keys/server-10/administrator.rsa.pub"
 
 #### MySQL administrator
 mysql_root_password: "administrator"

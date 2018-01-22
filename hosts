@@ -1,20 +1,31 @@
 ; Ansible hosts inventory
 
 [servers]
-ruby
-php
+server-10
+server-20
 
-[database_servers]
-ruby
-php
+[servers_db]
+server-10
+server-20
 
-[php_servers]
-php
+[servers_db_mysql]
+server-10
+server-20
 
-[ruby_servers]
-ruby
+[servers_db_redis]
+server-10
+server-20
 
-[web_servers]
-ruby
-php
+[servers_web]
+server-20
+server-10
 
+[servers_web_php]
+server-20
+
+[servers_web_ruby]
+server-10
+
+[servers_app]
+server-10
+server-20

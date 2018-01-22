@@ -1,6 +1,12 @@
 ---
+
+# Allow key only authentication
+security_ssh_permit_empty_password: "yes"
+
 # Monit configuration
 # ===================
+
+monit_enable_status: false
 
 monit_mails_servers: []
   # - "backup.bar.baz port 10025"
