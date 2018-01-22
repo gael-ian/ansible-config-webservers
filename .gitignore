@@ -5,3 +5,6 @@ roles/externals/*
 
 # Failed playbook
 *.retry
+
+# Python bitcode
+*.pyc
