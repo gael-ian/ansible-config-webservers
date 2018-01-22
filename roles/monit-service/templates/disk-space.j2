@@ -1,2 +1,11 @@
-check filesystem disk with path /dev/sda1
+# {{ ansible_managed }}
+
+{% if monit_check_system_partitions | length > 0 %}
+{% for partition in monit_check_system_partitions %}
+
+check filesystem disk-{{ partition | urlize }} with path {{ partition }}
   if space usage > 95% then alert
+
+{% endfor %}
+{% endif %}
+

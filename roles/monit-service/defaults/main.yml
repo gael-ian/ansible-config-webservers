@@ -5,3 +5,6 @@ monit_services: {}
   #   name: {service-name}
   #   template: "path/to/template"
 
+monit_check_system_partitions:
+  - /dev/sda1
+

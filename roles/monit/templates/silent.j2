@@ -1,0 +1,8 @@
+# Monit silent services configuration
+# ===================================
+
+{% if monit_mails_recipients|length > 0 %}
+{% for recipient in monit_mails_recipients %}
+noalert {{ recipient.split(' ') | first }}
+{% endfor %}
+{% endif %}

@@ -6,8 +6,18 @@
 
 - name: Configure Monit alerts
   template:
-    src: "monit-mail.conf.j2"
-    dest: "/etc/monit/conf.d/monit-mail.conf"
+    src: "mail.conf.j2"
+    dest: "/etc/monit/conf.d/mail.conf"
+    owner: root
+    group: root
+    mode: 0600
+  notify:
+    - restart monit
+
+- name: Add a Monit template for silent services
+  template:
+    src: "silent.j2"
+    dest: "/etc/monit/templates/silent"
     owner: root
     group: root
     mode: 0600
@@ -16,8 +26,8 @@
 
 - name: Configure Monit status server
   copy:
-    src: "monit-status.conf"
-    dest: "/etc/monit/conf.d/monit-status.conf"
+    src: "web.conf"
+    dest: "/etc/monit/conf.d/web.conf"
     owner: root
     group: root
     mode: 0600

@@ -1,14 +1,29 @@
+# {{ ansible_managed }}
+
 check process crond with pidfile /var/run/crond.pid
   group system
   group crond
+
+  if 5 restarts within 5 cycles then alert
+
+check process crond-silent with pidfile /var/run/crond.pid
+  group system
+  group crond
+
+  include /etc/monit/templates/silent
+
   start program = "/bin/systemctl start cron.service"
   stop  program = "/bin/systemctl stop cron.service"
-  
-  if 5 restarts with 5 cycles then timeout
-  
+
+  depend cron_spool
   depend cron_bin
   depend cron_rc
-  depend cron_spool
+
+check directory cron_spool with path /var/spool/cron/crontabs
+  group crond
+  if failed permission 1730 then unmonitor
+  if failed uid root        then unmonitor
+  if failed gid crontab     then unmonitor
 
 check file cron_bin with path /usr/sbin/cron
   group crond
@@ -17,9 +32,3 @@ check file cron_bin with path /usr/sbin/cron
 check file cron_rc with path "/etc/init.d/cron"
   group crond
   include /etc/monit/templates/rootbin
-
-check directory cron_spool with path /var/spool/cron/crontabs
-  group crond
-  if failed permission 1730 then unmonitor
-  if failed uid root        then unmonitor
-  if failed gid crontab     then unmonitor

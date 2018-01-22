@@ -1,6 +1,13 @@
 ---
-- include: setup-service.yml
+- name: "Configure Monit for {{ service.value.name }}"
+  template:
+    src: "{{ service.value.template }}"
+    dest: "/etc/monit/services.d/{{ service.value.name }}"
+    owner: root
+    group: root
+    mode: 0644
   with_dict: "{{ monit_services }}"
   loop_control:
     loop_var: service
-
+  notify:
+    - reload monit

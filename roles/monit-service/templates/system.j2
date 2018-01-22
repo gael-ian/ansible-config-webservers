@@ -1,3 +1,5 @@
+# {{ ansible_managed }}
+
 check system $HOST
   
   if loadavg (1min) > 4 then alert
