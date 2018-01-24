@@ -15,8 +15,9 @@
   roles:
     # Add dotdeb.org repositories to APT sources
     - dotdeb
-    # Apply all pending updates
-    - uptodate
+    # Apply all pending updates (except in Virtualbox VMs, as updates
+    # can break Guest Additions kernel module)
+    - { role: uptodate, when: (ansible_bios_version != 'VirtualBox') }
     # Ensure some basic packages are installed.  
     # See `roles/base-packages/defaults/main.yml` 
     # for a list of installed packages.
