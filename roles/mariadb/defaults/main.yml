@@ -8,8 +8,6 @@ mariadb_root_password: root
 mariadb_root_password_update: yes
 
 mariadb_conf:
-  server:
-    bind_address: "127.0.0.1"
   mysqldump:
     max_allowed_packet: "64M"
   logging:

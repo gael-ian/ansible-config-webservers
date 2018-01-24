@@ -1,4 +1,18 @@
 ---
+- name: Alter main configuration file
+  lineinfile:
+    dest: "/etc/mysql/my.cnf"
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    backrefs: yes
+    state: present
+  with_items:
+    - regexp: '^log_bin(\s*=.+)$'
+      line: '#log_bin\1'
+    - regexp: '^log_bin_index(\s*=.+)$'
+      line: '#log_bin_index\1'
+  notify: restart mariadb
+
 - name: Ensure configuration include directory exists
   file:
     path: "/etc/mysql/mariadb.conf.d"
@@ -14,7 +28,7 @@
     owner: root
     group: root
     mode: 0644
-  with_items: ['90-logging.cnf', '90-server.cnf', '90-mysqldump.cnf']
+  with_items: ['90-logging.cnf', '90-mysqldump.cnf']
   notify: restart mariadb
 
 - name: Ensure log files exist (if configured)

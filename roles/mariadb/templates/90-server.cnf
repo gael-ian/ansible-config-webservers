@@ -1,6 +1,0 @@
-# {{ ansible_managed }}
-# MariaDB Server configuration
-
-
-[mysqld]
-bind-address    = {{ mariadb_conf.server.bind_address }}
