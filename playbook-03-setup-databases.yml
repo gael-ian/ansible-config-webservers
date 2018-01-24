@@ -5,31 +5,25 @@
 # 
 #     ansible-playbook playbook-03-setup-databases.yml
 #
-- name: Setup and configure MySQL on database servers
+- name: Setup and configure MySQL
   remote_user: administrator
   become: yes
   
-  # Configurations will be applied only on databases servers
-  hosts: database_servers
+  # Configurations will be applied only on MariaDB databases servers
+  hosts: servers_db_mariadb
   
   roles:
-    # Install MySQL (MariaDB)  
+    # Install MariaDB
     # Disable external and anonymous connexions and set up  
     # root credentials (defined per server in `host_vars`).
-    - {
-        role: mysql,
-        
-        # Fix log paths to match default package configuration
-        # mysql_log:                "/var/log/mysql/mysql.log",
-        mysql_slow_query_log_file:  "/var/log/mysql/mysql-slow.log",
-        mysql_log_error:            "/var/log/mysql/error.log",
-        
+    - { role: mariadb, mariadb_conf: { logging: {
+        error:      { enabled: 1, file: "/var/log/mysql/error.log" },
+        slow_query: { enabled: 1, file: "/var/log/mysql/slow.log" },
+      }}
+    }
+    # Configure Monit to watch over MariaDB services
+    - { role: monit-service, monit_services: {
+        mariadb: { name: mariadb, template: mariadb.j2 }
       }
-    # Configure Monit to watch over MySQL services
-    - {
-        role: monit-service,
-        monit_services: {
-          mysql: { name: mysql, template: mysql.j2 }
-        }
-      }
+    }
 

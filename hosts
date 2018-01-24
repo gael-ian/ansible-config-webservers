@@ -8,7 +8,7 @@ server-20
 server-10
 server-20
 
-[servers_db_mysql]
+[servers_db_mariadb]
 server-10
 server-20
 

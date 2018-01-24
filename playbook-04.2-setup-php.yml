@@ -10,7 +10,7 @@
   become: yes
   
   # Configurations will be applied only on PHP servers
-  hosts: php_servers
+  hosts: servers_web_php
   
   roles:
     # Install PHP and PHP-fpm

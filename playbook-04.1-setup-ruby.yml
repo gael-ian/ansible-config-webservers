@@ -10,7 +10,7 @@
   become: yes
   
   # Configurations will be applied only on Ruby servers
-  hosts: ruby_servers
+  hosts: servers_web_ruby
   
   roles: 
     # Install RVM, Ruby and Passenger

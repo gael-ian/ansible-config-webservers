@@ -1,0 +1,23 @@
+---
+- name: Install system requirements
+  apt:
+    name: "{{ item }}"
+    state: installed
+  with_items:
+    - software-properties-common
+    - dirmngr
+
+- name: Import MariaDB GPG keys
+  shell: "apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 {{ item }}"
+  args:
+    warn: no
+  with_items: ['0xcbcb082a1bb943db', '0xF1656F24C74CD1D8']
+
+- name: Add MariaDB repository
+  apt_repository:
+    repo: "deb {{ mariadb_mirror }}/mariadb/repo/{{ mariadb_release }}/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} main"
+    state: present
+
+- name: Update apt cache
+  apt:
+    update_cache: "yes"

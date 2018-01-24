@@ -23,7 +23,6 @@ Comments in the `roles` section of each playbook provide details on applied conf
 
 # TODO
 
-* Un pool PHP par application et par environnement (chroot ?)
 * Stabilisation de la configuration nginx
 * Unification des logs d'une application dans un répertoire unique :
     - Application
@@ -31,4 +30,4 @@ Comments in the `roles` section of each playbook provide details on applied conf
     - Serveur web
     - Crons
     (- DB ?)
-* Un utilisateur par application
+* Vhost par défaut pour nginx: no content

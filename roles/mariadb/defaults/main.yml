@@ -1,0 +1,28 @@
+---
+
+mariadb_mirror: "http://ftp.igh.cnrs.fr/pub"
+mariadb_release: "10.2"
+mariadb_packages: ['mariadb-client', 'mariadb-server']
+
+mariadb_root_password: root
+mariadb_root_password_update: yes
+
+mariadb_conf:
+  server:
+    bind_address: "127.0.0.1"
+  mysqldump:
+    max_allowed_packet: "64M"
+  logging:
+    general:
+      enabled: 0
+      file: "/var/log/mysql/mysql.log"
+    error:
+      enabled: 0
+      file: "/var/log/mysql/error.log"
+    slow_query:
+      enabled: 0
+      file: "/var/log/mysql/slow.log"
+      time: 2
+      rate_limit: 1000
+      verbosity: "query_plan"
+      not_using_indexes: 0

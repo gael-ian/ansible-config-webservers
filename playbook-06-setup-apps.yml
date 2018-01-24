@@ -10,7 +10,7 @@
   become: yes
   
   # Configurations will be applied on all servers
-  hosts: web_servers
+  hosts: servers_app
   
   roles:
     # Create application user accounts, used for application deployment and execution.

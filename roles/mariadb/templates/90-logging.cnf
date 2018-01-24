@@ -1,0 +1,28 @@
+# {{ ansible_managed }}
+# MariaDB Logging configuration
+
+
+[mysqld]
+
+{% if mariadb_conf.logging.general.enabled %}
+# General Log
+general_log           = {{ mariadb_conf.logging.general.enabled }}
+general_log_file      = {{ mariadb_conf.logging.general.file }}
+{% endif %}
+
+{% if mariadb_conf.logging.error.enabled %}
+# Error Log
+log_error             = {{ mariadb_conf.logging.error.file }}
+{% endif %}
+
+{% if mariadb_conf.logging.slow_query.enabled %}
+# Slow queries
+slow_query_log_file   = {{ mariadb_conf.logging.slow_query.file }}
+long_query_time       = {{ mariadb_conf.logging.slow_query.time }}
+log_slow_rate_limit   = {{ mariadb_conf.logging.slow_query.rate_limit }}
+log_slow_verbosity    = {{ mariadb_conf.logging.slow_query.verbosity }}
+{% if mariadb_conf.logging.slow_query.not_using_indexes %}log-queries-not-using-indexes{% endif %}
+{% endif %}
+
+[mysqld_safe]
+skip_syslog

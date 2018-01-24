@@ -10,7 +10,7 @@
   become: yes
   
   # Configurations will be applied only on web servers
-  hosts: web_servers
+  hosts: servers_web
   
   roles:
     # Install and configure nginx web server

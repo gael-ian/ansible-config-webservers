@@ -1,0 +1,6 @@
+# {{ ansible_managed }}
+# MariaDB dump configuration
+
+
+[mysqldump]
+max_allowed_packet  = {{ mariadb_conf.mysqldump.max_allowed_packet }}

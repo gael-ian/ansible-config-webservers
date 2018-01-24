@@ -1,6 +1,0 @@
----
-# MySQL databases configuration
-# =============================
-
-mysql_packages: ['mariadb-client', 'mariadb-server']
-mysql_root_password_update: yes

@@ -1,0 +1,53 @@
+---
+- name: Ensure configuration include directory exists
+  file:
+    path: "/etc/mysql/mariadb.conf.d"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Copy configuration files into include directory
+  template:
+    src: "{{ item }}"
+    dest: "/etc/mysql/mariadb.conf.d/{{ item }}"
+    owner: root
+    group: root
+    mode: 0644
+  with_items: ['90-logging.cnf', '90-server.cnf', '90-mysqldump.cnf']
+  notify: restart mariadb
+
+- name: Ensure log files exist (if configured)
+  file:
+    path: "{{ item }}"
+    state: touch
+    owner: mysql
+    group: mysql
+    mode: 0640
+  with_items: "{{ mariadb_conf.logging | json_query('* | [?enabled==`1`].file') }}"
+
+- name: Configure logrotate for log files (if configured)
+  template:
+    src: "logrotate.conf.j2"
+    dest: "/etc/logrotate.d/mariadb"
+    owner: root
+    group: root
+    mode: 0644
+  when: mariadb_conf.logging | json_query('* | [?enabled==`1`].file') | length != 0
+
+- block:
+  - stat:
+      path: "/etc/logrotate.d/mariadb"
+    register: mariadb_logrotate
+  - name: Remove logrotate configuration for log files (if not configured)
+    file:
+      path: "/etc/logrotate.d/mariadb"
+      state: "absent"
+    when: mariadb_logrotate.stat.exists
+  when: mariadb_conf.logging | json_query('* | [?enabled==`1`].file') | length == 0
+
+- name: Ensure MariaDB is started and enabled on boot
+  service:
+    name: mysql
+    state: started
+    enabled: yes

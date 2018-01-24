@@ -11,8 +11,8 @@
 administrator_password: "$6$pv/TEfxaBcz$bYlBpO4FwIv83D6yFmAc3A1VBFgPYzoA7f0b0EUlmP.R0GcQvCN.CxJI7miMNZZ4mp/cxBDwS73AV7KaJMcR3."
 administrator_public_key: "host_vars/keys/server-20/administrator.rsa.pub"
 
-#### MySQL administrator
-mysql_root_password: "administrator"
+#### MariaDB administrator
+mariadb_root_password: "administrator"
 
 
 ## Deployers / Application owners

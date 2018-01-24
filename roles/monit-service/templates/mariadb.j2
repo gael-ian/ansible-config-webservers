@@ -31,3 +31,18 @@ check file mysql_bin with path /usr/sbin/mysqld
 check file mysql_rc with path /etc/init.d/mysql
   group mysql
   include /etc/monit/templates/rootbin
+
+{% if mariadb_conf.logging.general.enabled %}
+check file mariadb_log_general with path {{ mariadb_conf.logging.general.file }}
+  if size > 250 MB then exec "/usr/sbin/logrotate -f /etc/logrotate.d/mariadb"
+{% endif %}
+
+{% if mariadb_conf.logging.error.enabled %}
+check file mariadb_log_error with path {{ mariadb_conf.logging.error.file }}
+  if size > 250 MB then exec "/usr/sbin/logrotate -f /etc/logrotate.d/mariadb"
+{% endif %}
+
+{% if mariadb_conf.logging.slow_query.enabled %}
+check file mariadb_log_slow_query with path {{ mariadb_conf.logging.slow_query.file }}
+  if size > 250 MB then exec "/usr/sbin/logrotate -f /etc/logrotate.d/mariadb"
+{% endif %}
