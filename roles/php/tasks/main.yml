@@ -1,10 +1,5 @@
 ---
-
-# Install PHP
-- include: install-php.yml
-
-# Configure PHP
-- include: configure-php.yml
-
-# Configure PHP-FPM
-- include: configure-php-fpm.yml
+- import_tasks: repository.yml
+- import_tasks: install-php.yml
+- import_tasks: configure-php.yml
+- import_tasks: configure-php-fpm.yml

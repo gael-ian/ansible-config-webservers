@@ -1,26 +1,17 @@
 ---
 - name: configure PHP-FPM
   lineinfile:
-    dest: "/etc/php/7.0/fpm/php-fpm.conf"
+    dest: "/etc/php/{{ php_version }}/fpm/php-fpm.conf"
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
     state: present
   with_items:
     - regexp: "^error_log.?=.+$"
-      line: "error_log = /var/log/php7.0-fpm/php7.0-fpm.log"
+      line: "error_log = /var/log/php/php-fpm.log"
   notify: restart php-fpm
 
-- name: Configure default PHP-FPM pool
-  include: "../../php-fpm-pools/tasks/setup-pool.yml"
-  args:
-    pool:
-      name: www
-      user: www-data
-    handle_nginx: False
-
-- name: Ensure PHP-FPM is started and enabled to start at boot.
+- name: Ensure PHP-FPM is enabled to start at boot.
   service:
-    name: php7.0-fpm
+    name: "php{{ php_version }}-fpm"
     state: started
     enabled: yes
-

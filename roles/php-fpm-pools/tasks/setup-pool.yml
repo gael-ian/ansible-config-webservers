@@ -1,8 +1,8 @@
 ---
 - name: "Configure PHP-FPM pool {{ pool.name }}"
   template:
-    src: roles/php-fpm-pools/templates/pool.conf.j2
-    dest: /etc/php/7.0/fpm/pool.d/{{ pool.name }}.conf
+    src: pool.conf.j2
+    dest: "/etc/php/{{ php_version }}/fpm/pool.d/{{ pool.name }}.conf"
     owner: root
     group: root
     mode: 0644
@@ -11,7 +11,7 @@
 - name: "Ensure pool log directory exists for pool {{ pool.name }}"
   file:
     state: directory
-    path:  "/var/log/php7.0-fpm/{{ pool.name }}"
+    path:  "/var/log/php/{{ pool.name }}"
     owner: root
     group: root
     mode: 0644
@@ -26,8 +26,8 @@
 
 - name: "Configure nginx upstream for the PHP-FPM {{ pool.name }} pool"
   template:
-    src: roles/php-fpm-pools/templates/upstream.conf.j2
-    dest: /etc/nginx/upstreams/php7.0-fpm.{{ pool.name }}.conf
+    src: upstream.conf.j2
+    dest: "/etc/nginx/upstreams/php-fpm.{{ pool.name }}.conf"
     owner: root
     group: root
     mode: 0644

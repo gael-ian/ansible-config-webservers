@@ -1,13 +1,20 @@
 # {{ ansible_managed }}
 
-check process php-fpm with pidfile /run/php/php7.0-fpm.pid
+check process php-fpm with pidfile /run/php/php{{ php_version }}-fpm.pid
   group servers
   group php
-  start program = "/bin/systemctl start php7.0-fpm.service"
-  stop program = "/bin/systemctl stop php7.0-fpm.service"
   
   if cpu > 60% for 2 cycles then alert
+  if 5 restarts with 5 cycles then alert
+
+check process php-fpm-silent with pidfile /run/php/php{{ php_version }}-fpm.pid
+  group servers
+  group php
+
+  include /etc/monit/templates/silent
+
+  start program = "/bin/systemctl start php{{ php_version }}-fpm.service"
+  stop program = "/bin/systemctl stop php{{ php_version }}-fpm.service"
+
   if cpu > 80% for 5 cycles then restart
   if totalmem > 500.0 MB then restart
-  
-  if 5 restarts with 5 cycles then timeout

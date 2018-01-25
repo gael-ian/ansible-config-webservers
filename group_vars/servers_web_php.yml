@@ -2,51 +2,7 @@
 # PHP configuration
 # =================
 
-php_packages:
-  - libpcre3-dev
-  - php7.0-dev
-  - php7.0-common
-  - php7.0-cli
-  - php7.0-fpm
-  
-  - php7.0-curl
-  - php7.0-gd
-  - php7.0-json
-  - php7.0-mbstring
-  - php7.0-mcrypt
-  - php7.0-mysql
-  - php7.0-opcache
-  - php7.0-redis
-  - php7.0-sqlite3
-  - php7.0-xml
-  - php-apcu
-
-# Do not try to reconfigure any web server but install PHP-FPM
-php_enable_webserver: false
-php_enable_php_fpm: true
-
+php_version: "7.2"
 
 nginx_upstreams:
   - php-fpm.conf
-
-
-php_webserver_daemon: "nginx"
-
-# PHP fpm
-
-php_fpm_listen_allowed_clients: ""  # nginx seems to identify as remote IP
-php_fpm_pm_max_children: 10         # Limit PHP-fpm to 10 process
-
-# Opcode cache
-php_enable_apc: false               # APCu only support key-value storage capacities of APC
-php_opcache_enable: "1"             # OpCache replace APC for PHP >= 5.5
-php_opcache_enabled_in_ini: true
-
-# php.ini
-php_upload_max_filesize: "15M"
-php_post_max_size: "20M"
-php_date_timezone: "Europe/Paris"
-php_error_reporting: "E_ALL & E_STRICT"
-php_display_errors: "On"
-php_display_startup_errors: "On"
-php_expose_php: "Off"
