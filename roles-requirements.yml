@@ -10,7 +10,3 @@
 - src: geerlingguy.security
   version: 1.5.0
   name: security
-
-- src: geerlingguy.redis
-  version: 1.5.1
-  name: redis

@@ -27,3 +27,19 @@
       }
     }
 
+
+- name: Setup and configure Redis
+  remote_user: administrator
+  become: yes
+
+  # Configurations will be applied only on Redis databases servers
+  hosts: servers_db_redis
+
+  roles:
+    # Install Redis
+    - redis
+    # Configure Monit to watch over Redis
+    - { role: monit-service, monit_services: {
+        redis: { name: redis, template: redis.j2 }
+      }
+    }
