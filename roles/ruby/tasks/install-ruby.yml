@@ -5,7 +5,7 @@
   ignore_errors: True
   register: rvm_install_result
 
-- include: ./install-rvm.yml
+- include_tasks: ./install-rvm.yml
   when: rvm_install_result.stat.exists != true
 
 - name: updating RVM

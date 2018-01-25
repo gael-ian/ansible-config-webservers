@@ -1,6 +1,8 @@
 ---
 - name: reload nginx
   service: name=nginx state=reloaded
+  when: nginx_stats.stat.exists
 
 - name: restart nginx
   service: name=nginx state=restarted
+  when: nginx_stats.stat.exists

@@ -15,13 +15,9 @@
 
 - name: add Phusion Passenger repository
   apt_repository:
-    repo: deb https://oss-binaries.phusionpassenger.com/apt/passenger jessie main
+    repo: "deb https://oss-binaries.phusionpassenger.com/apt/passenger {{ ansible_distribution_release }} main"
     state: present
-
-- name: update apt cache.
-  apt:
     update_cache: yes
-    cache_valid_time: 86400
 
 - name: install Phusion Passenger
   apt:
@@ -54,10 +50,15 @@
 - shell: "passenger-config about ruby-command | egrep 'Command:' | cut -d':' -f2"
   register: passenger_ruby_path
 
+- name: detect if nginx is already installed
+  stat:
+    path: "/usr/sbin/nginx"
+  register: nginx_stats
+
 - name: configure Phusion Passenger for nginx
   template:
     src: nginx.conf.j2
-    dest: /etc/nginx/conf.d/passenger.conf
+    dest: /etc/nginx/modules-available/passenger.conf
     owner: root
     group: root
     mode: 0644

@@ -1,8 +1,8 @@
 ---
 
 # Install Ruby
-- include: install-ruby.yml
+- import_tasks: install-ruby.yml
   
 # Install Passenger
-- include: install-passenger.yml
+- import_tasks: install-passenger.yml
 

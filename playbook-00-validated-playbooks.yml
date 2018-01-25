@@ -1,4 +1,5 @@
 ---
 - import_playbook: playbook-02-setup-system.yml
 - import_playbook: playbook-03-setup-databases.yml
+- import_playbook: playbook-04.1-setup-ruby.yml
 - import_playbook: playbook-04.2-setup-php.yml
