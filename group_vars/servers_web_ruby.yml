@@ -1,5 +1,13 @@
 ---
-# Ruby configuration
-# ==================
 
 ruby_version: "2.3.1"
+
+# Additional repositories
+apt_sources_repositories:
+  passenger-official:
+    dependencies: ['apt-transport-https', 'ca-certificates']
+    signing_keys:
+      - keyserver: "keyserver.ubuntu.com"
+        id: "561F9B9CAC40B2F7"
+    repos:
+      - "deb https://oss-binaries.phusionpassenger.com/apt/passenger {{ ansible_distribution_release }} main"

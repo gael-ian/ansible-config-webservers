@@ -3,6 +3,15 @@
 # Allow key only authentication
 security_ssh_permit_empty_password: "yes"
 
+# Additional repositories
+apt_sources_repositories:
+  dotdeb.org:
+    signing_keys:
+      - url: "https://www.dotdeb.org/dotdeb.gpg"
+    repos:
+      - "deb http://packages.dotdeb.org {{ ansible_distribution_release }} all"
+
+
 # Monit configuration
 # ===================
 

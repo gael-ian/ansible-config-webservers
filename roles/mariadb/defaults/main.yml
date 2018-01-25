@@ -1,6 +1,5 @@
 ---
 
-mariadb_mirror: "http://ftp.igh.cnrs.fr/pub"
 mariadb_version: "10.2"
 mariadb_packages: ['mariadb-client', 'mariadb-server']
 

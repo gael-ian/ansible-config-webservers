@@ -1,8 +1,15 @@
 ---
-# PHP configuration
-# =================
 
 php_version: "7.2"
+
+# Additional repositories
+apt_sources_repositories:
+  php-packages.sury.org:
+    dependencies: ['apt-transport-https', 'ca-certificates', 'lsb-release']
+    signing_keys:
+      - url: "https://packages.sury.org/php/apt.gpg"
+    repos:
+      - "deb https://packages.sury.org/php/ {{ ansible_distribution_release }} main"
 
 nginx_upstreams:
   - php-fpm.conf

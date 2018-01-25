@@ -1,0 +1,11 @@
+---
+
+# Additional repositories
+apt_sources_repositories:
+  nginx-official:
+    dependencies: ['apt-transport-https', 'ca-certificates', 'lsb-release']
+    signing_keys:
+      - url: "http://nginx.org/keys/nginx_signing.key"
+    repos:
+      - "deb http://nginx.org/packages/debian/ {{ ansible_distribution_release }} nginx"
+      - "deb-src http://nginx.org/packages/debian/ {{ ansible_distribution_release }} nginx"

@@ -13,8 +13,8 @@
   hosts: servers
   
   roles:
-    # Add dotdeb.org repositories to APT sources
-    - dotdeb
+    # Add repositories to APT sources
+    - apt-sources
     # Apply all pending updates (except in Virtualbox VMs, as updates
     # can break Guest Additions kernel module)
     - { role: uptodate, when: (ansible_bios_version != 'VirtualBox') }

@@ -1,0 +1,8 @@
+---
+apt_sources_repositories: {}
+#  dotdeb.org:
+#    dependencies: []
+#    signing_keys:
+#      - "url='https://www.dotdeb.org/dotdeb.gpg'"
+#    repos:
+#      - "deb http://packages.dotdeb.org {{ ansible_distribution_release }} all"

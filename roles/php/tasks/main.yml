@@ -1,5 +1,4 @@
 ---
-- import_tasks: repository.yml
 - import_tasks: install-php.yml
 - import_tasks: configure-php.yml
 - import_tasks: configure-php-fpm.yml
