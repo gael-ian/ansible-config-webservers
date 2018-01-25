@@ -1,5 +1,5 @@
 ---
-- name: Ensure MySQL databases are present.
+- name: Ensure MySQL databases are present
   mysql_db:
     name: "{{ item.name }}"
     collation: "{{ item.collation | default('utf8_general_ci') }}"
@@ -7,12 +7,12 @@
     state: present
   with_items: "{{ databases }}"
 
-- name: Ensure MySQL users are present.
+- name: Ensure MySQL users are present
   mysql_user:
     name: "{{ item.username }}"
     password: "{{ item.password }}"
-    host: "localhost"
-    append_privs: "no"
     priv: "{{ item.name }}.*:ALL"
+    host: localhost
+    append_privs: no
     state: present
   with_items: "{{ databases }}"

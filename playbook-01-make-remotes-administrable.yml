@@ -37,5 +37,5 @@
     # Ensure sudo is installed and that the `administrators` group is sudoer
     # Create an `administrator` user account (credentials and authentication
     #   keys are defined per server in `host_vars`)
-    - administrable
+    - role: administrable
 

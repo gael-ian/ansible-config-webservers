@@ -14,14 +14,17 @@
   
   roles:
     # Install PHP and PHP-FPM
-    - php
-    - { role: php-fpm-pools, handle_nginx: yes, php_fpm_pools: [
-        { name: www, user: www-data, group: www-data }
-      ]
-    }
-    # Configure Monit to watch over PHP services
-    - { role: monit-service, monit_services: {
-        php-fpm: { name: php-fpm, template: php-fpm.j2 }
-      }
-    }
+    - role: php
+    - role: php-fpm-pools
+      handle_nginx: false
+      php_fpm_pools:
+        - name: www
+          user: www-data
+          group: www-data
 
+    # Configure Monit to watch over PHP services
+    - role: monit-service
+      monit_services:
+        php-fpm:
+          name: php-fpm
+          template: php-fpm.j2

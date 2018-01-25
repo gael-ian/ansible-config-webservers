@@ -1,7 +1,6 @@
 # {{ ansible_managed }}
 # MariaDB Logging configuration
 
-
 [mysqld]
 
 {% if mariadb_conf.logging.general.enabled %}

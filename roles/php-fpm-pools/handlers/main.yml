@@ -2,11 +2,11 @@
 - name: restart php-fpm
   service:
     name: "php{{ php_version }}-fpm"
-    state: "restarted"
+    state: restarted
 
 - name: restart nginx
   service:
-    name: "nginx"
-    state: "restarted"
+    name: nginx
+    state: restarted
   notify: restart php-fpm
   when: handle_nginx is defined and handle_nginx

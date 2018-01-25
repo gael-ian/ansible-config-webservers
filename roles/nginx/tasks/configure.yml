@@ -7,9 +7,9 @@
     group: root
     mode: 0755
   with_items:
-    - "conf.d"
-    - "partials.d"
-    - "upstreams.d"
+    - conf.d
+    - partials.d
+    - upstreams.d
 
 - name: Copy nginx main configuration file
   copy:
@@ -51,9 +51,9 @@
     mode: 0755
     recurse: yes
   with_items:
-    - "conf.d"
-    - "partials.d"
-    - "upstreams.d"
+    - conf.d
+    - partials.d
+    - upstreams.d
 
 - name: Remove default nginx vhost config file
   file:

@@ -4,7 +4,7 @@
 
 - name: checking that RVM is installed
   stat:
-    path: "/etc/profile.d/rvm.sh"
+    path: /etc/profile.d/rvm.sh
   ignore_errors: True
   register: rvm_install_result
 

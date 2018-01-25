@@ -49,7 +49,7 @@
 
 - name: Setup log rotation
   template:
-    src: "logrotate.conf.j2"
+    src: logrotate.conf.j2
     dest: "/etc/logrotate.d/{{ vhost.name }}.{{ vhost.environment }}"
     owner: root
     group: root
@@ -57,7 +57,7 @@
 
 - name: Monitor log rotation
   template:
-    src: "monit.conf.j2"
+    src: monit.conf.j2
     dest: "/etc/monit/conf.d/{{ vhost.name }}.{{ vhost.environment }}"
     owner: root
     group: root

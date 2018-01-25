@@ -11,8 +11,8 @@
 
 - name: Allow members of group administrators to use sudo
   copy:
-    src: "administrators"
-    dest: "/etc/sudoers.d/administrators"
+    src: administrators
+    dest: /etc/sudoers.d/administrators
     owner: root
     group: root
     mode: 0440
@@ -20,11 +20,11 @@
 - name: Create administrator account
   user:
     name: administrator
-    comment: "Administrator account"
+    comment: Administrator account
     password: "{{ administrator_password }}"
     groups: administrators
     append: yes
-    shell: "/bin/bash"
+    shell: /bin/bash
     state: present
 
 - name: Authorize key for SSH connections
@@ -32,4 +32,3 @@
     user: administrator
     key: "{{ lookup('file', administrator_public_key) }}"
     state: present
-

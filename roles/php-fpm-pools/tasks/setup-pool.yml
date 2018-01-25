@@ -19,7 +19,7 @@
 - name: "Ensure nginx upstreams directory exists"
   file:
     state: directory
-    path:  "/etc/nginx/upstreams.d"
+    path:  /etc/nginx/upstreams.d
     owner: root
     group: root
     mode: 0755

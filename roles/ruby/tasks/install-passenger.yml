@@ -10,7 +10,7 @@
 - name: create Phusion Passenger log directory
   file:
     state: directory
-    path: "/var/log/passenger/"
+    path: /var/log/passenger/
     owner: www-data
     group: adm
     mode: 0750
@@ -32,7 +32,7 @@
 
 - name: detect if nginx is already installed
   stat:
-    path: "/usr/sbin/nginx"
+    path: /usr/sbin/nginx
   register: nginx_stats
 
 - name: configure Phusion Passenger for nginx

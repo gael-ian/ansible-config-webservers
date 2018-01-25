@@ -16,16 +16,21 @@
     # Install MariaDB
     # Disable external and anonymous connexions and set up  
     # root credentials (defined per server in `host_vars`).
-    - { role: mariadb, mariadb_conf: { logging: {
-        error:      { enabled: 1, file: "/var/log/mysql/error.log" },
-        slow_query: { enabled: 1, file: "/var/log/mysql/slow.log" },
-      }}
-    }
+    - role: mariadb
+      mariadb_conf:
+        logging:
+          error:
+            enabled: yes
+            file: /var/log/mysql/error.log
+          slow_query:
+            enabled: yes
+            file: /var/log/mysql/slow.log
     # Configure Monit to watch over MariaDB services
-    - { role: monit-service, monit_services: {
-        mariadb: { name: mariadb, template: mariadb.j2 }
-      }
-    }
+    - role: monit-service
+      monit_services:
+        mariadb:
+          name: mariadb
+          template: mariadb.j2
 
 
 - name: Setup and configure Redis
@@ -37,9 +42,10 @@
 
   roles:
     # Install Redis
-    - redis
+    - role: redis
     # Configure Monit to watch over Redis
-    - { role: monit-service, monit_services: {
-        redis: { name: redis, template: redis.j2 }
-      }
-    }
+    - role: monit-service
+      monit_services:
+        redis:
+          name: redis
+          template: redis.j2

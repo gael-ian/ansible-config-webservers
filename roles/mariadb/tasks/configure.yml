@@ -1,7 +1,7 @@
 ---
 - name: Alter main configuration file
   lineinfile:
-    dest: "/etc/mysql/my.cnf"
+    dest: /etc/mysql/my.cnf
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
     backrefs: yes
@@ -15,7 +15,7 @@
 
 - name: Ensure configuration include directory exists
   file:
-    path: "/etc/mysql/mariadb.conf.d"
+    path: /etc/mysql/mariadb.conf.d
     state: directory
     owner: root
     group: root
@@ -51,12 +51,13 @@
 
 - block:
   - stat:
-      path: "/etc/logrotate.d/mariadb"
+      path: /etc/logrotate.d/mariadb
     register: mariadb_logrotate
+
   - name: Remove logrotate configuration for log files (if not configured)
     file:
-      path: "/etc/logrotate.d/mariadb"
-      state: "absent"
+      path: /etc/logrotate.d/mariadb
+      state: absent
     when: mariadb_logrotate.stat.exists
   when: mariadb_conf.logging | json_query('* | [?enabled==`1`].file') | length == 0
 

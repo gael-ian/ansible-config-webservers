@@ -15,9 +15,9 @@
   roles:
     # Create application user accounts, used for application deployment and execution.
     # Credentials and authentication keys are defined per server in `host_vars`.
-    - deployers
+    - role: deployers
     # Create PHP-FPM pools (if applicable)
-    - php-fpm-pools
+    - role: php-fpm-pools
     # Create directories with proper permissions
     # Create applications databases (and users)
     # Configure nginx

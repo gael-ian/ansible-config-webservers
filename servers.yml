@@ -1,16 +1,16 @@
 ---
 # Managed servers definition
 
-- name: "server-10"
-  ip: "192.168.50.10"
+- name: server-10
+  ip: 192.168.50.10
   ssh: |
     Host server-10
       Hostname 192.168.50.10
       User administrator
       IdentityFile ~/ansible/host_vars/keys/server-10/administrator.rsa
 
-- name: "server-20"
-  ip: "192.168.50.20"
+- name: server-20
+  ip: 192.168.50.20
   ssh: |
     Host server-20
       Hostname 192.168.50.20

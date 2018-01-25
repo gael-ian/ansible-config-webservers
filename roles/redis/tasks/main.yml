@@ -7,6 +7,6 @@
 
 - name: Ensure Redis is running and enabled on boot.
   service:
-    name: "redis-server"
-    state: "started"
-    enabled: "yes"
+    name: redis-server
+    state: started
+    enabled: yes

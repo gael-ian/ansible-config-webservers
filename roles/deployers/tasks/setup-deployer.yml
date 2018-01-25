@@ -5,7 +5,7 @@
     password: "{{ deployer.password|password_hash('sha512') }}"
     groups: deployers
     append: yes
-    shell: "/bin/bash"
+    shell: /bin/bash
     state: present
 
 - name: "Authorize key for SSH connections for {{ deployer.name }}"

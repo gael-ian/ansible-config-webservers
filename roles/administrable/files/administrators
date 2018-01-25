@@ -1,4 +1,4 @@
 
 # Allow members of group administrators to execute any command
-%administrators	ALL=(ALL) NOPASSWD:ALL
+%administrators ALL=(ALL) NOPASSWD:ALL
 

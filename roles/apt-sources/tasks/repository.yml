@@ -2,21 +2,21 @@
 - name: "Install {{ repository.key }} requirements"
   apt:
     name: "{{ item }}"
-    state: "installed"
+    state: installed
   with_items: "{{ repository.value.dependencies }}"
   when: ('dependencies' in repository.value)
 
 - block:
     - name: "Install {{ repository.key }} key [ if defined by (url) ]"
       apt_key:
-        state: "present"
+        state: present
         url: "{{ item.url }}"
       with_items: "{{ repository.value.signing_keys | json_query('[*].{ url: url }') }}"
       when: (item.url)
 
     - name: "Install {{ repository.key }} key [ if defined by (keyserver, id) ]"
       apt_key:
-        state: "present"
+        state: present
         keyserver: "{{ item.keyserver }}"
         id: "{{ item.id }}"
       with_items: "{{ repository.value.signing_keys | json_query('[*].{ keyserver: keyserver, id: id }') }}"
@@ -28,7 +28,7 @@
   apt_repository:
     filename: "{{ repository.key }}"
     repo: "{{ item }}"
-    state: "present"
-    update_cache: "yes"
+    state: present
+    update_cache: yes
   with_items: "{{ repository.value.repos }}"
   when: ('repos' in repository.value)

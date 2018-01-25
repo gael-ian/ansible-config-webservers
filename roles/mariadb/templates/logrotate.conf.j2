@@ -1,3 +1,5 @@
+# {{ ansible_managed }}
+
 {{ mariadb_conf.logging | json_query('* | [?enabled==`1`].file') | join(' ') }} {
   daily
   rotate 7

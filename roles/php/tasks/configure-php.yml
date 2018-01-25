@@ -7,7 +7,7 @@
 - name: create PHP-FPM log directory
   file:
     state: directory
-    path: "/var/log/php/"
+    path: /var/log/php/
     owner: root
     group: root
     mode: 0750

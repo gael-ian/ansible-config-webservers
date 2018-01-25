@@ -9,18 +9,18 @@
 ### System administrator
 # Password : administrator
 administrator_password: "$6$pv/TEfxaBcz$bYlBpO4FwIv83D6yFmAc3A1VBFgPYzoA7f0b0EUlmP.R0GcQvCN.CxJI7miMNZZ4mp/cxBDwS73AV7KaJMcR3."
-administrator_public_key: "host_vars/keys/server-10/administrator.rsa.pub"
+administrator_public_key: host_vars/keys/server-10/administrator.rsa.pub
 
 #### MariaDB administrator
-mariadb_root_password: "administrator"
+mariadb_root_password: administrator
 
 
 ## Deployers / Application owners
 ## ==============================
 deployers:
-  - name: "ruby-dummy"
-    password: "ruby-dummy"
-    key:  "host_vars/keys/deployer.ruby.rsa.pub"
+  - name: ruby-dummy
+    password: ruby-dummy
+    key: host_vars/keys/deployer.ruby.rsa.pub
 
 
 ## Applications
@@ -35,11 +35,11 @@ applications:
         
         # Databases options
         databases:
-          - name:       "ruby_dummy_production"
-            collation:  "utf8_general_ci"
-            encoding:   "utf8"
-            username:   "ruby-dummy"
-            password:   "ruby-dummy"
+          - name: ruby_dummy_production
+            collation: utf8_general_ci
+            encoding: utf8
+            username: ruby-dummy
+            password: ruby-dummy
         
         # Vhost options
         domains:
@@ -51,4 +51,3 @@ applications:
     extra_packages:
       - libmysqlclient-dev
       - imagemagick
-

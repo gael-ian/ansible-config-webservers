@@ -14,27 +14,34 @@
   
   roles:
     # Add repositories to APT sources
-    - apt-sources
+    - role: apt-sources
     # Apply all pending updates (except in Virtualbox VMs, as updates
     # can break Guest Additions kernel module)
-    - { role: uptodate, when: (ansible_bios_version != 'VirtualBox') }
+    - role: uptodate
+      when: (ansible_bios_version != 'VirtualBox')
     # Ensure some basic packages are installed.  
     # See `roles/base-packages/defaults/main.yml` 
     # for a list of installed packages.
-    - base-packages
+    - role: base-packages
     # Ensure servers are (basically) secured by
     # - Disabling SSH root login and password authentication
     # - Installing fail2ban with default configuration
     # - Enabling automatic security updates
-    - security
+    - role: security
     # Install and globally configure Monit for monitoring
-    - monit
+    - role: monit
     # Configure Monit with basic system watches
-    - { role: monit-service, monit_services: {
-        system:     { name: system,         template: system.j2         },
-        diskspace:  { name: disk-space,     template: disk-space.j2     },
-        cron:       { name: cron,           template: cron.j2           },
-        openssh:    { name: openssh-server, template: openssh-server.j2 },
-      }
-    }
-
+    - role: monit-service
+      monit_services:
+        system:
+          name: system
+          template: system.j2
+        diskspace:
+          name: disk-space
+          template: disk-space.j2
+        cron:
+          name: cron
+          template: cron.j2
+        openssh:
+          name: openssh-server
+          template: openssh-server.j2

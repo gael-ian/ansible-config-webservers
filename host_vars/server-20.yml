@@ -9,21 +9,21 @@
 ### System administrator
 # Password : administrator
 administrator_password: "$6$pv/TEfxaBcz$bYlBpO4FwIv83D6yFmAc3A1VBFgPYzoA7f0b0EUlmP.R0GcQvCN.CxJI7miMNZZ4mp/cxBDwS73AV7KaJMcR3."
-administrator_public_key: "host_vars/keys/server-20/administrator.rsa.pub"
+administrator_public_key: host_vars/keys/server-20/administrator.rsa.pub
 
 #### MariaDB administrator
-mariadb_root_password: "administrator"
+mariadb_root_password: administrator
 
 
 ## Deployers / Application owners
 ## ==============================
 deployers:
-  - name: "php-dummy"
-    password: "php-dummy"
-    key:  "host_vars/keys/deployer.php.rsa.pub"
-  - name: "prestashop-dummy"
-    password: "prestashop-dummy"
-    key:  "host_vars/keys/deployer.php.rsa.pub"
+  - name: php-dummy
+    password: php-dummy
+    key: host_vars/keys/deployer.php.rsa.pub
+  - name: prestashop-dummy
+    password: prestashop-dummy
+    key: host_vars/keys/deployer.php.rsa.pub
 
 
 ## PHP-FPM pools
@@ -47,16 +47,16 @@ applications:
         
         # Databases options
         databases:
-          - name:       "php_dummy_production"
-            collation:  "utf8_general_ci"
-            encoding:   "utf8"
-            username:   "php-dummy-production"
-            password:   "php-dummy-production"
+          - name: php_dummy_production
+            collation: utf8_general_ci
+            encoding: utf8
+            username: php-dummy-production
+            password: php-dummy-production
         
         # Vhost options
         upstream: php-fpm.production
         domains:
-          main:   www.php-dummy.com
+          main: www.php-dummy.com
           additionals: 
             - php-dummy.com
 
@@ -68,16 +68,15 @@ applications:
         
         # Databases options
         databases:
-          - name:       "prestashop_dummy_production"
-            collation:  "utf8_general_ci"
-            encoding:   "utf8"
-            username:   "prestashop-dummy"
-            password:   "prestashop-dummy"
+          - name: prestashop_dummy_production
+            collation: utf8_general_ci
+            encoding: utf8
+            username: prestashop-dummy
+            password: prestashop-dummy
         
         # Vhost options
         upstream: php-fpm.production
         domains:
-          main:   www.prestashop-dummy.com
+          main: www.prestashop-dummy.com
           additionals: 
             - prestashop-dummy.com
-
