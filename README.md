@@ -19,15 +19,3 @@ They after can be used independantly to apply later modifications.
 
 Comments on top of each playbook provide details on usage.
 Comments in the `roles` section of each playbook provide details on applied configurations.
-
-
-# TODO
-
-* Stabilisation de la configuration nginx
-* Unification des logs d'une application dans un répertoire unique :
-    - Application
-    - Interpréteur (Ruby + Passenger / PHP + PHP-FPM)
-    - Serveur web
-    - Crons
-    (- DB ?)
-* Vhost par défaut pour nginx: no content
