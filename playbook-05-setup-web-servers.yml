@@ -3,7 +3,7 @@
 # 
 # Use ansible-playbook without extra arguments:
 # 
-#     ansible-playbook playbook-06-setup-web-servers.yml
+#     ansible-playbook playbook-05-setup-web-servers.yml
 #
 - name: Setup and configure nginx on web servers
   remote_user: administrator
@@ -16,10 +16,8 @@
     # Install and configure nginx web server
     - nginx
     # Configure Monit to watch over nginx services
-    - {
-        role: monit-service,
-        monit_services: { 
-          nginx: { name: nginx, template: nginx.j2 }
-        }
+    - { role: monit-service, monit_services: {
+        nginx: { name: nginx, template: nginx.j2 }
       }
+    }
 

@@ -9,7 +9,7 @@
   with_items:
     - "conf.d"
     - "partials.d"
-    - "upstreams"
+    - "upstreams.d"
 
 - name: Copy nginx main configuration file
   copy:
@@ -53,8 +53,8 @@
   with_items:
     - "conf.d"
     - "partials.d"
-    - "upstreams"
-    
+    - "upstreams.d"
+
 - name: Remove default nginx vhost config file
   file:
     path: /etc/nginx/sites-enabled/default

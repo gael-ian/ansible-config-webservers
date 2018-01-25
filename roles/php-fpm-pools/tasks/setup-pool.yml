@@ -19,7 +19,7 @@
 - name: "Ensure nginx upstreams directory exists"
   file:
     state: directory
-    path:  "/etc/nginx/upstreams"
+    path:  "/etc/nginx/upstreams.d"
     owner: root
     group: root
     mode: 0755
@@ -27,7 +27,7 @@
 - name: "Configure nginx upstream for the PHP-FPM {{ pool.name }} pool"
   template:
     src: upstream.conf.j2
-    dest: "/etc/nginx/upstreams/php-fpm.{{ pool.name }}.conf"
+    dest: "/etc/nginx/upstreams.d/php-fpm.{{ pool.name }}.conf"
     owner: root
     group: root
     mode: 0644

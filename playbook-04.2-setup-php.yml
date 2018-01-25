@@ -15,7 +15,7 @@
   roles:
     # Install PHP and PHP-FPM
     - php
-    - { role: php-fpm-pools, handle_nginx: nginx, php_fpm_pools: [
+    - { role: php-fpm-pools, handle_nginx: yes, php_fpm_pools: [
         { name: www, user: www-data, group: www-data }
       ]
     }

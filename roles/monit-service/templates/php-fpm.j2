@@ -18,3 +18,12 @@ check process php-fpm-silent with pidfile /run/php/php{{ php_version }}-fpm.pid
 
   if cpu > 80% for 5 cycles then restart
   if totalmem > 500.0 MB then restart
+
+check file php_log_error with path /var/log/php/error.log
+  if size > 250 MB then exec "/usr/sbin/logrotate -f /etc/logrotate.d/php"
+
+check file php_log_slow with path /var/log/php/slow.log
+  if size > 250 MB then exec "/usr/sbin/logrotate -f /etc/logrotate.d/php"
+
+check file php_log_slow with path /var/log/php/php-fpm.log
+  if size > 250 MB then exec "/usr/sbin/logrotate -f /etc/logrotate.d/php"

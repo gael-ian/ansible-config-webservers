@@ -3,14 +3,22 @@
 check process nginx with pidfile /var/run/nginx.pid
   group servers
   group nginx
+
+  if cpu > 60% for 2 cycles then alert
+  if 5 restarts with 5 cycles then alert
+
+check process nginx-silent with pidfile /var/run/nginx.pid
+  group servers
+  group nginx
+
+  include /etc/monit/templates/silent
+
   start program = "/bin/systemctl start nginx.service"
   stop program = "/bin/systemctl stop nginx.service"
-  
-  if cpu > 60% for 2 cycles then alert
+
   if cpu > 80% for 5 cycles then restart
   if totalmem > 500.0 MB then restart
-  
-  if 5 restarts with 5 cycles then timeout
+
   depend nginx_bin
   depend nginx_rc
 
@@ -22,9 +30,8 @@ check file nginx_rc with path /etc/init.d/nginx
   group nginx
   include /etc/monit/templates/rootbin
 
-check file access.log with path /var/log/nginx/access.log
-  if size > 250 MB then exec "/usr/sbin/logrotate -f nginx"
+check file nginx_log_access with path /var/log/nginx/access.log
+  if size > 250 MB then exec "/usr/sbin/logrotate -f /etc/logrotate.d/nginx"
   
-check file access.log with path /var/log/nginx/error.log
-  if size > 250 MB then exec "/usr/sbin/logrotate -f nginx"
-
+check file nginx_log_error with path /var/log/nginx/error.log
+  if size > 250 MB then exec "/usr/sbin/logrotate -f /etc/logrotate.d/nginx"

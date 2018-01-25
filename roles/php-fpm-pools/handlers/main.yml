@@ -9,4 +9,4 @@
     name: "nginx"
     state: "restarted"
   notify: restart php-fpm
-  when: handle_nginx
+  when: handle_nginx is defined and handle_nginx
