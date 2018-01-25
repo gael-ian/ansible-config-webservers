@@ -16,6 +16,6 @@
 
 - name: Add MariaDB repository
   apt_repository:
-    repo: "deb {{ mariadb_mirror }}/mariadb/repo/{{ mariadb_release }}/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} main"
+    repo: "deb {{ mariadb_mirror }}/mariadb/repo/{{ mariadb_version }}/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} main"
     state: present
     update_cache: "yes"

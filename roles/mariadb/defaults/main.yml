@@ -1,7 +1,7 @@
 ---
 
 mariadb_mirror: "http://ftp.igh.cnrs.fr/pub"
-mariadb_release: "10.2"
+mariadb_version: "10.2"
 mariadb_packages: ['mariadb-client', 'mariadb-server']
 
 mariadb_root_password: root

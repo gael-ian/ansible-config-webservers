@@ -1,4 +1,7 @@
 ---
+- set_fact:
+    rvm_default_ruby_version: "ruby-{{ ruby_version }}"
+
 - name: checking that RVM is installed
   stat:
     path: "/etc/profile.d/rvm.sh"
