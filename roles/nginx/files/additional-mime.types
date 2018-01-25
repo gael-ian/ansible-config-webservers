@@ -1,5 +1,6 @@
+# This file is managed by Ansible, all changes will be lost.
+
 # Additional MIME types
-#
 # Extracted from https://github.com/nginx-boilerplate/nginx-boilerplate/blob/master/boilerplate/mime.types
 
 types {
