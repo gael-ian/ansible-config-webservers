@@ -5,7 +5,7 @@ mariadb_release: "10.2"
 mariadb_packages: ['mariadb-client', 'mariadb-server']
 
 mariadb_root_password: root
-mariadb_root_password_update: yes
+mariadb_root_password_update: no
 
 mariadb_conf:
   mysqldump:
