@@ -10,6 +10,7 @@
     - conf.d
     - partials.d
     - upstreams.d
+    - sites.d
 
 - name: Copy nginx main configuration file
   copy:
@@ -54,10 +55,23 @@
     - conf.d
     - partials.d
     - upstreams.d
+    - sites.d
 
-- name: Remove default nginx vhost config file
+- name: Ensure default vhost directories exist
   file:
-    path: /etc/nginx/sites-enabled/default
-    state: absent
+    path: /var/www/default
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+    recurse: yes
+
+- name: Setup nginx default vhost
+  copy:
+    src: vhosts/default
+    path: /etc/nginx/sites.d/default
+    owner: root
+    group: root
+    mode: 0644
   notify:
     - reload nginx

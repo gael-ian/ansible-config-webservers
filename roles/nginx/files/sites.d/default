@@ -1,0 +1,10 @@
+server {
+  server_name _;
+  root /var/www/default;
+
+  # http://httpstatus.es/444
+  # The server returns no information to the client and closes the connection
+  location / {
+    return 444;
+  }
+}
