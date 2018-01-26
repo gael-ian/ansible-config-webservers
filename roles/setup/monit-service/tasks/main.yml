@@ -1,13 +1,10 @@
 ---
-- name: "Configure Monit for {{ service.value.name }}"
+- name: "Configure Monit for {{ monit_servive.name }}"
   template:
-    src: "{{ service.value.template }}"
-    dest: "/etc/monit/services.d/{{ service.value.name }}"
+    src: "{{ monit_servive.template }}"
+    dest: "/etc/monit/services.d/{{ monit_servive.name }}"
     owner: root
     group: root
     mode: 0644
-  with_dict: "{{ monit_services }}"
-  loop_control:
-    loop_var: service
   notify:
     - reload monit

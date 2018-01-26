@@ -37,16 +37,21 @@
 
     # Configure Monit with basic system watches
     - role: monit-service
-      monit_services:
-        system:
-          name: system
-          template: system.j2
-        diskspace:
-          name: disk-space
-          template: disk-space.j2
-        cron:
-          name: cron
-          template: cron.j2
-        openssh:
-          name: openssh-server
-          template: openssh-server.j2
+      monit_service:
+        name: system
+        template: system.j2
+
+    - role: monit-service
+      monit_service:
+        name: disk-space
+        template: disk-space.j2
+
+    - role: monit-service
+      monit_service:
+        name: cron
+        template: cron.j2
+
+    - role: monit-service
+      monit_service:
+        name: openssh-server
+        template: openssh-server.j2

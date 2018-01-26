@@ -28,10 +28,9 @@
 
     # Configure Monit to watch over MariaDB services
     - role: monit-service
-      monit_services:
-        mariadb:
-          name: mariadb
-          template: mariadb.j2
+      monit_service:
+        name: mariadb
+        template: mariadb.j2
 
 
 - name: Setup and configure Redis
@@ -47,7 +46,6 @@
 
     # Configure Monit to watch over Redis
     - role: monit-service
-      monit_services:
-        redis:
-          name: redis
-          template: redis.j2
+      monit_service:
+        name: redis
+        template: redis.j2

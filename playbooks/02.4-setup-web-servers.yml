@@ -18,10 +18,9 @@
 
     # Configure Monit to watch over nginx services
     - role: monit-service
-      monit_services:
-        nginx:
-          name: nginx
-          template: nginx.j2
+      monit_service:
+        name: nginx
+        template: nginx.j2
 
     # Install lets-encrypt's certbot
     - role: lets-encrypt

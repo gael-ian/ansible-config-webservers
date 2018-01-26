@@ -8,11 +8,9 @@
     mode: 0644
 
 - name: Monitor log rotation
-  template:
-    src: monit.conf.j2
-    dest: "/etc/monit/conf.d/{{ fragments.name }}"
-    owner: root
-    group: root
-    mode: 0644
-  notify:
-    - reload monit
+  include_role:
+    name: monit-service
+  vars:
+    monit-service:
+      name: "{{ fragments.name }}"
+      template: vhost.js

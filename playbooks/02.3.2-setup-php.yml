@@ -27,7 +27,6 @@
 
     # Configure Monit to watch over PHP services
     - role: monit-service
-      monit_services:
-        php-fpm:
-          name: php-fpm
-          template: php-fpm.j2
+      monit_service:
+        name: php-fpm
+        template: php-fpm.j2
