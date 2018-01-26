@@ -1,9 +1,9 @@
 ---
-# Setup and configure MySQL on databases servers
+# Setup and configure MariaDB and Redis on databases servers
 # 
 # Use ansible-playbook without extra arguments:
 # 
-#     ansible-playbook playbook-03-setup-databases.yml
+#     ansible-playbook playbooks/02.2-setup-databases.yml
 #
 - name: Setup and configure MySQL
   remote_user: administrator

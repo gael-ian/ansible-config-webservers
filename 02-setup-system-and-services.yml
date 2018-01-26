@@ -1,0 +1,28 @@
+---
+# Services setup for a ready to use machine
+#
+# Use ansible-playbook without extra arguments:
+#
+#     ansible-playbook 02-setup-system-and-services.yml
+#
+# Please refer to included playbooks for details about
+# installed services and their configuration. Each of
+# them can be run independantly with:
+#
+#     ansible-playbook playbooks/{playbook basename}
+#
+
+## Basic setup for every machine
+- import_playbook: playbooks/02.1-setup-system.yml
+
+## Install and configure MariaDB and Redis on databases servers
+- import_playbook: playbooks/02.2-setup-databases.yml
+
+## Install and configure language interpreters
+# Ruby
+- import_playbook: playbooks/02.3.1-setup-ruby.yml
+# PHP (and PHP-FPM)
+- import_playbook: playbooks/02.3.2-setup-php.yml
+
+## Install and configure nginx as web server
+- import_playbook: playbooks/02.4-setup-web-servers.yml
