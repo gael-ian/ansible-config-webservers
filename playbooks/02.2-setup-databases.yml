@@ -25,6 +25,7 @@
           slow_query:
             enabled: yes
             file: /var/log/mysql/slow.log
+
     # Configure Monit to watch over MariaDB services
     - role: monit-service
       monit_services:
@@ -43,6 +44,7 @@
   roles:
     # Install Redis
     - role: redis
+
     # Configure Monit to watch over Redis
     - role: monit-service
       monit_services:

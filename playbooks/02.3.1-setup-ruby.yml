@@ -15,6 +15,7 @@
   roles: 
     # Install RVM, Ruby and Passenger
     - role: ruby
+
     # Configure Monit to watch over Ruby services
     # - role: monit-service,
     #   monit_services:

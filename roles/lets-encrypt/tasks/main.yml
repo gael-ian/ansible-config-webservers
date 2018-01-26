@@ -1,0 +1,15 @@
+---
+- name: Ensure certbot is installed
+  apt:
+    name: certbot
+    state: installed
+
+- name: Setup certbot renewal cron
+  copy:
+    src: letsencrypt
+    dest: /etc/cron.daily/letsencrypt
+    owner: root
+    group: root
+    mode: 0755
+  notify:
+    - reload cron
