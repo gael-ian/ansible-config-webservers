@@ -68,8 +68,8 @@
 
 - name: Setup nginx default vhost
   copy:
-    src: vhosts/default
-    path: /etc/nginx/sites.d/default
+    src: sites.d/default
+    dest: /etc/nginx/sites.d/default
     owner: root
     group: root
     mode: 0644
