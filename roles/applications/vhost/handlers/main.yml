@@ -3,8 +3,3 @@
   service:
     name: nginx
     state: reloaded
-  
-- name: reload monit
-  service:
-    name: monit
-    state: reloaded

@@ -1,15 +1,15 @@
 ---
-- name: "Extract application environment configuration"
+- name: Extract application environment configuration
   set_fact:
     environment_config: "{{ application_config | json_query(environment_query) | first }}"
   vars:
     environment_query: "environments[?name=='{{ application_environment }}']"
 
-- name: "Extract application servers"
+- name: Extract application servers
   set_fact:
     app_servers: "{{ environment_config.servers }}"
 
-- name: "Extract database servers"
+- name: Extract database servers
   set_fact:
     db_servers: "{{ environment_config | json_query(db_servers_query) }}"
   vars:

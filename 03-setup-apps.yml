@@ -12,7 +12,7 @@
   become: yes
   
   # Configurations will be applied on all servers
-  hosts: servers_app
+  hosts: servers
   
   tasks:
 
