@@ -1,7 +1,0 @@
----
-- include_tasks: setup-pool.yml
-  with_items: "{{ php_fpm_pools }}"
-  loop_control:
-    loop_var: pool
-  args:
-    handle_nginx: True

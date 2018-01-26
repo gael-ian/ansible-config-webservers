@@ -7,7 +7,7 @@
     group: root
     mode: 0644
   notify: restart php-fpm
-  
+
 - name: "Ensure pool log directory exists for pool {{ pool.name }}"
   file:
     state: directory
@@ -15,7 +15,7 @@
     owner: root
     group: root
     mode: 0644
-  
+
 - name: "Ensure nginx upstreams directory exists"
   file:
     state: directory

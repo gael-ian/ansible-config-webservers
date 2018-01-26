@@ -15,12 +15,12 @@
   roles:
     # Install PHP and PHP-FPM
     - role: php
-    - role: php-fpm-pools
+    - role: php-fpm-pool
+      php_fpm_pool:
+        name: www
+        user: www-data
+        group: www-data
       handle_nginx: false
-      php_fpm_pools:
-        - name: www
-          user: www-data
-          group: www-data
 
     # Install Composer globaly
     - role: php-extra
