@@ -1,0 +1,48 @@
+---
+# ruby-dummy application
+application:
+  name: ruby-dummy
+
+  # Application owner
+  owner:
+    name: ruby-dummy
+    password: ruby-dummy
+    key: apps/keys/ruby-dummy.rsa.pub
+
+  # Environments
+  environments:
+    - name: production
+
+      servers:
+        - server-10
+
+      # Additional packages to install
+      packages:
+        - libmysqlclient-dev
+        - imagemagick
+
+      # Vhost options
+      vhost:
+        type: ruby
+        redirections: config/servers/*.conf
+        domains:
+          ssl: true
+          main: www.ruby-dummy.com
+          additionals:
+            - ruby-dummy.com
+          assets:
+            - assets0.ruby-dummy.com
+            - assets1.ruby-dummy.com
+            - assets2.ruby-dummy.com
+            - assets3.ruby-dummy.com
+
+      # Databases options
+      databases:
+        mariadb:
+          - name: ruby_dummy_production
+            collation: utf8_general_ci
+            encoding: utf8
+            username: ruby-dummy
+            password: ruby-dummy
+            servers:
+              - server-10

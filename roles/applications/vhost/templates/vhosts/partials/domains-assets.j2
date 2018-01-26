@@ -1,0 +1,17 @@
+{% if 'assets' in vhost.domains and vhost.domains.assets|length > 0 %}
+# Static assets
+server {
+  {% include './partials/listen.j2' %}
+  server_name {{ vhost.domains.assets | join(" ") }};
+  root {{ root }};
+
+  # Common configurations
+  include /etc/nginx/partials.d/presets/assets-server.conf;
+
+  location ~* ^/(assets|system) {
+    include /etc/nginx/partials.d/enable/strong-cache.conf;
+    break;
+  }
+}
+
+{% endif %}

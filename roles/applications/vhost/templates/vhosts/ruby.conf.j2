@@ -1,0 +1,21 @@
+# {{ ansible_managed }}
+
+{% set root = directories.root.path + 'public' %}
+
+server {
+  {% include './partials/main.j2' %}
+
+  index index.html;
+  
+  # Phusion Passenger
+  passenger_enabled on;
+  passenger_min_instances 1;
+  passenger_app_env {{ env_name }};
+  passenger_env_var SERVER_NAME {{ vhost.domains.main }}; # Explicit domain required for rack / sinatra apps
+}
+
+passenger_pre_start http://{{ vhost.domains.main }};
+
+{% include './partials/domains-additionals.j2' %}
+{% include './partials/domains-assets.j2' %}
+{% include './partials/domains-non-ssl.j2' %}

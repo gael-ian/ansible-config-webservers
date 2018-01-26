@@ -1,9 +1,11 @@
 ---
-# Setup applications environments for deployments
-# 
-# Use ansible-playbook without extra arguments:
-# 
-#     ansible-playbook playbook-07-setup-apps.yml
+# Setup applications deployments environments
+#
+# By default, this will setup `staging` and `production`
+# environments on targets. To setup development servers, use:
+#
+#     ansible-playbook 03-setup-apps.yml \
+#       --extra-vars "environments=['development']"
 #
 - name: Setups applications
   remote_user: administrator
@@ -12,12 +14,26 @@
   # Configurations will be applied on all servers
   hosts: servers_app
   
-  roles:
+  tasks:
+
+    - name: Define configured environments
+      set_fact:
+        application_environments: "{{ environments | default(['production']) }}"
+
+    - include_role:
+        role: app
+      with_fileglob:
+        - 'apps/*.yml'
+      loop_control:
+        loop_var: application_config_file
+
+    #
+
     # Create application user accounts, used for application deployment and execution.
     # Credentials and authentication keys are defined per server in `host_vars`.
-    - role: deployers
+    #- role: deployers
     # Create PHP-FPM pools (if applicable)
-    - role: php-fpm-pools
+    #- role: php-fpm-pools
     # Create directories with proper permissions
     # Create applications databases (and users)
     # Configure nginx

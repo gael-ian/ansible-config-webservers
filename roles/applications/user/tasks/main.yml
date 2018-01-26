@@ -1,0 +1,20 @@
+---
+- name: Ensure group 'applications' exists
+  group:
+    name: applications
+    state: present
+
+- name: Ensure user account exists
+  user:
+    name: "{{ user.name }}"
+    password: "{{ user.password|password_hash('sha512') }}"
+    groups: applications
+    append: yes
+    shell: /bin/bash
+    state: present
+
+- name: Authorize SSH key
+  authorized_key:
+    user: "{{ user.name }}"
+    key: "{{ lookup('file', '{{ user.key }}') }}"
+    state: present

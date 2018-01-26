@@ -1,0 +1,25 @@
+# {{ ansible_managed }}
+
+{{ directories.log.path }}*.log {
+  su {{ user }} applications
+  create 660 {{ user }} applications
+  weekly
+  missingok
+  rotate 52
+  compress
+  delaycompress
+  notifempty
+  nomail
+}
+
+{{ directories.shared_log.path }}*.log {
+  su {{ user }} applications
+  create 660 {{ user }} applications
+  weekly
+  missingok
+  rotate 52
+  compress
+  delaycompress
+  notifempty
+  nomail
+}

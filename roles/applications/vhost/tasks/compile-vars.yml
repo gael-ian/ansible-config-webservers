@@ -1,0 +1,42 @@
+---
+- name: Compile common path and name fragment
+  set_fact:
+    home_path: "/home/{{ user }}/"
+    fragments:
+      name: "{{ app_name }}_{{ env_name }}"
+      path: "{{ app_name }}/{{ env_name }}"
+
+- name: Compile application's paths
+  set_fact:
+    nginx:
+      vhost: "/etc/nginx/sites.d/{{ fragments.name }}"
+      certificate: "/etc/nginx/certificates.d/{{ fragments.name }}"
+    log_path: "{{ home_path }}log/{{ fragments.path }}/"
+    web_path: "{{ home_path }}www/{{ fragments.path }}/"
+
+- name: Compile directories
+  set_fact:
+    directories:
+      root:
+        path:  "{{ web_path }}current/"
+        owner: "{{ user }}"
+        group: applications
+        mode: "u=rwx,g=rwx,o=rx"
+      log:
+        path:  "{{ log_path }}"
+        owner: "{{ user }}"
+        group: www-data
+        mode: "u=rwx,g=rwx,o=rx"
+      shared_log:
+        path:  "{{ web_path }}shared/log/"
+        owner: "{{ user }}"
+        group: applications
+        mode: "u=rwx,g=rwx,o=rx"
+
+- name: Compile domains
+  set_fact:
+    all_domains: "{{ mains | union(additionals) | union(assets) }}"
+  vars:
+    mains: "{{ [ vhost.domains.main ] }}"
+    additionals: "{{ vhost.domains.additionals | default([]) }}"
+    assets: "{{ vhost.domains.assets | default([]) }}"

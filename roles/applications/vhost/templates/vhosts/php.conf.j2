@@ -1,0 +1,32 @@
+# {{ ansible_managed }}
+
+{% set root = directories.root.path %}
+
+server {
+  {% include './partials/main.j2' %}
+
+  index index.html index.htm index.php;
+  
+  location / {
+    try_files $uri $uri/ @rewrite;
+  }
+
+  location @rewrite {
+    {{ vhost.rewrite }};
+  }
+  
+  location ~ \.php$ {
+    # Default PHP configuration
+    include /etc/nginx/partials.d/enable/php.conf;
+
+    fastcgi_param SCRIPT_FILENAME "${realpath_root}${fastcgi_script_name}";
+    fastcgi_param DOCUMENT_ROOT   "${realpath_root}";
+    fastcgi_param APPLICATION_ENV {{ env_name }};
+
+    fastcgi_pass {{ vhost.upstream.name }};
+  }
+}
+
+{% include './partials/domains-additionals.j2' %}
+{% include './partials/domains-assets.j2' %}
+{% include './partials/domains-non-ssl.j2' %}

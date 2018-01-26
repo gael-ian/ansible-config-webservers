@@ -1,0 +1,52 @@
+---
+# php-dummy application
+application:
+  name: php-dummy
+
+  # Application owner
+  owner:
+    name: php-dummy
+    password: php-dummy
+    key: apps/keys/php-dummy.rsa.pub
+
+  # Environments
+  environments:
+    - name: production
+
+      servers:
+        - server-20
+
+      # Additional packages to install
+      packages: []
+
+      # Vhost options
+      vhost:
+        type: php
+
+        # Examples :
+        # - Limonade : '^/(.*)$ /index.php?u=$1&$args'
+        # - Zend Framework : '^.*$ /index.php?$args'
+        rewrite: '^/(.*)$ /index.php?u=$1&$args'
+        upstream:
+          name: php-dummy-production
+
+        domains:
+          main: www.php-dummy.com
+          additionals:
+            - php-dummy.com
+          assets:
+            - assets0.php-dummy.com
+            - assets1.php-dummy.com
+            - assets2.php-dummy.com
+            - assets3.php-dummy.com
+
+      # Databases options
+      databases:
+        mariadb:
+          - name: php_dummy_production
+            collation: utf8_general_ci
+            encoding: utf8
+            username: php-dummy
+            password: php-dummy
+            servers:
+              - server-20

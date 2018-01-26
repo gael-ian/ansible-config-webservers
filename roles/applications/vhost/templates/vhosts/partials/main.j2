@@ -1,0 +1,16 @@
+  {% include './partials/listen.j2' %}
+
+  server_name {{ vhost.domains.main }};
+  root {{ root }};
+
+  access_log {{ directories.log.path }}access.log;
+  error_log  {{ directories.log.path }}error.log;
+
+  {% if 'redirections' in vhost %}
+
+  # Redirections
+  include {{ directories.root.path }}{{ vhost.redirections }};
+  {% endif %}
+
+  # Common configurations
+  include /etc/nginx/partials.d/presets/main-server.conf;

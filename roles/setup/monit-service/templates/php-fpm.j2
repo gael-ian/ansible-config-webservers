@@ -25,5 +25,5 @@ check file php_log_error with path /var/log/php/error.log
 check file php_log_slow with path /var/log/php/slow.log
   if size > 250 MB then exec "/usr/sbin/logrotate -f /etc/logrotate.d/php"
 
-check file php_log_slow with path /var/log/php/php-fpm.log
+check file php_log_fpm with path /var/log/php/php-fpm.log
   if size > 250 MB then exec "/usr/sbin/logrotate -f /etc/logrotate.d/php"

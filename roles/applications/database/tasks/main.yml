@@ -1,0 +1,18 @@
+---
+- block:
+  - name: Ensure database exists
+    mysql_db:
+      name: "{{ database.name }}"
+      collation: "{{ database.collation | default('utf8_general_ci') }}"
+      encoding: "{{ database.encoding | default('utf8') }}"
+      state: present
+
+  - name: Ensure user exists
+    mysql_user:
+      name: "{{ database.username }}"
+      password: "{{ database.password }}"
+      priv: "{{ database.name }}.*:ALL"
+      host: localhost
+      append_privs: no
+      state: present
+  when: inventory_hostname in database.servers

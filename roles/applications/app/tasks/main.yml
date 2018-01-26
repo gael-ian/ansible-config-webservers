@@ -1,0 +1,14 @@
+---
+- name: "Load application configuration file"
+  include_vars:
+    file: "{{ application_config_file }}"
+    name: __application_config
+
+- name: "Extract application configuration"
+  set_fact:
+    application_config: "{{ __application_config.application }}"
+
+- include_tasks: environment.yml
+  with_items: "{{ application_environments }}"
+  loop_control:
+    loop_var: application_environment

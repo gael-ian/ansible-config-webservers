@@ -1,5 +1,0 @@
----
-- include: setup-vhost.yml
-  with_items: "{{ vhosts }}"
-  loop_control:
-    loop_var: vhost

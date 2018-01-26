@@ -1,0 +1,42 @@
+---
+# prestashop-dummy application
+application:
+  name: prestashop-dummy
+
+  # Application owner
+  owner:
+    name: php-dummy
+    password: php-dummy
+    key: apps/keys/php-dummy.rsa.pub
+
+  # Environments
+  environments:
+    - name: production
+
+      servers:
+        - server-20
+
+      # Additional packages to install
+      packages: []
+
+      # Vhost options
+      vhost:
+        type: php-prestashop-1.4
+        upstream:
+          name: prestashop-dummy-production
+        domains:
+          ssl: true
+          main: www.prestashop-dummy.com
+          additionals:
+            - prestashop-dummy.com
+
+      # Databases options
+      databases:
+        mariadb:
+          - name: prestashop_dummy_production
+            collation: utf8_general_ci
+            encoding: utf8
+            username: prestashop-dummy
+            password: prestashop-dummy
+            servers:
+              - server-20

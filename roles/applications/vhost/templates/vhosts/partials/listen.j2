@@ -1,0 +1,9 @@
+  {% if ssl %}
+  listen 443 ssl;
+  include {{ nginx.certificate }};
+
+  {% else %}
+  listen [::]:80 deferred;
+  listen 80 deferred;
+
+  {% endif %}

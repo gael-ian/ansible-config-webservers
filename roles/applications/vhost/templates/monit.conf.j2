@@ -1,0 +1,10 @@
+# {{ ansible_managed }}
+
+check file {{ fragments.name }}_access_log with path {{ directories.log.path }}access.log
+  if size > 250 MB then exec "/usr/sbin/logrotate -f /etc/logrotate.d/{{ fragments.name }}"
+
+check file {{ fragments.name }}_error_log with path {{ directories.log.path }}error.log
+  if size > 250 MB then exec "/usr/sbin/logrotate -f /etc/logrotate.d/{{ fragments.name }}"
+
+check file {{ fragments.name }}_shared_log with path {{ directories.shared_log.path }}*.log
+  if size > 250 MB then exec "/usr/sbin/logrotate -f /etc/logrotate.d/{{ fragments.name }}"

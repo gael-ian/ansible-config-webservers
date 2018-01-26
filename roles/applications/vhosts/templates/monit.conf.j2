@@ -1,8 +1,0 @@
-# {{ ansible_managed }}
-
-check file {{ vhost.name }}_{{ vhost.environment }}_access_log with path {{ directories.logs.path }}/access.log
-  if size > 250 MB then exec "/usr/sbin/logrotate -f /etc/logrotate.d/{{ vhost.name }}.{{ vhost.environment }}"
-
-check file {{ vhost.name }}_{{ vhost.environment }}_access_log with path {{ directories.logs.path }}/error.log
-  if size > 250 MB then exec "/usr/sbin/logrotate -f /etc/logrotate.d/{{ vhost.name }}.{{ vhost.environment }}"
-

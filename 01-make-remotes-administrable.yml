@@ -3,7 +3,7 @@
 # 
 # On first run, use:
 #
-#     ansible-playbook playbook-01-make-remotes-administrable.yml \
+#     ansible-playbook 01-make-remotes-administrable.yml \
 #       --ask-pass \
 #       --extra-vars "host={{servername}} user={{username}}"
 # 
@@ -12,7 +12,7 @@
 #
 # On servers where `{{username}}` is not a sudoer, use instead:
 #
-#     ansible-playbook playbook-01-make-remotes-administrable.yml \
+#     ansible-playbook 01-make-remotes-administrable.yml \
 #       --ask-pass \
 #       --ask-become-pass \
 #       --extra-vars "host={{servername}},method=su,user={{username}}"
@@ -21,7 +21,7 @@
 # 
 # On subsequent runs, use ansible-playbook without extra arguments:
 # 
-#     ansible-playbook playbook-01-make-remotes-administrable.yml
+#     ansible-playbook 01-make-remotes-administrable.yml
 # 
 - name: Initial setup for ansible managment
   remote_user: "{{ user | default('administrator') }}"
