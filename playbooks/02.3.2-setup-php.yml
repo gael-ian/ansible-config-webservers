@@ -22,6 +22,9 @@
           user: www-data
           group: www-data
 
+    # Install Composer globaly
+    - role: php-extra
+
     # Configure Monit to watch over PHP services
     - role: monit-service
       monit_services:

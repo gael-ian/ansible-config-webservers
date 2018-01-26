@@ -1,0 +1,9 @@
+---
+composer:
+  url: https://getcomposer.org/installer
+  temp_installer_path: /tmp/composer-setup.php
+  install_dir: /usr/local/lib/composer
+  filename: composer.phar
+  path: /usr/local/bin/composer
+
+composer_auto_update: true

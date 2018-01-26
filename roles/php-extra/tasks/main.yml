@@ -1,0 +1,13 @@
+---
+- name: Ensure Composer is installed
+  stat:
+    path: "{{ composer.path }}"
+  ignore_errors: True
+  register: composer_install_result
+
+- include: ./install-composer.yml
+  when: composer_install_result.stat.exists != true
+
+- name: Update Composer
+  shell: "{{ composer.path }} self-update --no-progress --stable"
+  when: composer_auto_update and composer_install_result.stat.exists != true
