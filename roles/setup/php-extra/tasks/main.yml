@@ -5,7 +5,7 @@
   ignore_errors: True
   register: composer_install_result
 
-- include: ./install-composer.yml
+- import_tasks: ./install-composer.yml
   when: composer_install_result.stat.exists != true
 
 - name: Update Composer
