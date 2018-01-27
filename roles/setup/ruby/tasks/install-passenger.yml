@@ -1,11 +1,8 @@
 ---
 - name: install Phusion Passenger
   apt:
-    name: "{{ item }}"
+    name: libnginx-mod-http-passenger
     state: installed
-  with_items:
-    - nginx-extras
-    - passenger
 
 - name: create Phusion Passenger log directory
   file:
@@ -30,15 +27,28 @@
 - shell: "passenger-config about ruby-command | egrep 'Command:' | cut -d':' -f2"
   register: passenger_ruby_path
 
-- name: detect if nginx is already installed
-  stat:
-    path: /usr/sbin/nginx
-  register: nginx_stats
+- name: Ensure Passenger module for nginx is enabled
+  file:
+    src: /usr/share/nginx/modules-available/mod-http-passenger.load
+    dest: /etc/nginx/modules-enabled/50-mod-http-passenger.conf
+    state: link
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart nginx
+
+- name: Ensure nginx configuration directory exists
+  file:
+    path: /etc/nginx/conf.d/additionals/
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
 
 - name: configure Phusion Passenger for nginx
   template:
     src: nginx.conf.j2
-    dest: /etc/nginx/modules-available/passenger.conf
+    dest: /etc/nginx/conf.d/additionals/passenger.conf
     owner: root
     group: root
     mode: 0644

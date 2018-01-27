@@ -24,7 +24,7 @@ server {
     fastcgi_param DOCUMENT_ROOT   "${realpath_root}";
     fastcgi_param APPLICATION_ENV {{ env_name }};
 
-    fastcgi_pass {{ vhost.upstream.name }};
+    fastcgi_pass php_fpm_{{ vhost.upstream.name | slugify('_') }};
   }
 }
 

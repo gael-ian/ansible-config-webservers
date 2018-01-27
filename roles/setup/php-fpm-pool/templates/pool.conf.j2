@@ -4,10 +4,14 @@
 
 ; Unix user/group of processes
 user = {{ php_fpm_pool.user }}
-{% if 'group' in php_fpm_pool %}group = {{ php_fpm_pool.group }}{% endif %}
+group = {{ php_fpm_pool.group | default('www-data') }}
 
 ; The address on which to accept FastCGI requests.
 listen = /run/php/php-fpm.{{ php_fpm_pool.name }}.sock
+
+listen.owner = {{ php_fpm_pool.user }}
+listen.group = www-data
+listen.mode  = 0660
 
 ; Processes management
 pm = dynamic

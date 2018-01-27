@@ -11,6 +11,6 @@
   include_role:
     name: monit-service
   vars:
-    monit-service:
+    monit_service:
       name: "{{ fragments.name }}"
-      template: vhost.js
+      template: vhost.j2

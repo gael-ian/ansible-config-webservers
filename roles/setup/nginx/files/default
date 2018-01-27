@@ -1,6 +1,6 @@
 server {
   server_name _;
-  root /var/www/default;
+  root /var/www/html;
 
   # http://httpstatus.es/444
   # The server returns no information to the client and closes the connection

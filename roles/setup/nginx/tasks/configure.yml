@@ -8,9 +8,11 @@
     mode: 0755
   with_items:
     - conf.d
+    - conf.d/additionals
     - partials.d
     - upstreams.d
-    - sites.d
+    - sites-available
+    - sites-enabled
 
 - name: Copy nginx main configuration file
   copy:
@@ -22,24 +24,32 @@
   notify:
     - reload nginx
     
-- name: Copy additional MIME types definition file
+- name: Copy additional configuration files
   copy:
-    src: additional-mime.types
-    dest: /etc/nginx/additional-mime.types
+    src: "{{ item }}"
+    dest: "/etc/nginx/{{ item }}"
     owner: root
     group: root
     mode: 0644
+  with_items:
+    - conf.d/cache.conf
+    - conf.d/geoip.conf
+    - conf.d/gzip.conf
+    - conf.d/http.conf
+    - conf.d/limits.conf
+    - conf.d/logs.conf
+    - conf.d/mime.conf
+    - additional-mime.types
+    - conf.d/security.conf
+    - conf.d/ssl.conf
   notify:
     - reload nginx    
 
-- name: Synchronize nginx configuration files
+- name: Synchronize nginx configuration partials
   synchronize:
-    src: "{{ item }}/"
-    dest: "/etc/nginx/{{ item }}/"
+    src: partials.d/
+    dest: /etc/nginx/partials.d/
     delete: yes
-  with_items:
-    - conf.d
-    - partials.d
   notify:
     - reload nginx
     
@@ -49,13 +59,11 @@
     state: directory
     owner: root
     group: root
-    mode: 0755
+    mode: u=rwX,g=rX,o=rX
     recurse: yes
   with_items:
     - conf.d
     - partials.d
-    - upstreams.d
-    - sites.d
 
 - name: Ensure default vhost directories exist
   file:
@@ -68,8 +76,17 @@
 
 - name: Setup nginx default vhost
   copy:
-    src: sites.d/default
-    dest: /etc/nginx/sites.d/default
+    src: default
+    dest: /etc/nginx/sites-available/default
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Enable nginx default vhost
+  file:
+    state: link
+    src: /etc/nginx/sites-available/default
+    dest: /etc/nginx/sites-enabled/default
     owner: root
     group: root
     mode: 0644

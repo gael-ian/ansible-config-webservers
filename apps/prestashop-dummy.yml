@@ -25,7 +25,6 @@ application:
         upstream:
           name: prestashop-dummy-production
         domains:
-          ssl: true
           main: www.prestashop-dummy.com
           additionals:
             - prestashop-dummy.com

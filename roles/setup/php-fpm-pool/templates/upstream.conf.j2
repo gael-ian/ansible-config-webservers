@@ -3,7 +3,7 @@
 # PHP-FPM upstream configuration for pool {{ php_fpm_pool.name }}
 # =======================================================
 
-upstream php7.0-fpm.{{ php_fpm_pool.name }} {
+upstream php_fpm_{{ php_fpm_pool.name | slugify('_') }} {
   server unix:/run/php/php-fpm.{{ php_fpm_pool.name }}.sock;
 }
 

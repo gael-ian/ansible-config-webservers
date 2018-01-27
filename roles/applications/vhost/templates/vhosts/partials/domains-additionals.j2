@@ -3,7 +3,7 @@
 server {
   {% include './partials/listen.j2' %}
   server_name {{ vhost.domains.additionals | join(" ") }};
-  return ^ $scheme://{{ vhost.domains.main }}$request_uri? permanent;
+  rewrite ^ $scheme://{{ vhost.domains.main }}$request_uri? permanent;
 }
 
 {% endif %}

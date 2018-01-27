@@ -26,7 +26,6 @@ application:
         type: ruby
         redirections: config/servers/*.conf
         domains:
-          ssl: true
           main: www.ruby-dummy.com
           additionals:
             - ruby-dummy.com
