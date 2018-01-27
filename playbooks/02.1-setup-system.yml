@@ -24,8 +24,8 @@
     # Enable automatic security updates
     - role: autoupdate
 
-    # Ensure some basic packages are installed.  
-    # See `roles/base-packages/defaults/main.yml` 
+    # Ensure some basic packages are installed.
+    # See `roles/base-packages/defaults/main.yml`
     # for a list of installed packages.
     - role: base-packages
 
@@ -50,6 +50,7 @@
       monit_service:
         name: disk-space
         template: disk-space.j2
+        partitions: "{{ ansible_devices | json_query('*.partitions.*.uuid | []') }}"
 
     - role: monit-service
       monit_service:
