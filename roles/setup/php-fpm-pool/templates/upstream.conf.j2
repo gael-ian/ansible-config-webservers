@@ -1,9 +1,9 @@
 # {{ ansible_managed }}
 
-# PHP-FPM upstream configuration for pool {{ pool.name }}
+# PHP-FPM upstream configuration for pool {{ php_fpm_pool.name }}
 # =======================================================
 
-upstream php7.0-fpm.{{ pool.name }} {
-  server unix:/run/php/php-fpm.{{ pool.name }}.sock;
+upstream php7.0-fpm.{{ php_fpm_pool.name }} {
+  server unix:/run/php/php-fpm.{{ php_fpm_pool.name }}.sock;
 }
 

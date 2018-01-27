@@ -1,20 +1,20 @@
 ; {{ ansible_managed }}
 
-[{{ pool.name }}]
+[{{ php_fpm_pool.name }}]
 
 ; Unix user/group of processes
-user = {{ pool.user }}
-{% if 'group' in pool %}group = {{ pool.group }}{% endif %}
+user = {{ php_fpm_pool.user }}
+{% if 'group' in php_fpm_pool %}group = {{ php_fpm_pool.group }}{% endif %}
 
 ; The address on which to accept FastCGI requests.
-listen = /run/php/php-fpm.{{ pool.name }}.sock
+listen = /run/php/php-fpm.{{ php_fpm_pool.name }}.sock
 
 ; Processes management
 pm = dynamic
-pm.start_servers     = {{ pool.min_servers | default('1') }}
-pm.min_spare_servers = {{ pool.min_servers | default('1') }}
-pm.max_spare_servers = {{ pool.avg_servers | default('3') }}
-pm.max_children      = {{ pool.max_servers | default('10') }}
+pm.start_servers     = {{ php_fpm_pool.min_servers | default('1') }}
+pm.min_spare_servers = {{ php_fpm_pool.min_servers | default('1') }}
+pm.max_spare_servers = {{ php_fpm_pool.avg_servers | default('3') }}
+pm.max_children      = {{ php_fpm_pool.max_servers | default('10') }}
 
 pm.process_idle_timeout = 300s;
 pm.max_requests = 10000;
@@ -34,16 +34,16 @@ slowlog = /var/log/php/$pool/slow.log
 
 
 ; Additional php.ini directives
-php_value[memory_limit] = {{ pool.memory_limit | default('256M') }}
-php_admin_value[post_max_size] = {{ pool.max_post_size | default('20M') }}
-php_admin_value[upload_max_filesize] = {{ pool.max_file_size | default('15M') }}
-{% if 'ini_directives' in pool and pool.ini_directives|length > 0 %}
-{{ pool.ini_directives | join("\n") }}
+php_value[memory_limit] = {{ php_fpm_pool.memory_limit | default('256M') }}
+php_admin_value[post_max_size] = {{ php_fpm_pool.max_post_size | default('20M') }}
+php_admin_value[upload_max_filesize] = {{ php_fpm_pool.max_file_size | default('15M') }}
+{% if 'ini_directives' in php_fpm_pool and php_fpm_pool.ini_directives|length > 0 %}
+{{ php_fpm_pool.ini_directives | join("\n") }}
 {% endif %}
 
-{% if 'env' in pool and pool.env|length > 0 %}
+{% if 'env' in php_fpm_pool and php_fpm_pool.env|length > 0 %}
 ; Additional environment variables
-{% for var in pool.env %}
+{% for var in php_fpm_pool.env %}
 env[{{ var.name }}] = {{ var.value }}
 {% endfor %}
 {% endif %}
