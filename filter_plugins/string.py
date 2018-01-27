@@ -1,25 +1,30 @@
 import re
-
-from ansible.errors import AnsibleError
-
-def urlize(string):
-  '''
-  Given a string, return an urlized version of the string.
-  '''
-  if string is None:
-    raise AnsibleError('String not found')
-
-  s = string.lower()                  # Turn string to lower case
-  s = re.sub(r"[^a-z0-9]",  "-",  s)  # Replace all non-letter non-digits char by '-'
-  s = re.sub(r"-{2,}",      "-",  s)  # Merge multiple '-'
-  s = re.sub(r"-$",         "",   s)  # Remove trailing '-'
-  s = re.sub(r"^-",         "",   s)  # Remove leading '-'
-  return s
+from ansible.errors import AnsibleError, AnsibleFilterError
 
 class FilterModule(object):
   ''' Query filter '''
 
   def filters(self):
     return {
-      'urlize': urlize
+      'slugify': self.slugify
     }
+
+  def slugify(self, string, separator = '-'):
+    '''
+    Given a string, return an slugified version of the string.
+    '''
+    if string is None:
+      raise AnsibleFilterError('String not found')
+
+    # Turn string to lower case
+    s = string.lower()
+
+    # Replace all non-letter non-digits characters suite by separator
+    s = re.sub(r"[^a-z0-9]", separator,  s)
+    s = re.sub(r"" + re.escape(separator) + "{2,}", separator,  s)
+
+    # Remove leading and trailing separators
+    s = re.sub(r"" + re.escape(separator) + "$", "",   s)
+    s = re.sub(r"^" + re.escape(separator),      "",   s)
+
+    return s

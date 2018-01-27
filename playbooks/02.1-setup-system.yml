@@ -11,7 +11,14 @@
   
   # Configurations will be applied on all servers
   hosts: servers
-  
+
+  pre_tasks:
+    - find:
+        paths: /etc/ssh
+        patterns: 'ssh_host_*_key*'
+        file_type: file
+      register: ssh_host_keys
+
   roles:
     # Add repositories to APT sources
     - role: apt-sources
@@ -61,3 +68,4 @@
       monit_service:
         name: openssh-server
         template: openssh-server.j2
+        ssh_keys: "{{ ssh_host_keys.files | json_query('[].path') }}"
