@@ -1,0 +1,6 @@
+---
+
+autoupdate_mail_to: ""
+autoupdate_mail_on_error: true
+
+autoupdate_blacklist: []

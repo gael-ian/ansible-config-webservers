@@ -21,16 +21,21 @@
     - role: uptodate
       when: (ansible_bios_version != 'VirtualBox')
 
+    # Enable automatic security updates
+    - role: autoupdate
+
     # Ensure some basic packages are installed.  
     # See `roles/base-packages/defaults/main.yml` 
     # for a list of installed packages.
     - role: base-packages
 
-    # Ensure servers are (basically) secured by
-    # - Disabling SSH root login and password authentication
-    # - Installing fail2ban with default configuration
-    # - Enabling automatic security updates
-    - role: security
+
+    # Disable SSH root login and password authentication
+    - role: ssh
+
+    # Install fail2ban
+    - role: firewall
+
 
     # Install and globally configure Monit for monitoring
     - role: monit
