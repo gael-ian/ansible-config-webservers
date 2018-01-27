@@ -8,6 +8,7 @@ apt_sources_repositories:
     repos:
       - "deb http://packages.dotdeb.org {{ ansible_distribution_release }} all"
 
+administrable_update_administrator_password: false
 
 # Monit configuration
 # ===================

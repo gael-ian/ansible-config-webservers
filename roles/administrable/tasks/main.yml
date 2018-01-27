@@ -22,10 +22,13 @@
     name: administrator
     comment: Administrator account
     password: "{{ administrator_password }}"
-    groups: administrators
+    group: administrators
+    groups:
+      - applications
     append: yes
     shell: /bin/bash
     state: present
+    update_password: "{{ ('always' if administrable_update_administrator_password else 'on_create') }}"
 
 - name: Authorize key for SSH connections
   authorized_key:

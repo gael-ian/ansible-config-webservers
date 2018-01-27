@@ -25,7 +25,7 @@
       log:
         path:  "{{ log_path }}"
         owner: "{{ user }}"
-        group: www-data
+        group: applications
         mode: "u=rwx,g=rwx,o=rx"
       shared_log:
         path:  "{{ web_path }}shared/log/"
