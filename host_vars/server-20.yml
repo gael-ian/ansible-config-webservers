@@ -1,15 +1,8 @@
 ---
-# Server configuration for `server-20`
-# ====================================
 
+# System administrator
+administrator_password: "{{ administrator_passwords['server-20'] }}"
+administrator_public_key: vault/keys/server-20/administrator.rsa.pub
 
-## Administrator accounts
-## ======================
-
-### System administrator
-# Password : administrator
-administrator_password: "$6$pv/TEfxaBcz$bYlBpO4FwIv83D6yFmAc3A1VBFgPYzoA7f0b0EUlmP.R0GcQvCN.CxJI7miMNZZ4mp/cxBDwS73AV7KaJMcR3."
-administrator_public_key: host_vars/keys/server-20/administrator.rsa.pub
-
-#### MariaDB administrator
-mariadb_root_password: administrator
+# MariaDB administrator
+mariadb_root_password: "{{ database_administrator_passwords['server-20'] }}"

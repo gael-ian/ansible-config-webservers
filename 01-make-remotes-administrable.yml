@@ -31,6 +31,9 @@
   # Configurations will be applied on all remotes
   # (unless others hosts are specified on command line)
   hosts: "{{ host | default('servers') }}"
+
+  vars_files:
+    - vault/administrators.yml
   
   roles:
     # Create an `administrators` user group.

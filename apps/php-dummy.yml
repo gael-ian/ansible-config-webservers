@@ -6,8 +6,8 @@ application:
   # Application owner
   owner:
     name: php-dummy
-    password: php-dummy
-    key: apps/keys/php-dummy.rsa.pub
+    password: "{{ application_owners_passwords['php-dummy'] }}"
+    key: vault/keys/apps/php-dummy.rsa.pub
     email: dev@notus.sh
 
   # Environments
@@ -48,6 +48,6 @@ application:
             collation: utf8_general_ci
             encoding: utf8
             username: php-dummy
-            password: php-dummy
+            password: "{{ database_passwords['php-dummy'] }}"
             servers:
               - server-20

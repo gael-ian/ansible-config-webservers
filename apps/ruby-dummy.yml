@@ -6,8 +6,8 @@ application:
   # Application owner
   owner:
     name: ruby-dummy
-    password: ruby-dummy
-    key: apps/keys/ruby-dummy.rsa.pub
+    password: "{{ application_owners_passwords['ruby-dummy'] }}"
+    key: vault/keys/apps/ruby-dummy.rsa.pub
     email: dev@notus.sh
 
   # Environments
@@ -43,6 +43,6 @@ application:
             collation: utf8_general_ci
             encoding: utf8
             username: ruby-dummy
-            password: ruby-dummy
+            password: "{{ database_passwords['ruby-dummy'] }}"
             servers:
               - server-10

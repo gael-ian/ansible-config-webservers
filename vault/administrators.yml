@@ -1,0 +1,8 @@
+---
+administrator_passwords:
+  server-10: administrator
+  server-20: administrator
+
+database_administrator_passwords:
+  server-10: administrator
+  server-20: administrator

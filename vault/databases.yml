@@ -1,0 +1,5 @@
+---
+database_passwords:
+  php-dummy: php-dummy
+  prestashop-dummy: prestashop-dummy
+  ruby-dummy: ruby-dummy

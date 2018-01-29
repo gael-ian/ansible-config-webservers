@@ -1,0 +1,4 @@
+---
+application_owners_passwords:
+  php-dummy: php-dummy
+  ruby-dummy: ruby-dummy

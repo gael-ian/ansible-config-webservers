@@ -12,6 +12,11 @@
   # Configurations will be applied on all servers
   hosts: servers
 
+  # Some vault vars have to be loaded to not let
+  # host_cars files loading fail.
+  vars_files:
+    - vault/administrators.yml
+
   pre_tasks:
     - name: list SSH hosts keys
       find:

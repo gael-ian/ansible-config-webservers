@@ -14,7 +14,7 @@
   user:
     name: administrator
     comment: Administrator account
-    password: "{{ administrator_password }}"
+    password: "{{ administrator_password | password_hash('sha512') }}"
     group: administrators
     groups:
       - applications
