@@ -1,6 +1,6 @@
 ---
 ## Disallow remote root login
-- name: Disallow root login remotely
+- name: disallow root login remotely
   command: 'mysql -NBe "{{ item }}"'
   with_items:
     - DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1')
@@ -9,17 +9,19 @@
 
 ## Update root password
 - block:
-    - name: Get list of hosts for the root user.
+    - name: list of hosts for the root user
       command: mysql -NBe "SELECT Host FROM mysql.user WHERE User = 'root' ORDER BY (Host='localhost') ASC"
       register: mariadb_root_hosts
       changed_when: false
       check_mode: no
-    - name: Update MySQL root password for localhost root account
+
+    - name: set root password
       shell: >
         mysql -NBe 'SET PASSWORD FOR "root"@"{{ item }}" = PASSWORD("{{ mariadb_root_password }}");'
       with_items: "{{ mariadb_root_hosts.stdout_lines|default([]) }}"
+
     # Has to be after the root password assignment, for idempotency.
-    - name: Copy .my.cnf file with root password credentials.
+    - name: configure root credentials
       template:
         src: "root-my.cnf.j2"
         dest: "/root/.my.cnf"
@@ -29,13 +31,13 @@
   when: ((mariadb_packages_installed | bool) or mariadb_root_password_update)
 
 ## Remove anonymous connexions
-- name: Get list of hosts for the anonymous user
+- name: list of hosts for the anonymous user
   command: mysql -NBe 'SELECT Host FROM mysql.user WHERE User = ""'
   register: mysql_anonymous_hosts
   changed_when: false
   check_mode: no
 
-- name: Remove anonymous users
+- name: remove anonymous users
   mysql_user:
      name: ""
      host: "{{ item }}"
@@ -44,5 +46,7 @@
 
 
 ## Remove test database
-- name: Remove test database
-  mysql_db: "name='test' state=absent"
+- name: remove test database
+  mysql_db:
+    name: test
+    state: absent

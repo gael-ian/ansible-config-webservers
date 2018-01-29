@@ -1,5 +1,5 @@
 ---
-- name: "Create or renew a certificate for {{ vhost.domains.main }}"
+- name: create or renew certificate
   shell: |
     certbot certonly --webroot \
       -n --agree-tos -m gael-ian@notus.sh \

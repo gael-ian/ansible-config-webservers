@@ -1,10 +1,10 @@
 ---
-- name: "Load application configuration file"
+- name: load application configuration file
   include_vars:
     file: "{{ application_config_file }}"
     name: __application_config
 
-- name: "Extract application configuration"
+- name: extract application configuration
   set_fact:
     application_config: "{{ __application_config.application }}"
 

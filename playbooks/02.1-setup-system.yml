@@ -5,7 +5,7 @@
 # 
 #     ansible-playbook playbooks/02.1-setup-system.yml
 #
-- name: System setup for every machine
+- name: system setup for every machine
   remote_user: administrator
   become: yes
   
@@ -13,7 +13,8 @@
   hosts: servers
 
   pre_tasks:
-    - find:
+    - name: list SSH hosts keys
+      find:
         paths: /etc/ssh
         patterns: 'ssh_host_*_key*'
         file_type: file

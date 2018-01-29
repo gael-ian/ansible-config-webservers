@@ -1,23 +1,23 @@
 ---
-- name: Compile SSL options
+- name: compile SSL options
   set_fact:
     cert_path: "/etc/letsencrypt/live/{{ vhost.domains.main }}/"
 
-- name: Check certificate
+- name: check certificate
   stat:
     path: "{{ cert_path }}"
   register: cert_file
 
-- name: Compile SSL options
+- name: compile SSL options
   set_fact:
     certificate_needed: "{{ ssl and not cert_file.stat.exists }}"
 
-- name: Ensure certificate exists
+- name: create certificate
   include_role:
     role: certificate
   when: certificate_needed
 
-- name: Ensure nginx certificates.d folder exists
+- name: create certificates folder
   file:
     state: directory
     path:  "{{ nginx.certificate | dirname }}"
@@ -25,7 +25,7 @@
     group: root
     mode:  0755
 
-- name: Create SSL config file
+- name: create SSL config file
   template:
     src: certificate.j2
     dest: "{{ nginx.certificate }}"

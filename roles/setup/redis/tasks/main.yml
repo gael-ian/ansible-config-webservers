@@ -1,11 +1,11 @@
 ---
-- name: Ensure Redis is installed
+- name: install packages
   apt:
     name: "{{ item }}"
     state: present
   with_items: "{{ redis_packages }}"
 
-- name: Ensure Redis is running and enabled on boot.
+- name: enable service at boot and start it
   service:
     name: redis-server
     state: started

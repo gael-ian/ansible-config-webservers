@@ -1,5 +1,5 @@
 ---
-- name: "Install {{ repository.key }} requirements"
+- name: install packages
   apt:
     name: "{{ item }}"
     state: installed
@@ -7,14 +7,14 @@
   when: ('dependencies' in repository.value)
 
 - block:
-    - name: "Install {{ repository.key }} key [ if defined by (url) ]"
+    - name: add GPG key, if defined by (url)
       apt_key:
         state: present
         url: "{{ item.url }}"
       with_items: "{{ repository.value.signing_keys | json_query('[*].{ url: url }') }}"
       when: (item.url)
 
-    - name: "Install {{ repository.key }} key [ if defined by (keyserver, id) ]"
+    - name: add GPG key, if defined by (keyserver, id)
       apt_key:
         state: present
         keyserver: "{{ item.keyserver }}"
@@ -24,7 +24,7 @@
 
   when: ('signing_keys' in repository.value)
 
-- name: "Add {{ repository.key }} repository to sources"
+- name: add repository to apt sources
   apt_repository:
     filename: "{{ repository.key }}"
     repo: "{{ item }}"

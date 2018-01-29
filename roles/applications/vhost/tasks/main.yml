@@ -2,7 +2,7 @@
 
 - include_tasks: compile-vars.yml
 
-- name: Create directories
+- name: create directories
   file:
     state: directory
     path:  "{{ dir.value.path }}"

@@ -1,5 +1,5 @@
 ---
-- name: Ensure Composer installation directory exists
+- name: create Composer installation directory
   file:
     path: "{{ composer.install_dir }}"
     owner: root
@@ -8,21 +8,21 @@
     state: directory
     recurse: true
     
-- name: Install Composer globally
+- name: install Composer
   shell: |
     php {{composer.temp_installer_path}} \
         --install-dir {{ composer.install_dir }} \
         --filename {{ composer.filename }} \
         --quiet
 
-- name: Ensure Composer is executable
+- name: set Composer as executable
   file:
     path: "{{ [ composer.install_dir, composer.filename ] | join('/') }}"
     owner: root
     group: staff
     mode: 0755
 
-- name: Link Composer into $PATH
+- name: link Composer into $PATH
   file:
     src: "{{ [ composer.install_dir, composer.filename ] | join('/') }}"
     dest: "{{ composer.path }}"

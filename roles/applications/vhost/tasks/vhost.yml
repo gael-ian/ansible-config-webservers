@@ -1,5 +1,5 @@
 ---
-- name: Create nginx vhost file
+- name: create vhost
   template:
     src: "vhosts/{{ vhost.type }}.conf.j2"
     dest: "{{ nginx.vhost }}"
@@ -9,7 +9,7 @@
   notify:
     - reload nginx
 
-- name: Enable nginx vhost
+- name: enable vhost
   file:
     state: link
     src: "{{ nginx.vhost }}"

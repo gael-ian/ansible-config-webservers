@@ -1,5 +1,5 @@
 ---
-- name: Ensure some basic packages are installed
+- name: install packages
   apt:
     name: "{{ item }}"
     state: installed

@@ -1,10 +1,10 @@
 ---
-- name: remove default PHP-FPM log file
+- name: remove default log file
   file:
     path: "/var/log/php{{ php_version }}-fpm.log"
     state: absent
 
-- name: create PHP-FPM log directory
+- name: create log directory
   file:
     state: directory
     path: /var/log/php/
@@ -12,7 +12,7 @@
     group: root
     mode: 0750
 
-- name: configure PHP-FPM log rotation
+- name: configure log rotation
   template:
     src: logrotate.conf.j2
     dest: /etc/logrotate.d/php
@@ -20,7 +20,7 @@
     group: root
     mode: 0644
 
-- name: setup PHP-FPM specific INI configuration
+- name: configure PHP for php-fpm
   template:
     src: php-fpm.ini.j2
     dest: "/etc/php/{{ php_version }}/fpm/conf.d/90-php-fpm.ini"
@@ -29,7 +29,7 @@
     mode: 0644
   notify: restart php-fpm
   
-- name: setup PHP CLI specific INI configuration
+- name: configure PHP for php-cli
   template:
     src: php-cli.ini.j2
     dest: "/etc/php/{{ php_version }}/cli/conf.d/90-php-cli.ini"

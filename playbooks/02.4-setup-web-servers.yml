@@ -5,7 +5,7 @@
 # 
 #     ansible-playbook playbooks/02.4-setup-web-servers.yml
 #
-- name: Setup and configure nginx on web servers
+- name: setup and configure web servers
   remote_user: administrator
   become: yes
   

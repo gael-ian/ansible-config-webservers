@@ -10,7 +10,7 @@
       line: "error_log = /var/log/php/php-fpm.log"
   notify: restart php-fpm
 
-- name: Ensure PHP-FPM is enabled to start at boot.
+- name: enable service at boot and start it
   service:
     name: "php{{ php_version }}-fpm"
     state: started

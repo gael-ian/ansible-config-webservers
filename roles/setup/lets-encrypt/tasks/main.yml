@@ -1,10 +1,10 @@
 ---
-- name: Ensure certbot is installed
+- name: install packages
   apt:
     name: certbot
     state: installed
 
-- name: Setup certbot renewal cron
+- name: setup cron for auto-renewal
   copy:
     src: letsencrypt
     dest: /etc/cron.daily/letsencrypt

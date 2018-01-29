@@ -5,7 +5,7 @@
 # 
 #     ansible-playbook playbooks/02.3.1-setup-ruby.yml
 #
-- name: Setup and configure Ruby on Ruby servers
+- name: setup and configure ruby
   remote_user: administrator
   become: yes
   

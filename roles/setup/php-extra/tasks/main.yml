@@ -1,5 +1,5 @@
 ---
-- name: Ensure Composer is installed
+- name: check Composer installation
   stat:
     path: "{{ composer.path }}"
   ignore_errors: True
@@ -8,6 +8,6 @@
 - import_tasks: ./install-composer.yml
   when: composer_install_result.stat.exists != true
 
-- name: Update Composer
+- name: update Composer
   shell: "{{ composer.path }} self-update --no-progress --stable"
   when: composer_auto_update and composer_install_result.stat.exists != true

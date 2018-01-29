@@ -1,5 +1,5 @@
 ---
-- name: Ensure nginx is installed.
+- name: install packages
   apt:
     name: "{{ item }}"
     state: installed
@@ -7,7 +7,7 @@
     - nginx
     - nginx-extras
 
-- name: Ensure nginx is started and enabled to start at boot.
+- name: enable service at boot and start it
   service:
     name: nginx
     state: started

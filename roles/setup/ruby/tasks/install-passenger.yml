@@ -1,10 +1,10 @@
 ---
-- name: install Phusion Passenger
+- name: install packages
   apt:
     name: libnginx-mod-http-passenger
     state: installed
 
-- name: create Phusion Passenger log directory
+- name: create log directory
   file:
     state: directory
     path: /var/log/passenger/
@@ -12,7 +12,7 @@
     group: adm
     mode: 0750
 
-- name: configure Phusion Passenger log rotation
+- name: configure log rotation
   template:
     src: logrotate.conf.j2
     dest: /etc/logrotate.d/passenger
@@ -21,13 +21,15 @@
     mode: 0644
   notify: restart nginx
 
-- shell: "passenger-config --root"
+- name: get passenger_root
+  shell: "passenger-config --root"
   register: passenger_root_path
 
-- shell: "passenger-config about ruby-command | egrep 'Command:' | cut -d':' -f2"
+- name: get passenger_ruby
+  shell: "passenger-config about ruby-command | egrep 'Command:' | cut -d':' -f2"
   register: passenger_ruby_path
 
-- name: Ensure Passenger module for nginx is enabled
+- name: enable Passenger module for nginx
   file:
     src: /usr/share/nginx/modules-available/mod-http-passenger.load
     dest: /etc/nginx/modules-enabled/50-mod-http-passenger.conf
@@ -37,7 +39,7 @@
     mode: 0644
   notify: restart nginx
 
-- name: Ensure nginx configuration directory exists
+- name: create nginx additional configurations directory
   file:
     path: /etc/nginx/conf.d/additionals/
     state: directory
@@ -45,7 +47,7 @@
     group: root
     mode: 0755
 
-- name: configure Phusion Passenger for nginx
+- name: configure Passenger for nginx
   template:
     src: nginx.conf.j2
     dest: /etc/nginx/conf.d/additionals/passenger.conf

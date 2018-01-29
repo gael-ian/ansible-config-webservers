@@ -1,12 +1,12 @@
 ---
-- name: Compile common path and name fragment
+- name: compile common path and name fragment
   set_fact:
     home_path: "/home/{{ user }}/"
     fragments:
       name: "{{ app_name }}_{{ env_name }}"
       path: "{{ app_name }}/{{ env_name }}"
 
-- name: Compile application's paths
+- name: compile paths
   set_fact:
     nginx:
       vhost: "/etc/nginx/sites-available/{{ fragments.name }}"
@@ -14,7 +14,7 @@
     log_path: "{{ home_path }}log/{{ fragments.path }}/"
     web_path: "{{ home_path }}www/{{ fragments.path }}/"
 
-- name: Compile directories
+- name: compile directories
   set_fact:
     directories:
       root:
@@ -33,7 +33,7 @@
         group: applications
         mode: "u=rwx,g=rwx,o=rx"
 
-- name: Compile domains
+- name: compile domains
   set_fact:
     all_domains: "{{ mains | union(additionals) | union(assets) }}"
   vars:

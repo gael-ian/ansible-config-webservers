@@ -1,23 +1,16 @@
 ---
-- name: Ensure sudo is installed
-  apt:
-    name: sudo
-    state: installed
 
-- name: Create group "administrators"
+- name: Create group 'administrators'
   group:
     name: administrators
     state: present
 
-- name: Allow members of group administrators to use sudo
-  copy:
-    src: administrators
-    dest: /etc/sudoers.d/administrators
-    owner: root
-    group: root
-    mode: 0440
+- name: create group 'applications'
+  group:
+    name: applications
+    state: present
 
-- name: Create administrator account
+- name: create administrator account
   user:
     name: administrator
     comment: Administrator account
@@ -30,8 +23,21 @@
     state: present
     update_password: "{{ ('always' if administrable_update_administrator_password else 'on_create') }}"
 
-- name: Authorize key for SSH connections
+- name: authorize administrator key for SSH connections
   authorized_key:
     user: administrator
     key: "{{ lookup('file', administrator_public_key) }}"
     state: present
+
+- name: install sudo
+  apt:
+    name: sudo
+    state: installed
+
+- name: allow members of 'administrators' to use sudo
+  copy:
+    src: administrators
+    dest: /etc/sudoers.d/administrators
+    owner: root
+    group: root
+    mode: 0440

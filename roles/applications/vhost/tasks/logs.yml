@@ -1,5 +1,5 @@
 ---
-- name: Setup log rotation
+- name: setup log rotation
   template:
     src: logrotate.conf.j2
     dest: "/etc/logrotate.d/{{ fragments.name }}"
@@ -7,7 +7,7 @@
     group: root
     mode: 0644
 
-- name: Monitor log rotation
+- name: monitor log rotation
   include_role:
     name: monit-service
   vars:

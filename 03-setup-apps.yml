@@ -16,7 +16,7 @@
   
   tasks:
 
-    - name: Define configured environments
+    - name: define configured environments
       set_fact:
         application_environments: "{{ environments | default(['production']) }}"
 

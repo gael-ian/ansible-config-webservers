@@ -1,5 +1,5 @@
 ---
-- name: "Configure Monit for {{ monit_service.name }}"
+- name: "configure {{ monit_service.name }}"
   template:
     src: "{{ monit_service.template }}"
     dest: "/etc/monit/services.d/{{ monit_service.name }}"

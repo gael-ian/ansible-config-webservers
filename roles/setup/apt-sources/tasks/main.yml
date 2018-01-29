@@ -1,5 +1,5 @@
 ---
-- name: Configure additionals APT repositories
+- name: "configure apt repository: {{ repository.key }}"
   include_tasks: repository.yml
   with_dict: "{{ apt_sources_repositories }}"
   loop_control:

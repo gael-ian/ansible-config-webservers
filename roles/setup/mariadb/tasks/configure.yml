@@ -1,5 +1,5 @@
 ---
-- name: Alter main configuration file
+- name: disable default binary logging
   lineinfile:
     dest: /etc/mysql/my.cnf
     regexp: "{{ item.regexp }}"
@@ -13,7 +13,7 @@
       line: '#log_bin_index\1'
   notify: restart mariadb
 
-- name: Ensure configuration include directory exists
+- name: create a directory for configurations
   file:
     path: /etc/mysql/mariadb.conf.d
     state: directory
@@ -21,7 +21,7 @@
     group: root
     mode: 0755
 
-- name: Copy configuration files into include directory
+- name: configure MariaDB
   template:
     src: "{{ item }}"
     dest: "/etc/mysql/mariadb.conf.d/{{ item }}"
@@ -31,7 +31,7 @@
   with_items: ['90-logging.cnf', '90-mysqldump.cnf']
   notify: restart mariadb
 
-- name: Ensure log files exist (if configured)
+- name: create log files
   file:
     path: "{{ item }}"
     state: touch
@@ -40,7 +40,7 @@
     mode: 0640
   with_items: "{{ mariadb_conf.logging | json_query('* | [?enabled==`1`].file') }}"
 
-- name: Configure logrotate for log files (if configured)
+- name: configure log rotation
   template:
     src: "logrotate.conf.j2"
     dest: "/etc/logrotate.d/mariadb"
@@ -50,18 +50,19 @@
   when: mariadb_conf.logging | json_query('* | [?enabled==`1`].file') | length != 0
 
 - block:
-  - stat:
+  - name: check log rotation configuration
+    stat:
       path: /etc/logrotate.d/mariadb
     register: mariadb_logrotate
 
-  - name: Remove logrotate configuration for log files (if not configured)
+  - name: configure log rotation
     file:
       path: /etc/logrotate.d/mariadb
       state: absent
     when: mariadb_logrotate.stat.exists
   when: mariadb_conf.logging | json_query('* | [?enabled==`1`].file') | length == 0
 
-- name: Ensure MariaDB is started and enabled on boot
+- name: enable service at boot and start it
   service:
     name: mysql
     state: started

@@ -1,13 +1,13 @@
 ---
 - block:
-  - name: Ensure database exists
+  - name: create database
     mysql_db:
       name: "{{ database.name }}"
       collation: "{{ database.collation | default('utf8_general_ci') }}"
       encoding: "{{ database.encoding | default('utf8') }}"
       state: present
 
-  - name: Ensure user exists
+  - name: create database user
     mysql_user:
       name: "{{ database.username }}"
       password: "{{ database.password }}"

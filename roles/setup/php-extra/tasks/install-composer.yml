@@ -1,16 +1,16 @@
 ---
-- name: Get Composer installer expected signature
+- name: get Composer installer expected signature
   uri:
     url: https://composer.github.io/installer.sig
     return_content: true
   register: composer_expected_signature
 
-- name: Get Composer installer
+- name: get Composer installer
   get_url:
     url: "{{composer.url}}"
     dest: "{{composer.temp_installer_path}}"
 
-- name: Get Composer installer signature
+- name: get Composer installer signature
   shell: |
     php -r "echo hash_file('SHA384', '{{composer.temp_installer_path}}');"
   register: composer_actual_signature
@@ -18,12 +18,11 @@
 - include_tasks: install-composer-global.yml
   when: composer_expected_signature.content|trim == composer_actual_signature.stdout|trim
 
-- name: Remove Composer installer
+- name: remove Composer installer
   file:
     path: "{{composer.temp_installer_path}}"
     state: absent
 
-- name: Fail if signature don't match
-  fail:
+- fail:
     msg: Composer installer signature does not match the expected one. Aborting installation !
   when: composer_expected_signature.content|trim != composer_actual_signature.stdout|trim

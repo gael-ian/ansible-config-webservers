@@ -1,5 +1,5 @@
 ---
-- name: install system requirements
+- name: install packages
   apt:
     name: "{{ item }}"
     state: installed
@@ -8,33 +8,33 @@
     - gnupg
     - build-essential
 
-- name: add RVM gpg key
+- name: add GPG key
   shell: curl -sSL https://rvm.io/mpapis.asc | gpg --import -
   args:
     warn: no
 
-- name: downloading RVM installer
+- name: download installer
   get_url:
     url: "{{rvm.url}}"
     dest: "{{rvm.temp_installer_path}}"
 
-- name: set executable RVM installer
+- name: set the installer as executable
   file:
     path: "{{rvm.temp_installer_path}}"
     mode: 0755
 
-- name: installing RVM
+- name: install rvm
   command: "{{rvm.temp_installer_path}} stable"
 
-- name: removing RVM installer
+- name: remove installer
   file:
     path: "{{rvm.temp_installer_path}}"
     state: absent
 
-- name: setting RVM autolibs on as root
+- name: enable rvm autolibs as root
   command: "/usr/local/rvm/bin/rvm autolibs 3"
 
-- name: add current user to rvm group
+- name: add current user to the rvm group
   shell: usermod -a -G rvm `whoami`
   
 - name: configure rvmsudo_secure_path

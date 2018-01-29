@@ -1,34 +1,34 @@
 ---
-- name: Extract application environment configuration
+- name: extract application environment configuration
   set_fact:
     environment_config: "{{ application_config | json_query(environment_query) | first }}"
   vars:
     environment_query: "environments[?name=='{{ application_environment }}']"
 
-- name: Extract application servers
+- name: extract application servers
   set_fact:
     app_servers: "{{ environment_config.servers }}"
 
-- name: Extract database servers
+- name: extract database servers
   set_fact:
     db_servers: "{{ environment_config | json_query(db_servers_query) }}"
   vars:
     db_servers_query: "databases.mariadb[].servers | []"
 
 - block:
-    - name: Setup application's owner account
+    - name: create owner account
       include_role:
         role: user
       vars:
         user: "{{ application_config.owner }}"
 
-    - name: Install application's packages
+    - name: install packages
       apt:
         name: "{{ item }}"
         state: installed
       with_items: "{{ environment_config.packages }}"
 
-    - name: Setup application's vhost
+    - name: setup vhost
       include_role:
         role: vhost
       vars:
@@ -40,7 +40,7 @@
 
   when: inventory_hostname in app_servers
 
-- name: Setup application databases
+- name: setup databases
   include_role:
     role: database
   with_items: "{{ environment_config.databases.mariadb }}"

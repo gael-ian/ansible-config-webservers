@@ -1,5 +1,5 @@
 ---
-- name: Ensure nginx configuration directories exists
+- name: create configuration directories
   file:
     path: "/etc/nginx/{{ item }}"
     state: directory
@@ -14,7 +14,7 @@
     - sites-available
     - sites-enabled
 
-- name: Copy nginx main configuration file
+- name: copy main configuration file
   copy:
     src: nginx.conf
     dest: /etc/nginx/nginx.conf
@@ -24,7 +24,7 @@
   notify:
     - reload nginx
     
-- name: Copy additional configuration files
+- name: copy additional configuration files
   copy:
     src: "{{ item }}"
     dest: "/etc/nginx/{{ item }}"
@@ -45,7 +45,7 @@
   notify:
     - reload nginx    
 
-- name: Synchronize nginx configuration partials
+- name: copy configuration partials
   synchronize:
     src: partials.d/
     dest: /etc/nginx/partials.d/
@@ -53,7 +53,7 @@
   notify:
     - reload nginx
     
-- name: Ensure correct permissions on nginx configuration directories
+- name: set permissions on configuration directories
   file:
     path: "/etc/nginx/{{ item }}"
     state: directory
@@ -65,7 +65,7 @@
     - conf.d
     - partials.d
 
-- name: Ensure default vhost directories exist
+- name: create default vhost directory
   file:
     path: /var/www/default
     state: directory
@@ -74,7 +74,7 @@
     mode: 0755
     recurse: yes
 
-- name: Setup nginx default vhost
+- name: setup default vhost
   copy:
     src: default
     dest: /etc/nginx/sites-available/default
@@ -82,7 +82,7 @@
     group: root
     mode: 0644
 
-- name: Enable nginx default vhost
+- name: enable default vhost
   file:
     state: link
     src: /etc/nginx/sites-available/default
