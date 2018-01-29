@@ -17,7 +17,7 @@
     - role: ruby-passenger
 
     # Configure Monit to watch over Passenger
-    - role: monit-service,
+    - role: monit-service
       monit_service:
         name: passenger
-        template: monit/passenger.j2
+        template: passenger.j2

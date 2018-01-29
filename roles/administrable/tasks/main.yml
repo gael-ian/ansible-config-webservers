@@ -1,6 +1,6 @@
 ---
 
-- name: Create group 'administrators'
+- name: create group 'administrators'
   group:
     name: administrators
     state: present

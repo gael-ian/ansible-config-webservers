@@ -1,6 +1,7 @@
 ---
 
-- include_tasks: 01-compile-vars.yml
+- name: compile variables
+  include_tasks: 01-compile-vars.yml
 
 - name: create directories
   file:
@@ -13,16 +14,20 @@
   loop_control:
     loop_var: dir
 
-- include_tasks: 02-vhost.yml
+- name: configure vhost
+  include_tasks: 02-vhost.yml
 
-- include_role:
+- name: configure PHP pool
+  include_role:
     name: php-fpm-pool
     private: True
   vars:
     php_fpm_pool: "{{ vhost.upstream | combine({ 'user': user, 'group': 'applications' }) }}"
   when: '"upstream" in vhost'
 
-- include_tasks: 03-ssl.yml
+- name: configure SSL certificate
+  include_tasks: 03-ssl.yml
   when: ssl
 
-- include_tasks: 04-logs.yml
+- name: configure logs
+  include_tasks: 04-logs.yml

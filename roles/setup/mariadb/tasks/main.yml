@@ -1,5 +1,10 @@
 ---
 
-- import_tasks: 01-install.yml
-- import_tasks: 02-configure.yml
-- import_tasks: 03-secure-installation.yml
+- name: install MariaDB
+  import_tasks: 01-install.yml
+
+- name: configure MariaDB
+  import_tasks: 02-configure.yml
+
+- name: secure MariaDB installation
+  import_tasks: 03-secure-installation.yml

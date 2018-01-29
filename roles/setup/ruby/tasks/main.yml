@@ -1,5 +1,6 @@
 ---
-- set_fact:
+- name: define default ruby version
+  set_fact:
     rvm_default_ruby_version: "ruby-{{ ruby_version }}"
 
 - name: check rvm installation
@@ -8,12 +9,14 @@
   ignore_errors: True
   register: rvm_install_result
 
-- include_tasks: 01-install-rvm.yml
+- name: install rvm
+  include_tasks: 01-install-rvm.yml
   when: rvm_install_result.stat.exists != true
 
 - name: update rvm
   shell: "{{ rvm.path }} get stable executable=/bin/bash"
   when: rvm_auto_update_rvm and rvm_install_result.stat.exists == true
 
-- include_tasks: 02-install-ruby.yml
+- name: install ruby
+  include_tasks: 02-install-ruby.yml
   when: rvm_install_result.stat.exists != true

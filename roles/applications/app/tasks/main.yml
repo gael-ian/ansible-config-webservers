@@ -8,7 +8,8 @@
   set_fact:
     application_config: "{{ __application_config.application }}"
 
-- include_role:
+- name: configure environment
+  include_role:
     name: environment
   with_items: "{{ application_environments }}"
   loop_control:
