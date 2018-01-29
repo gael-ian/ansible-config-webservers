@@ -7,7 +7,7 @@
 #     ansible-playbook 03-setup-apps.yml \
 #       --extra-vars "environments=['development']"
 #
-- name: Setups applications
+- name: setups applications
   remote_user: administrator
   become: yes
   
