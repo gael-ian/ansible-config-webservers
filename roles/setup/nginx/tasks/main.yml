@@ -1,7 +1,5 @@
 ---
-# Install Nginx
-- import_tasks: install.yml
 
-# Configure Nginx
-- import_tasks: configure.yml
+- import_tasks: 01-install.yml
+- import_tasks: 02-configure.yml
 

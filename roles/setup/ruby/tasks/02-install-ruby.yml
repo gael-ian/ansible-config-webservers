@@ -1,0 +1,24 @@
+---
+- name: list installed ruby versions
+  shell: "{{ rvm.path }} list strings executable=/bin/bash"
+  register: rubies
+
+- name: check ruby default version
+  shell: "{{ rvm.path }} list default string executable=/bin/bash"
+  register: default_ruby
+
+- name: install required ruby version
+  shell: "{{ rvm.path }} install {{rvm_default_ruby_version}} executable=/bin/bash"
+  when: rubies.stdout.find(rvm_default_ruby_version) == -1
+
+- name: set default ruby version
+  shell: "{{ rvm.path }} alias create default {{rvm_default_ruby_version}}"
+  when: default_ruby.stdout.find(rvm_default_ruby_version) == -1
+
+- name: check bundler installation
+  shell: "{{ rvm.path }} {{rvm_default_ruby_version}} do gem list executable=/bin/bash"
+  register: gem_list
+
+- name: install bundler
+  shell: "{{ rvm.path }} {{rvm_default_ruby_version}} do gem install bundler executable=/bin/bash"
+  when: gem_list.stdout.find('^bundler ') == -1

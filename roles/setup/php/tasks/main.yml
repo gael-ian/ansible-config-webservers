@@ -1,4 +1,5 @@
 ---
-- import_tasks: install-php.yml
-- import_tasks: configure-php.yml
-- import_tasks: configure-php-fpm.yml
+
+- import_tasks: 01-install.yml
+- import_tasks: 02-configure-php.yml
+- import_tasks: 03-configure-php-fpm.yml

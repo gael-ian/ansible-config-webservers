@@ -5,7 +5,67 @@
   ignore_errors: True
   register: composer_install_result
 
-- import_tasks: ./install-composer.yml
+- block:
+    - name: get Composer installer expected signature
+      uri:
+        url: https://composer.github.io/installer.sig
+        return_content: true
+      register: composer_expected_signature
+
+    - name: get Composer installer
+      get_url:
+        url: "{{composer.url}}"
+        dest: "{{composer.temp_installer_path}}"
+
+    - name: get Composer installer signature
+      shell: |
+        php -r "echo hash_file('SHA384', '{{composer.temp_installer_path}}');"
+      register: composer_actual_signature
+
+    - block:
+        - name: create Composer installation directory
+          file:
+            path: "{{ composer.install_dir }}"
+            owner: root
+            group: staff
+            mode: 0755
+            state: directory
+            recurse: true
+
+        - name: install Composer
+          shell: |
+            php {{composer.temp_installer_path}} \
+                --install-dir {{ composer.install_dir }} \
+                --filename {{ composer.filename }} \
+                --quiet
+
+        - name: set Composer as executable
+          file:
+            path: "{{ [ composer.install_dir, composer.filename ] | join('/') }}"
+            owner: root
+            group: staff
+            mode: 0755
+
+        - name: link Composer into $PATH
+          file:
+            src: "{{ [ composer.install_dir, composer.filename ] | join('/') }}"
+            dest: "{{ composer.path }}"
+            state: link
+            owner: root
+            group: staff
+            mode: 0755
+
+      when: composer_expected_signature.content|trim == composer_actual_signature.stdout|trim
+
+    - name: remove Composer installer
+      file:
+        path: "{{composer.temp_installer_path}}"
+        state: absent
+
+    - fail:
+        msg: Composer installer signature does not match the expected one. Aborting installation !
+      when: composer_expected_signature.content|trim != composer_actual_signature.stdout|trim
+
   when: composer_install_result.stat.exists != true
 
 - name: update Composer

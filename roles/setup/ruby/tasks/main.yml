@@ -8,33 +8,12 @@
   ignore_errors: True
   register: rvm_install_result
 
-- include_tasks: ./install-rvm.yml
+- include_tasks: 01-install-rvm.yml
   when: rvm_install_result.stat.exists != true
 
 - name: update rvm
   shell: "{{ rvm.path }} get stable executable=/bin/bash"
   when: rvm_auto_update_rvm and rvm_install_result.stat.exists == true
 
-- name: list installed ruby versions
-  shell: "{{ rvm.path }} list strings executable=/bin/bash"
-  register: rubies
-
-- name: check ruby default version
-  shell: "{{ rvm.path }} list default string executable=/bin/bash"
-  register: default_ruby
-
-- name: install required ruby version
-  shell: "{{ rvm.path }} install {{rvm_default_ruby_version}} executable=/bin/bash"
-  when: rubies.stdout.find(rvm_default_ruby_version) == -1
-
-- name: set default ruby version
-  shell: "{{ rvm.path }} alias create default {{rvm_default_ruby_version}}"
-  when: default_ruby.stdout.find(rvm_default_ruby_version) == -1
-
-- name: check bundler installation
-  shell: "{{ rvm.path }} {{rvm_default_ruby_version}} do gem list executable=/bin/bash"
-  register: gem_list
-
-- name: install bundler
-  shell: "{{ rvm.path }} {{rvm_default_ruby_version}} do gem install bundler executable=/bin/bash"
-  when: gem_list.stdout.find('^bundler ') == -1
+- include_tasks: 02-install-ruby.yml
+  when: rvm_install_result.stat.exists != true

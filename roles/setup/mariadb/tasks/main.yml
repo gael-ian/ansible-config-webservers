@@ -1,4 +1,5 @@
 ---
-- import_tasks: install.yml
-- import_tasks: configure.yml
-- import_tasks: secure-installation.yml
+
+- import_tasks: 01-install.yml
+- import_tasks: 02-configure.yml
+- import_tasks: 03-secure-installation.yml
