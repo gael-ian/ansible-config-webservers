@@ -9,6 +9,25 @@
   notify:
     - reload nginx
 
+- name: extract vhost root path
+  slurp:
+    src: "{{ nginx.vhost }}"
+  register: base64_vhost
+
+- name: extract vhost root path
+  set_fact:
+    vhost_root_path: "{{ base64_vhost['content'] | b64decode | regex_search(root_pattern) | regex_replace(root_pattern, '\\1') }}"
+  vars:
+    root_pattern: "root ([^;]+);"
+
+- name: create vhost root directory
+  file:
+    state: directory
+    path:  "{{ vhost_root_path }}"
+    owner: "{{ user }}"
+    group: applications
+    mode: "u=rwx,g=rwx,o=rx"
+
 - name: enable vhost
   file:
     state: link

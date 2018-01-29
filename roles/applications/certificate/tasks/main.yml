@@ -3,6 +3,6 @@
   shell: |
     certbot certonly --webroot \
       -n --agree-tos -m gael-ian@notus.sh \
-      --cert-name {{ vhost.domains.main }} \
-      --webroot-path {{ directories.root.path }} \
+      --cert-name {{ main_domain }} \
+      --webroot-path {{ root_path }} \
       --domains {{ all_domains | join(',') }}

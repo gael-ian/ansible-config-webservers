@@ -25,8 +25,13 @@
     php_fpm_pool: "{{ vhost.upstream | combine({ 'user': user, 'group': 'applications' }) }}"
   when: '"upstream" in vhost'
 
-- name: configure SSL certificate
-  include_tasks: 03-ssl.yml
+- block:
+    # Ensure nginx is reloaded and support the newly created vhost
+    - meta: flush_handlers
+      when: "certificate_needed"
+
+    - name: configure SSL certificate
+      include_tasks: 03-ssl.yml
   when: ssl
 
 - name: configure logs

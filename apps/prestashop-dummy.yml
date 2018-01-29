@@ -8,6 +8,7 @@ application:
     name: php-dummy
     password: php-dummy
     key: apps/keys/php-dummy.rsa.pub
+    email: dev@notus.sh
 
   # Environments
   environments:

@@ -8,6 +8,7 @@ application:
     name: ruby-dummy
     password: ruby-dummy
     key: apps/keys/ruby-dummy.rsa.pub
+    email: dev@notus.sh
 
   # Environments
   environments:
