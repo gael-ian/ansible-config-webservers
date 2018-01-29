@@ -16,7 +16,7 @@
   # host_cars files loading fail.
   vars_files:
     - vault/administrators.yml
-  
+
   roles:
     # Install and configure nginx web server
     - role: nginx
