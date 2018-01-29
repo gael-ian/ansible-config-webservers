@@ -1,0 +1,4 @@
+# {{ ansible_managed }}
+
+check file passenger_log_error with path /var/log/passenger/error.log
+  if size > 250 MB then exec "/usr/sbin/logrotate -f /etc/logrotate.d/passenger"

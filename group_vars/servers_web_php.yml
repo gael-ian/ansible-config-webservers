@@ -1,7 +1,5 @@
 ---
 
-php_version: 7.2
-
 # Additional repositories
 apt_sources_repositories:
   php-packages.sury.org:

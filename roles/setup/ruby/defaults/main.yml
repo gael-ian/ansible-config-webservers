@@ -1,4 +1,6 @@
 ---
+ruby_version: "2.3.1"
+
 rvm:
   url: https://get.rvm.io
   temp_installer_path: /tmp/rvm-installer.sh
@@ -6,4 +8,3 @@ rvm:
   sudopath: /usr/local/rvm/bin/rvmsudo
 
 rvm_auto_update_rvm: true
-rvm_default_ruby_version: ruby-2.3.1

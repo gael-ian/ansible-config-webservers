@@ -70,3 +70,6 @@
         name: openssh-server
         template: openssh-server.j2
         ssh_keys: "{{ ssh_host_keys.files | json_query('[].path') }}"
+
+    # Install ruby
+    - role: ruby

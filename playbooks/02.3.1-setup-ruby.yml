@@ -13,11 +13,11 @@
   hosts: servers_web_ruby
   
   roles: 
-    # Install RVM, Ruby and Passenger
-    - role: ruby
+    # Install Passenger
+    - role: ruby-passenger
 
-    # Configure Monit to watch over Ruby services
-    # - role: monit-service,
-    #   monit_service:
-    #     name: ruby
-    #     template: monit/ruby.j2
+    # Configure Monit to watch over Passenger
+    - role: monit-service,
+      monit_service:
+        name: passenger
+        template: monit/passenger.j2
