@@ -14,7 +14,7 @@
     path:  "/var/log/php/{{ php_fpm_pool.name }}"
     owner: root
     group: root
-    mode: 0644
+    mode: 0755
 
 - name: Ensure nginx upstreams directory exists
   file:

@@ -14,3 +14,39 @@
     monit_service:
       name: "{{ fragments.name }}"
       template: vhost.j2
+
+- name: compile log paths from other services
+  set_fact:
+    system_logs:
+      application:  "{{ directories.shared_log.path }}"
+      nginx:        /var/log/nginx
+      mysql:        /var/log/mysql
+      redis:        /var/log/redis
+    php_logs: {}
+    ruby_logs: {}
+
+- name: compile log paths from other services
+  set_fact:
+    php_logs:
+      php-fpm-pool: "/var/log/php/{{ vhost.upstream.name }}"
+  when: '"upstream" in vhost'
+
+- name: compile log paths from other services
+  set_fact:
+    ruby_logs:
+      passenger: "/var/log/passenger"
+  when: vhost.type.startswith("ruby")
+
+- name: compile log paths from other services
+  set_fact:
+    logs: "{{ system_logs | combine(php_logs) | combine(ruby_logs) }}"
+
+- name: link logs from other services
+  file:
+    state: link
+    src: "{{ item.value }}"
+    dest: "{{ log_path }}{{ item.key }}"
+    owner: "{{ user }}"
+    group: applications
+    mode: 0755
+  with_dict: "{{ logs }}"

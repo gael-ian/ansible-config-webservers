@@ -23,7 +23,7 @@
         group: applications
         mode: "u=rwx,g=rwx,o=rx"
       log:
-        path:  "{{ log_path }}"
+        path:  "{{ log_path }}vhost/"
         owner: "{{ user }}"
         group: applications
         mode: "u=rwx,g=rwx,o=rx"
