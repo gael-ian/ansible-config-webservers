@@ -27,6 +27,7 @@
         name: "{{ item }}"
         state: installed
       with_items: "{{ environment_config.packages }}"
+      when: '"packages" in environment_config and environment_config.packages | length > 0'
 
     - name: setup vhost
       include_role:
