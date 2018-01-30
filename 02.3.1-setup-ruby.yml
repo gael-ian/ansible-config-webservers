@@ -3,7 +3,7 @@
 # 
 # Use ansible-playbook without extra arguments:
 # 
-#     ansible-playbook playbooks/02.3.1-setup-ruby.yml
+#     ansible-playbook 02.3.1-setup-ruby.yml
 #
 - name: setup and configure ruby
   remote_user: administrator

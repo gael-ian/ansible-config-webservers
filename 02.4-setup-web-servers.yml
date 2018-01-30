@@ -3,7 +3,7 @@
 # 
 # Use ansible-playbook without extra arguments:
 # 
-#     ansible-playbook playbooks/02.4-setup-web-servers.yml
+#     ansible-playbook 02.4-setup-web-servers.yml
 #
 - name: setup and configure web servers
   remote_user: administrator

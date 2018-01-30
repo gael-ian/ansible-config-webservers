@@ -3,7 +3,7 @@
 # 
 # Use ansible-playbook without extra arguments:
 # 
-#     ansible-playbook playbooks/02.1-setup-system.yml
+#     ansible-playbook 02.1-setup-system.yml
 #
 - name: system setup for every machine
   remote_user: administrator

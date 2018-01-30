@@ -3,14 +3,11 @@
 #
 # Use ansible-playbook without extra arguments:
 #
-#     ansible-playbook 02-setup-system-and-services.yml
+#     ansible-playbook 02.O--setup-system-and-services.yml
 #
 # Please refer to included playbooks for details about
 # installed services and their configuration. Each of
-# them can be run independantly with:
-#
-#     ansible-playbook playbooks/{playbook basename}
-#
+# them can be run independantly.
 
 ## Basic setup for every machine
 - import_playbook: 02.1-setup-system.yml

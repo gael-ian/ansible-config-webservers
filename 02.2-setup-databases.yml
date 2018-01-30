@@ -3,7 +3,7 @@
 # 
 # Use ansible-playbook without extra arguments:
 # 
-#     ansible-playbook playbooks/02.2-setup-databases.yml
+#     ansible-playbook 02.2-setup-databases.yml
 #
 - name: setup and configure databases
   remote_user: administrator
