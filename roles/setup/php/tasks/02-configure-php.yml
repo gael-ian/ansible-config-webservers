@@ -9,8 +9,8 @@
     state: directory
     path: /var/log/php/
     owner: root
-    group: root
-    mode: 0750
+    group: adm
+    mode: 0755
 
 - name: configure log rotation
   template:

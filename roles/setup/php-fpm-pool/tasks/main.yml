@@ -1,5 +1,5 @@
 ---
-- name: "Configure PHP-FPM pool {{ php_fpm_pool.name }}"
+- name: configure PHP-FPM pool
   template:
     src: pool.conf.j2
     dest: "/etc/php/{{ php_version }}/fpm/pool.d/{{ php_fpm_pool.name }}.conf"
@@ -8,15 +8,23 @@
     mode: 0644
   notify: restart php-fpm
 
-- name: "Ensure pool log directory exists for pool {{ php_fpm_pool.name }}"
+- name: create pool's log directory
   file:
     state: directory
     path:  "/var/log/php/{{ php_fpm_pool.name }}"
-    owner: root
-    group: root
+    owner: "{{ php_fpm_pool.user }}"
+    group: "{{ php_fpm_pool.group | default('www-data') }}"
     mode: 0755
 
-- name: Ensure nginx upstreams directory exists
+- name: create pool's error log
+  file:
+    state: touch
+    path:  "/var/log/php/{{ php_fpm_pool.name }}/error.log"
+    owner: "{{ php_fpm_pool.user }}"
+    group: "{{ php_fpm_pool.group | default('www-data') }}"
+    mode: 0755
+
+- name: create nginx upstreams directory
   file:
     state: directory
     path:  /etc/nginx/upstreams.d
@@ -24,7 +32,7 @@
     group: root
     mode: 0755
 
-- name: "Configure nginx upstream for the PHP-FPM {{ php_fpm_pool.name }} pool"
+- name: configure nginx upstream
   template:
     src: upstream.conf.j2
     dest: "/etc/nginx/upstreams.d/php-fpm.{{ php_fpm_pool.name }}.conf"
