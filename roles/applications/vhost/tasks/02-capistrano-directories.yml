@@ -1,0 +1,31 @@
+---
+- name: create Capistrano directories
+  file:
+    state: directory
+    path:  "{{ web_path }}{{ item }}"
+    owner: "{{ user }}"
+    group: applications
+    mode: "u=rwX,g=rwX,o=X"
+  with_items: [ "shared", "releases" ]
+
+- name: list releases
+  find:
+    path: "{{ web_path }}releases"
+    file_type: directory
+  register: releases
+
+- block:
+  - name: create initial release directory
+    file:
+      state: directory
+      path:  "{{ web_path }}releases/0"
+      owner: "{{ user }}"
+      group: applications
+      mode: "u=rwX,g=rwX,o=X"
+
+  - name: link initial release to current release
+    file:
+      state: link
+      src: "{{ web_path }}releases/0"
+      dest:  "{{ web_path }}current"
+  when: releases.matched | int == 0

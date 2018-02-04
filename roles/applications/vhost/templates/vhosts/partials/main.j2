@@ -3,13 +3,13 @@
   server_name {{ vhost.domains.main }};
   root {{ root }};
 
-  access_log {{ directories.log.path }}access.log;
-  error_log  {{ directories.log.path }}error.log;
+  access_log {{ log_paths.vhost }}access.log;
+  error_log  {{ log_paths.vhost }}error.log;
 
   {% if 'redirections' in vhost %}
 
   # Redirections
-  include {{ directories.root.path }}{{ vhost.redirections }};
+  include {{ vhost_paths.root }}{{ vhost.redirections }};
   {% endif %}
 
   # Common configurations

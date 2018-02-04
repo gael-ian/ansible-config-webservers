@@ -1,6 +1,6 @@
 # {{ ansible_managed }}
 
-{% set root = directories.root.path %}
+{% set root = vhost_paths.root %}
 
 server {
   {% include './partials/main.j2' %}

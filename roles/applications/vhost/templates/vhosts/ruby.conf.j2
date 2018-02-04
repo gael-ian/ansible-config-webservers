@@ -1,6 +1,6 @@
 # {{ ansible_managed }}
 
-{% set root = directories.root.path + 'public' %}
+{% set root = vhost_paths.root + "public/" %}
 
 server {
   {% include './partials/main.j2' %}

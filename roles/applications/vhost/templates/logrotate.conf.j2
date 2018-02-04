@@ -1,6 +1,6 @@
 # {{ ansible_managed }}
 
-{{ directories.log.path }}*.log {
+{{ log_paths.vhost }}*.log {
   su {{ user }} applications
   create 660 {{ user }} applications
   weekly
@@ -12,7 +12,7 @@
   nomail
 }
 
-{{ directories.shared_log.path }}*.log {
+{{ log_paths.app }}*.log {
   su {{ user }} applications
   create 660 {{ user }} applications
   weekly

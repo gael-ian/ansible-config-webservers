@@ -1,4 +1,21 @@
 ---
+- name: create log directory
+  file:
+    state: directory
+    path:  "{{ log_path }}"
+    owner: "{{ user }}"
+    group: applications
+    mode: "u=rwX,g=rwX,o=rX"
+
+- name: create log directories
+  file:
+    state: directory
+    path:  "{{ item.value }}"
+    owner: "{{ user }}"
+    group: applications
+    mode: "u=rwX,g=rwX,o=rwX"
+  with_dict: "{{ log_paths }}"
+
 - name: setup log rotation
   template:
     src: logrotate.conf.j2
@@ -18,7 +35,7 @@
 - name: compile log paths from other services
   set_fact:
     system_logs:
-      application:  "{{ directories.shared_log.path }}"
+      application:  "{{ log_paths.app }}"
       nginx:        /var/log/nginx
       mysql:        /var/log/mysql
       redis:        /var/log/redis
@@ -28,8 +45,8 @@
 - name: compile log paths from other services
   set_fact:
     php_logs:
-      php-fpm-pool: "/var/log/php/{{ vhost.upstream.name }}"
-  when: '"upstream" in vhost'
+      php-fpm-pool: "/var/log/php/{{ vhost.upstream.name if 'upstream' in vhost else 'www' }}"
+  when: vhost.type.startswith("php")
 
 - name: compile log paths from other services
   set_fact:

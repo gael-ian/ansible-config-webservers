@@ -1,9 +1,11 @@
   {% if ssl %}
+
   listen [::]:443 ssl http2;
   listen 443 ssl http2;
   include {{ nginx.certificate }};
 
   {% else %}
+
   listen [::]:80;
   listen 80;
 

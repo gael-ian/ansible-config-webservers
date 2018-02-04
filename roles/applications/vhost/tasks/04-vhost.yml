@@ -26,7 +26,7 @@
     path:  "{{ vhost_root_path }}"
     owner: "{{ user }}"
     group: applications
-    mode: "u=rwx,g=rwx,o=rx"
+    mode: "u=rwX,g=rwX,o=X"
 
 - name: enable vhost
   file:
