@@ -41,6 +41,12 @@
   set_fact:
     logs: "{{ system_logs | combine(php_logs) | combine(ruby_logs) }}"
 
+- name: clear mount points
+  file:
+    path: "{{ log_path }}{{ item.key }}"
+    state: absent
+  with_dict: "{{ logs }}"
+
 - name: bind logs from other services
   mount:
     src: "{{ item.value }}"
