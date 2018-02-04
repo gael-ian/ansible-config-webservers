@@ -24,4 +24,10 @@
         state: absent
       with_items: [ "ib_logfile0", "ib_logfile1" ]
 
+    - name: delete binary log files
+      file:
+        path: "/var/log/mysql/{{item}}"
+        state: absent
+      with_items: [ "mariadb-bin.000001", "mariadb-bin.index", "mariadb-bin.state" ]
+
   when: mariadb_packages_installed
