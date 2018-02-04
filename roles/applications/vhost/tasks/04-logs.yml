@@ -52,6 +52,6 @@
     src: "{{ item.value }}"
     path: "{{ log_path }}{{ item.key }}"
     fstype: fuse.bindfs
-    opts: "force-user={{ user }},force-group=applications,perms='u=rX,g=rX,o-rwx',delete-deny,rename-deny"
+    opts: "force-user={{ user }},force-group=applications,perms=0550,delete-deny,rename-deny"
     state: mounted
   with_dict: "{{ logs }}"
