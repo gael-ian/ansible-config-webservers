@@ -1,0 +1,15 @@
+# {{ ansible_managed }}
+
+/var/log/php/{{ php_fpm_pool.name }}/*.log {
+  su {{ php_fpm_pool.user }} {{ php_fpm_pool.group | default('www-data') }}
+  create 660 {{ php_fpm_pool.user }} {{ php_fpm_pool.group | default('www-data') }}
+  rotate 12
+  weekly
+  missingok
+  notifempty
+  compress
+  delaycompress
+  postrotate
+    /usr/lib/php/php{{ php_version }}-fpm-reopenlogs
+  endscript
+}

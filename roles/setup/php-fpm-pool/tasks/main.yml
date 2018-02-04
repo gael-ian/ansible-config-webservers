@@ -24,6 +24,14 @@
     group: "{{ php_fpm_pool.group | default('www-data') }}"
     mode: 0644
 
+- name: configure log rotation
+  template:
+    src: logrotate.conf.j2
+    dest: "/etc/logrotate.d/php-fpm-pool-{{ php_fpm_pool.name }}"
+    owner: root
+    group: root
+    mode: 0644
+
 - name: create nginx upstreams directory
   file:
     state: directory
