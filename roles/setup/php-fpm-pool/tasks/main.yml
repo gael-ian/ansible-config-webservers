@@ -22,7 +22,7 @@
     path:  "/var/log/php/{{ php_fpm_pool.name }}/error.log"
     owner: "{{ php_fpm_pool.user }}"
     group: "{{ php_fpm_pool.group | default('www-data') }}"
-    mode: 0755
+    mode: 0644
 
 - name: create nginx upstreams directory
   file:
