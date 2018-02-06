@@ -16,4 +16,5 @@
     - "php{{ php_version }}-opcache"
     - "php{{ php_version }}-sqlite3"
     - "php{{ php_version }}-xml"
+    - "php{{ php_version }}-zip"
     - php-redis
