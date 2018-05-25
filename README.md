@@ -15,8 +15,8 @@ Comments in the `roles` section of each playbook provide details on applied conf
 
 ### Ansible Vault
 
-Ansible Vault is used to store sensible information : user account passwords, SSH keys and database passwords.
+[Ansible Vault](https://docs.ansible.com/ansible/2.4/vault.html) is used to store sensible information : user account passwords, SSH keys and database passwords.
 
 **Note:**
 This repo aims to be usable out of the box to discover Ansible. Thus, Ansible Vault password and SSH keys have been keeped in the repository, respectevely in the `.vaultpass` file and in the `.keys` directory.
-If you want to use this repo as a base for your own configuration, ensure you remove these files from versioning.
+If you want to use this repo as a base for your own configuration, ensure you remove these files from versioning and change them.
