@@ -2,7 +2,7 @@
 - name: create or renew certificate
   shell: |
     certbot certonly --webroot \
-      -n --agree-tos -m gael-ian@notus.sh \
+      -n --agree-tos -m {{ email }} \
       --cert-name {{ main_domain }} \
       --webroot-path {{ root_path }} \
       --domains {{ all_domains | join(',') }}
