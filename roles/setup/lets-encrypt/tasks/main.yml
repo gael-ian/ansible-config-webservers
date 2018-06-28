@@ -2,7 +2,7 @@
 - name: install packages
   apt:
     name: certbot
-    state: installed
+    state: present
 
 - name: setup cron for auto-renewal
   copy:

@@ -32,7 +32,7 @@
 - name: install sudo
   apt:
     name: sudo
-    state: installed
+    state: present
 
 - name: allow members of 'administrators' to use sudo
   copy:

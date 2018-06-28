@@ -2,7 +2,7 @@
 - name: install packages
   apt:
     pkg: monit
-    state: installed
+    state: present
 
 - name: configure alerts
   template:

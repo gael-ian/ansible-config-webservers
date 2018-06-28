@@ -2,7 +2,7 @@
 - name: install packages
   apt:
     name: "{{ item }}"
-    state: installed
+    state: present
   with_items: "{{ repository.value.dependencies }}"
   when: ('dependencies' in repository.value)
 

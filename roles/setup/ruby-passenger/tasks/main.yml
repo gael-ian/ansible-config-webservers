@@ -2,7 +2,7 @@
 - name: install packages
   apt:
     name: libnginx-mod-http-passenger
-    state: installed
+    state: present
 
 - name: create log directory
   file:

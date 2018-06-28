@@ -25,7 +25,7 @@
     - name: install packages
       apt:
         name: "{{ item }}"
-        state: installed
+        state: present
       with_items: "{{ environment_config.packages }}"
       when: '"packages" in environment_config and environment_config.packages | length > 0'
 
