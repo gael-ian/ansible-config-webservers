@@ -16,9 +16,7 @@
   include_role:
     role: certificate
   vars:
-    email: "{{ email }}"
     main_domain: "{{ vhost.domains.main }}"
-    all_domain: "{{ all_domains }}"
     root_path: "{{ vhost_root_path }}"
   when: certificate_needed
 
