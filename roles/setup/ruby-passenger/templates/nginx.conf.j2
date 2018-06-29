@@ -5,7 +5,7 @@
 
 # Paths
 passenger_root {{ passenger_root_path.stdout_lines[0] }};
-passenger_ruby {{ passenger_ruby_path.stdout_lines[0] }};
+passenger_ruby {{ rvm_ruby_path.stdout_lines[0] }};
 
 # Allowed ressources
 passenger_pool_idle_time 300;           # Keep app process running for 5mn (min_instances keeped for ever)

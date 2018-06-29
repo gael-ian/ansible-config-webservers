@@ -29,6 +29,10 @@
   shell: "passenger-config about ruby-command | egrep 'Command:' | cut -d':' -f2"
   register: passenger_ruby_path
 
+- name: get rvm_ruby
+  shell: "/usr/local/rvm/bin/rvm info {{ ruby_version }} | grep -A4 binaries: | grep ruby: | cut -d'\"' -f2"
+  register: rvm_ruby_path
+
 - name: enable Passenger module for nginx
   file:
     src: /usr/share/nginx/modules-available/mod-http-passenger.load
