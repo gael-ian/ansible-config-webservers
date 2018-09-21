@@ -1,4 +1,9 @@
 ---
+- name: ensure unzip is installed
+  apt:
+    name: unzip
+    state: present
+
 - name: check Composer installation
   stat:
     path: "{{ composer.path }}"
