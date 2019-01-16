@@ -7,14 +7,21 @@
     group: applications
     mode: "u=rwX,g=rwX,o=rX"
 
-- name: create log directories
+- name: create vhost log directory
   file:
     state: directory
-    path:  "{{ item.value }}"
+    path:  "{{ log_paths.vhost }}"
+    owner: www-data
+    group: applications
+    mode: "u=rwX,g=rX,o=rX"
+
+- name: create app log directory
+  file:
+    state: directory
+    path:  "{{ log_paths.app }}"
     owner: "{{ user }}"
     group: applications
-    mode: "u=rwX,g=rwX,o=rwX"
-  with_dict: "{{ log_paths }}"
+    mode: "u=rwX,g=rX,o=rX"
 
 - name: setup log rotation
   template:
