@@ -46,3 +46,11 @@ application:
             password: "{{ database_passwords['ruby-dummy'] }}"
             servers:
               - server-10
+
+      # Cron configuration
+      # crons:
+      #   - name: production:cron-name
+      #     minute: '*/15'
+      #     job: |
+      #       cd /home/ruby-dummy/www/ruby-dummy/production/current/ && \
+      #          /usr/local/rvm/bin/rvm default do bundle exec rake task:name RAILS_ENV=production'

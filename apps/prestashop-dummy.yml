@@ -40,3 +40,9 @@ application:
             password: "{{ database_passwords['prestashop-dummy'] }}"
             servers:
               - server-20
+
+      # Cron configuration
+      # crons:
+      #   - name: production:cron-name
+      #     minute: '*/15'
+      #     job: 'cd /home/prestashop-dummy/www/prestashop-dummy/production/current/ && do something'

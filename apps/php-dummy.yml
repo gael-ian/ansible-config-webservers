@@ -51,3 +51,9 @@ application:
             password: "{{ database_passwords['php-dummy'] }}"
             servers:
               - server-20
+
+      # Cron configuration
+      # crons:
+      #   - name: production:cron-name
+      #     minute: '*/15'
+      #     job: 'cd /home/php-dummy/www/php-dummy/production/current/ && do something'

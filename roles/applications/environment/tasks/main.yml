@@ -40,6 +40,15 @@
         email: "{{ application_config.owner.email }}"
         ssl: "{{ 'ssl' in environment_config.vhost and environment_config.vhost.ssl }}"
 
+    - name: setup crons
+      include_role:
+        role: crons
+      vars:
+        user: "{{ application_config.owner.name }}"
+      with_items: "{{ environment_config.crons }}"
+      loop_control:
+        loop_var: application_cron
+
   when: inventory_hostname in app_servers
 
 - name: setup databases

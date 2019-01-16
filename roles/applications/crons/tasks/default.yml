@@ -1,0 +1,3 @@
+---
+- name: setup cron job
+  cron: "{{ { 'user': user, 'state': 'present' } | combine(application_cron) }}"
