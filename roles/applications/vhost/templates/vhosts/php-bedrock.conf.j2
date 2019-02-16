@@ -12,7 +12,7 @@ server {
   }
 
   location @rewrite {
-    rewrite ^([a-zA-Z0-9\-/]+)[\?]?$ /index.php?$args;
+    rewrite ^(.*)$ /index.php?$args;
   }
 
   location ~ \.php$ {
