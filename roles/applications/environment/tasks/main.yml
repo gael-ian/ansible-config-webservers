@@ -1,60 +1,65 @@
 ---
-- name: extract application environment configuration
-  set_fact:
-    environment_config: "{{ application_config | json_query(environment_query) | first }}"
+- block:
+  - name: extract application environment configuration
+    set_fact:
+      environment_config: "{{ application_config | json_query(environment_query) | first }}"
+    vars:
+      environment_query: "environments[?name=='{{ application_environment }}']"
+
+  - name: extract application servers
+    set_fact:
+      app_servers: "{{ environment_config.servers }}"
+
+  - name: extract database servers
+    set_fact:
+      db_servers: "{{ environment_config | json_query(db_servers_query) }}"
+    vars:
+      db_servers_query: "databases.mariadb[].servers | []"
+
+  - block:
+      - name: create owner account
+        include_role:
+          role: user
+        vars:
+          user: "{{ application_config.owner }}"
+
+      - name: install packages
+        apt:
+          name: "{{ item }}"
+          state: present
+        with_items: "{{ environment_config.packages }}"
+        when: '"packages" in environment_config and environment_config.packages | length > 0'
+
+      - name: setup vhost
+        include_role:
+          role: vhost
+        vars:
+          app_name: "{{ application_config.name }}"
+          env_name: "{{ environment_config.name }}"
+          vhost: "{{ environment_config.vhost }}"
+          user: "{{ application_config.owner.name }}"
+          email: "{{ application_config.owner.email }}"
+          ssl: "{{ 'ssl' in environment_config.vhost and environment_config.vhost.ssl }}"
+
+      - name: setup crons
+        include_role:
+          role: crons
+        vars:
+          user: "{{ application_config.owner.name }}"
+        with_items: "{{ environment_config.crons }}"
+        loop_control:
+          loop_var: application_cron
+
+    when: inventory_hostname in app_servers
+
+  - name: setup databases
+    include_role:
+      role: database
+    with_items: "{{ environment_config.databases.mariadb }}"
+    loop_control:
+      loop_var: database
+    when: inventory_hostname in db_servers
+
+  when: "application_config | json_query(environment_query)"
   vars:
     environment_query: "environments[?name=='{{ application_environment }}']"
-
-- name: extract application servers
-  set_fact:
-    app_servers: "{{ environment_config.servers }}"
-
-- name: extract database servers
-  set_fact:
-    db_servers: "{{ environment_config | json_query(db_servers_query) }}"
-  vars:
-    db_servers_query: "databases.mariadb[].servers | []"
-
-- block:
-    - name: create owner account
-      include_role:
-        role: user
-      vars:
-        user: "{{ application_config.owner }}"
-
-    - name: install packages
-      apt:
-        name: "{{ item }}"
-        state: present
-      with_items: "{{ environment_config.packages }}"
-      when: '"packages" in environment_config and environment_config.packages | length > 0'
-
-    - name: setup vhost
-      include_role:
-        role: vhost
-      vars:
-        app_name: "{{ application_config.name }}"
-        env_name: "{{ environment_config.name }}"
-        vhost: "{{ environment_config.vhost }}"
-        user: "{{ application_config.owner.name }}"
-        email: "{{ application_config.owner.email }}"
-        ssl: "{{ 'ssl' in environment_config.vhost and environment_config.vhost.ssl }}"
-
-    - name: setup crons
-      include_role:
-        role: crons
-      vars:
-        user: "{{ application_config.owner.name }}"
-      with_items: "{{ environment_config.crons }}"
-      loop_control:
-        loop_var: application_cron
-
-  when: inventory_hostname in app_servers
-
-- name: setup databases
-  include_role:
-    role: database
-  with_items: "{{ environment_config.databases.mariadb }}"
-  loop_control:
-    loop_var: database
-  when: inventory_hostname in db_servers
