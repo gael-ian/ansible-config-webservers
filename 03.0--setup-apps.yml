@@ -16,7 +16,7 @@
 
   vars_files:
     # Some vault vars have to be loaded to not let
-    # host_cars files loading fail.
+    # host_vars files loading fail.
     - vault/administrators.yml
 
     # Will be used by this playbook
@@ -30,6 +30,14 @@
       set_fact:
         application_environments: "{{ environments | default(['production']) }}"
 
+    # Create application user account, used for application deployment and execution.
+    # Ensure applications dependencies available as packages are installed.
+    # Create directories with proper permissions.
+    # Configure nginx and PHP-FPM pools (if applicable).
+    # Create applications databases (and users).
+    # Setup log rotation.
+    # Setup crons.
+    # Configure Monit to watch over application services.
     - name: configure applications
       include_role:
         role: app
@@ -37,19 +45,3 @@
         - 'apps/*.yml'
       loop_control:
         loop_var: application_config_file
-
-    #
-
-    # Create application user accounts, used for application deployment and execution.
-    # Credentials and authentication keys are defined per server in `host_vars`.
-    #- role: deployers
-    # Create PHP-FPM pools (if applicable)
-    #- role: php-fpm-pools
-    # Create directories with proper permissions
-    # Create applications databases (and users)
-    # Configure nginx
-    # Setup log rotation
-    # Ensure applications dependencies available as packages are installed.
-    # Configure Monit to watch over application services
-    # - applications
-

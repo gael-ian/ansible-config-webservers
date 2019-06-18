@@ -13,7 +13,7 @@
   hosts: servers_web_php
 
   # Some vault vars have to be loaded to not let
-  # host_cars files loading fail.
+  # host_vars files loading fail.
   vars_files:
     - vault/administrators.yml
   
