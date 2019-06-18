@@ -20,13 +20,11 @@
 # Configure vhost without HTTPS support
 - name: configure vhost
   include_tasks: 04-vhost.yml
-  vars:
-    ssl: false
+
+# Ensure nginx is reloaded and support the newly created vhost
+- meta: flush_handlers
 
 - block:
-    # Ensure nginx is reloaded and support the newly created vhost
-    - meta: flush_handlers
-
     - name: configure SSL certificate
       include_tasks: 05-ssl.yml
 
