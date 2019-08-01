@@ -3,7 +3,7 @@
 # 
 # On first run, use:
 #
-#     ansible-playbook 01-make-remotes-administrable.yml \
+#     ansible-playbook 01.0--make-remotes-administrable.yml \
 #       --ask-pass \
 #       --extra-vars "host={{servername}} user={{username}}"
 # 
