@@ -1,0 +1,15 @@
+---
+
+# Additional repositories for nginx
+apt_sources_repositories:
+  dotdeb.org:
+    dependencies:
+      - curl
+      - gnupg2
+      - ca-certificates
+      - lsb-release
+    signing_keys:
+      - id: ABF5BD827BD9BF62
+      - url: https://nginx.org/keys/nginx_signing.key
+    repos:
+      - "deb http://nginx.org/packages/debian {{ ansible_distribution_release }} nginx"

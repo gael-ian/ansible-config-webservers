@@ -3,14 +3,6 @@
 ruby_version: 2.7.0
 php_version: 7.4
 
-# Additional repositories
-apt_sources_repositories:
-  dotdeb.org:
-    signing_keys:
-      - url: https://www.dotdeb.org/dotdeb.gpg
-    repos:
-      - "deb http://packages.dotdeb.org {{ ansible_distribution_release }} all"
-
 administrable_update_administrator_password: false
 
 
