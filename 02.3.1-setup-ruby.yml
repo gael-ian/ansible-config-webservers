@@ -17,8 +17,9 @@
   vars_files:
     - vault/administrators.yml
   
-  roles: 
-    # Install Passenger
+  roles:
+    # Install Ruby and Passenger
+    - role: ruby
     - role: ruby-passenger
 
     # Configure Monit to watch over Passenger
