@@ -1,11 +1,10 @@
 ---
 - name: install packages
   apt:
-    name: "{{ item }}"
+    name:
+      - nginx
+      - nginx-extras
     state: present
-  with_items:
-    - nginx
-    - nginx-extras
 
 - name: enable service at boot and start it
   service:

@@ -1,9 +1,8 @@
 ---
 - name: install packages
   apt:
-    name: "{{ item }}"
+    name: "{{ repository.value.dependencies }}"
     state: present
-  with_items: "{{ repository.value.dependencies }}"
   when: ('dependencies' in repository.value)
 
 - block:

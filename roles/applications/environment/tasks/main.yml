@@ -25,9 +25,8 @@
 
       - name: install packages
         apt:
-          name: "{{ item }}"
+          name: "{{ environment_config.packages }}"
           state: present
-        with_items: "{{ environment_config.packages }}"
         when: '"packages" in environment_config and environment_config.packages | length > 0'
 
       - name: setup vhost
