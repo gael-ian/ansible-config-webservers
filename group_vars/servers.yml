@@ -2,6 +2,11 @@
 
 administrable_update_administrator_password: false
 
+# Additional repositories for monit
+apt_sources_repositories:
+  buster-backports:
+    repos:
+      - "deb http://deb.debian.org/debian buster-backports main"
 
 # Monit configuration
 monit_enable_status: false
