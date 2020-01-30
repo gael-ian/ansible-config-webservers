@@ -4,6 +4,16 @@
     name: libnginx-mod-http-passenger
     state: present
 
+- name: check nginx installation
+  stat:
+    path: /usr/sbin/nginx
+  ignore_errors: True
+  register: nginx_install_result
+
+- name: set fact about nginx
+  set_fact:
+    nginx_installed: "{{ nginx_install_result.stat.exists == true }}"
+
 - name: create log directory
   file:
     state: directory
@@ -19,7 +29,7 @@
     owner: root
     group: root
     mode: 0644
-  notify: restart nginx
+  notify: restart nginx if exists
 
 - name: get passenger_root
   shell: "passenger-config --root"
@@ -41,7 +51,7 @@
     owner: root
     group: root
     mode: 0644
-  notify: restart nginx
+  notify: restart nginx if exists
 
 - name: create nginx additional configurations directory
   file:
@@ -58,4 +68,4 @@
     owner: root
     group: root
     mode: 0644
-  notify: restart nginx
+  notify: restart nginx if exists

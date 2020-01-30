@@ -1,6 +1,13 @@
 ---
+- name: restart nginx if exists
+  command: "/bin/true"
+  notify:
+    - "{{ 'restart' if nginx_installed else 'forget' }} nginx"
+
 - name: restart nginx
   service:
     name: nginx
     state: restarted
-  ignore_errors: true
+
+- name: forget nginx
+  command: "/bin/true"
