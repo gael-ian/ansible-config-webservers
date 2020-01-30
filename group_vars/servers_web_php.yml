@@ -14,5 +14,3 @@ apt_sources_repositories:
     repos:
       - "deb https://packages.sury.org/php/ {{ ansible_distribution_release }} main"
 
-nginx_upstreams:
-  - php-fpm.conf
