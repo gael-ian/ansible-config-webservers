@@ -1,5 +1,7 @@
 ---
 
+ruby_version: 2.7.0
+
 # Additional repositories
 apt_sources_repositories:
   passenger-official:
