@@ -2,7 +2,7 @@
 
 mariadb_version: 10.4
 
-# Additional repositories
+# Additional repositories for MariaDB
 apt_sources_repositories:
   mariadb-official:
     dependencies:

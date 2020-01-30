@@ -2,8 +2,9 @@
 
 ruby_version: 2.7.0
 
-# Additional repositories
+# Additional repositories for Ruby
 apt_sources_repositories:
+  # Passenger is used to execute Ruby web applications
   passenger-official:
     dependencies:
       - apt-transport-https

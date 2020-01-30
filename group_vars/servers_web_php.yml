@@ -2,7 +2,7 @@
 
 php_version: 7.4
 
-# Additional repositories
+# Additional repositories for PHP
 apt_sources_repositories:
   php-packages.sury.org:
     dependencies:
