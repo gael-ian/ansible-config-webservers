@@ -1,8 +1,15 @@
 ---
 
-- name: install nginx
-  import_tasks: 01-install.yml
+- name: install packages
+  apt:
+    name: nginx
+    state: present
 
 - name: configure nginx
-  import_tasks: 02-configure.yml
+  import_tasks: configure.yml
 
+- name: enable nginx at boot and start it
+  service:
+    name: nginx
+    state: started
+    enabled: yes

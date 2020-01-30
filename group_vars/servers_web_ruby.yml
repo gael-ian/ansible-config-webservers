@@ -7,6 +7,8 @@ apt_sources_repositories:
   # Passenger is used to execute Ruby web applications
   passenger-official:
     dependencies:
+      - dirmngr
+      - gnupg
       - apt-transport-https
       - ca-certificates
     signing_keys:

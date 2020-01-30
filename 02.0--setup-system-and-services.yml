@@ -15,11 +15,11 @@
 ## Install and configure MariaDB and Redis on databases servers
 - import_playbook: 02.2-setup-databases.yml
 
+## Install and configure nginx as web server
+- import_playbook: 02.3-setup-web-servers.yml
+
 ## Install and configure language interpreters
 # Ruby
-- import_playbook: 02.3.1-setup-ruby.yml
+- import_playbook: 02.4.1-setup-ruby.yml
 # PHP (and PHP-FPM)
-- import_playbook: 02.3.2-setup-php.yml
-
-## Install and configure nginx as web server
-- import_playbook: 02.4-setup-web-servers.yml
+- import_playbook: 02.4.2-setup-php.yml
