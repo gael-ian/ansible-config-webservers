@@ -41,3 +41,15 @@
     owner: root
     group: root
     mode: 0440
+
+- name: configure shell
+  copy:
+    src: "shell-config/{{ item }}.sh"
+    dest: "/etc/profile.d/{{ item }}.sh"
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+    - defaults
+    - aliases
+    - prompt
