@@ -1,6 +1,6 @@
 ---
 
-mariadb_version: 10.2
+mariadb_version: 10.4
 
 # Additional repositories
 apt_sources_repositories:
@@ -9,9 +9,6 @@ apt_sources_repositories:
       - software-properties-common
       - dirmngr
     signing_keys:
-      - keyserver: hkp://keyserver.ubuntu.com:80
-        id: "0xcbcb082a1bb943db"
-      - keyserver: hkp://keyserver.ubuntu.com:80
-        id: "0xF1656F24C74CD1D8"
+      - url: https://downloads.mariadb.com/MariaDB/mariadb-keyring-2019.gpg
     repos:
-      - "deb http://ftp.igh.cnrs.fr/pub/mariadb/repo/{{ mariadb_version }}/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} main"
+      - "deb http://downloads.mariadb.com/MariaDB/mariadb-{{ mariadb_version }}/repo/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} main"
