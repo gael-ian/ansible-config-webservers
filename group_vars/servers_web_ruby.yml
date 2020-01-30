@@ -17,7 +17,7 @@ apt_sources_repositories:
     signing_keys:
       - url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
     repos:
-      - "deb https://deb.nodesource.com/node_10.x {{ ansible_distribution_release }} main"
+      - "deb https://deb.nodesource.com/node_12.x {{ ansible_distribution_release }} main"
   yarnpkg.com:
     signing_keys:
       - url: https://dl.yarnpkg.com/debian/pubkey.gpg
