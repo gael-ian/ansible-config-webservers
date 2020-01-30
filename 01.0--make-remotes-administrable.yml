@@ -3,7 +3,7 @@
 # 
 # On first run, use:
 #
-#     ansible-playbook 01.0--make-remotes-administrable.yml  --ask-pass \
+#     ansible-playbook 01.0--make-remotes-administrable.yml --ask-pass \
 #       --extra-vars "host={{servername}} user={{username}}"
 # 
 # `{{servername}}` have to be resolvable. Use /etc/hosts aliases if needed.
@@ -11,7 +11,7 @@
 #
 # For example, to make a Vagrant box administrable:
 #
-#     ansible-playbook 01.0--make-remotes-administrable.yml  --ask-pass \
+#     ansible-playbook 01.0--make-remotes-administrable.yml --ask-pass \
 #       --extra-vars "host={{servername}} user=vagrant"
 #
 # On servers where `{{username}}` is not a sudoer, use instead:
