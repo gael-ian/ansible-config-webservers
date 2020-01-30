@@ -3,3 +3,4 @@ base_packages:
   - git
   - rsync
   - bindfs
+  - htop
