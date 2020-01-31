@@ -1,0 +1,29 @@
+---
+owncloud_config:
+  database:
+    type: "mysql"
+    host: "localhost"
+  # name: ""
+  # user: ""
+  # pass: ""
+  admin:
+    user: "admin"
+  # pass: ""
+  data_dir: "/var/www/owncloud/data"
+
+owncloud_dependencies:
+  - "php{{ php_version }}-curl"
+  - "php{{ php_version }}-xml"
+  - "php{{ php_version }}-gd"
+  - "php{{ php_version }}-iconv"
+  - "php{{ php_version }}-intl"
+  - "php{{ php_version }}-json"
+  - "php{{ php_version }}-mbstring"
+  - "php{{ php_version }}-mysql"
+  - "php{{ php_version }}-zip"
+  - "php{{ php_version }}-bz2"
+  - "php{{ php_version }}-gmp"
+  - php-imagick
+
+owncloud_packages:
+  - owncloud-files

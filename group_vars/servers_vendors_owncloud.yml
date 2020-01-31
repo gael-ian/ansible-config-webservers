@@ -1,0 +1,9 @@
+---
+
+# Additional repositories for ownCloud
+apt_sources_repositories:
+  owncloud-official:
+    signing_keys:
+      - url: "https://download.owncloud.org/download/repositories/production/Debian_10/Release.key"
+    repos:
+      - "deb http://download.owncloud.org/download/repositories/production/Debian_10/ /"

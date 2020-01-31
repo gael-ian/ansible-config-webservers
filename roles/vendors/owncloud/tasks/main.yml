@@ -1,0 +1,47 @@
+---
+- name: install dependencies
+  apt:
+    name: "{{ owncloud_dependencies }}"
+    state: present
+
+- name: install owncloud packages
+  apt:
+   name: "{{ owncloud_packages }}"
+   state: present
+
+- name: mark owncloud packages as held
+  command: "apt-mark hold {{ item }}"
+  with_items: "{{ owncloud_packages }}"
+
+
+- name: create owncloud database
+  mysql_db:
+    name: "{{ owncloud_config.database.name }}"
+    collation: 'utf8_general_ci'
+    encoding: 'utf8'
+    state: present
+
+- name: create owncloud database user
+  mysql_user:
+    name: "{{ owncloud_config.database.user }}"
+    password: "{{ owncloud_config.database.pass }}"
+    priv: "{{ owncloud_config.database.name }}.*:ALL"
+    host: localhost
+    append_privs: no
+    state: present
+
+- name: configure owncloud
+  shell: |
+    sudo -u www-data ./occ maintenance:install \
+      --database "{{ owncloud_config.database.type | quote }}" \
+      --database-host "{{ owncloud_config.database.host | quote }}" \
+      --database-name "{{ owncloud_config.database.name | quote }}" \
+      --database-user "{{ owncloud_config.database.user | quote }}" \
+      --database-pass "{{ owncloud_config.database.pass | quote }}" \
+      \
+      --admin-user "{{ owncloud_config.admin.user | quote }}" \
+      --admin-pass "{{ owncloud_config.admin.pass | quote }}" \
+      \
+      --data-dir "{{ owncloud_config.data_dir | quote }}"
+  args:
+    chdir: "/var/www/owncloud/"

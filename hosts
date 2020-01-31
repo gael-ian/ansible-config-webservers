@@ -29,3 +29,9 @@ server-10
 [servers_app]
 server-10
 server-20
+
+[servers_vendors]
+server-20
+
+[servers_vendors_owncloud]
+server-20

@@ -7,3 +7,17 @@ administrator_public_key: vault/keys/server-20/administrator.rsa.pub
 
 # MariaDB administrator
 mariadb_root_password: "{{ administrators['server-20']['mariadb']['pass'] }}"
+
+# ownCloud configuration
+owncloud_config:
+  database:
+    type: "mysql"
+    host: "localhost"
+    name: "{{ databases['server-20']['owncloud']['name'] }}"
+    user: "{{ databases['server-20']['owncloud']['user'] }}"
+    pass: "{{ databases['server-20']['owncloud']['pass'] }}"
+  admin:
+    user: "{{ administrators['server-20']['owncloud']['user'] }}"
+    pass: "{{ administrators['server-20']['owncloud']['pass'] }}"
+  data_dir: "/var/www/owncloud/data"
+
