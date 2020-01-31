@@ -12,7 +12,7 @@
 
 - name: create administrator account
   user:
-    name: administrator
+    name: "{{ administrator_name }}"
     comment: Administrator account
     password: "{{ administrator_password | password_hash('sha512') }}"
     group: administrators

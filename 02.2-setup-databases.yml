@@ -6,7 +6,7 @@
 #     ansible-playbook 02.2-setup-databases.yml
 #
 - name: setup and configure databases
-  remote_user: administrator
+  remote_user: "{{ administrator_name }}"
   become: yes
   
   # Configurations will be applied only on MariaDB databases servers
@@ -39,11 +39,16 @@
 
 
 - name: Setup and configure Redis
-  remote_user: administrator
+  remote_user: "{{ administrator_name }}"
   become: yes
 
   # Configurations will be applied only on Redis databases servers
   hosts: servers_db_redis
+
+  # Some vault vars have to be loaded to not let
+  # host_vars files loading fail.
+  vars_files:
+    - vault/administrators.yml
 
   roles:
     # Install Redis

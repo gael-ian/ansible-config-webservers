@@ -26,7 +26,7 @@
 #     ansible-playbook 01.0--make-remotes-administrable.yml
 # 
 - name: initial setup for ansible managment
-  remote_user: "{{ user | default('administrator') }}"
+  remote_user: "{{ user | default(\"{{ administrator_name }}\") }}"
   become: true
   become_method: "{{ method | default('sudo') }}"
   

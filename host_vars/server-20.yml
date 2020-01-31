@@ -1,8 +1,9 @@
 ---
 
 # System administrator
-administrator_password: "{{ administrator_passwords['server-20'] }}"
+administrator_name: "{{ administrators['server-20']['system']['name'] }}"
+administrator_password: "{{ administrators['server-20']['system']['pass'] }}"
 administrator_public_key: vault/keys/server-20/administrator.rsa.pub
 
 # MariaDB administrator
-mariadb_root_password: "{{ database_administrator_passwords['server-20'] }}"
+mariadb_root_password: "{{ administrators['server-20']['mariadb']['pass'] }}"

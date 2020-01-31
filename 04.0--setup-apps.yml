@@ -4,11 +4,11 @@
 # By default, this will setup `staging` and `production`
 # environments on targets. To setup development servers, use:
 #
-#     ansible-playbook 03.0--setup-apps.yml \
+#     ansible-playbook 04.0--setup-apps.yml \
 #       --extra-vars "environments=['development']"
 #
 - name: setups applications
-  remote_user: administrator
+  remote_user: "{{ administrator_name }}"
   become: yes
   
   # Configurations will be applied on all servers

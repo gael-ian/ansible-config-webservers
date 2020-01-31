@@ -6,7 +6,7 @@
 #     ansible-playbook 02.3.2-setup-php.yml
 #
 - name: setup and configure PHP
-  remote_user: administrator
+  remote_user: "{{ administrator_name }}"
   become: yes
   
   # Configurations will be applied only on PHP servers
