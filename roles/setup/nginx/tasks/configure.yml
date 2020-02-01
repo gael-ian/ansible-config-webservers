@@ -1,18 +1,4 @@
 ---
-- name: create modules directory
-  file:
-    src: /usr/lib/nginx/modules
-    dest: /etc/nginx/modules-available
-    state: link
-    owner: root
-    group: root
-    mode: 0755
-
-- name: remove old default modules directory
-  file:
-    path: /etc/nginx/modules
-    state: absent
-
 - name: create configuration directories
   file:
     path: "/etc/nginx/{{ item }}"
@@ -25,9 +11,6 @@
     - conf.d/additionals
     - partials.d
     - upstreams.d
-    - modules-enabled
-    - sites-available
-    - sites-enabled
     
 - name: copy additional configuration files
   copy:
