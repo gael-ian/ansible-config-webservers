@@ -1,5 +1,7 @@
 ---
 
+notifications_recipients: []
+
 administrable_update_administrator_password: false
 
 # Additional repositories for monit
