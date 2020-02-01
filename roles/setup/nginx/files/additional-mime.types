@@ -6,10 +6,10 @@
 types {
 
   # Data interchange
-  application/json                      json map topojson;
+  application/json                      map topojson;
   application/ld+json                   jsonld;
   application/vnd.geo+json              geojson;
-  application/xml                       rdf xml;
+  application/xml                       rdf;
 
   # Manifest files
   application/manifest+json             webmanifest;
@@ -17,15 +17,13 @@ types {
   text/cache-manifest                   appcache;
 
   # Media files
-  audio/mp4                             aac f4a f4b m4a;
-  audio/ogg                             oga ogg opus;
+  audio/mp4                             aac f4a f4b;
+  audio/ogg                             oga opus;
   audio/x-wav                           wav;
     
-  image/x-icon                          cur ico;
-  image/bmp                             bmp;
-  image/tiff                            tif tiff;
+  image/x-icon                          cur;
   
-  video/mp4                             f4p f4v m4v mp4;
+  video/mp4                             f4p f4v;
   video/ogg                             ogv;
 
   # Web fonts
@@ -45,4 +43,3 @@ types {
   text/vnd.rim.location.xloc            xloc;
   text/vtt                              vtt;
 }
-
