@@ -1,47 +1,34 @@
 ---
-- name: install dependencies
-  apt:
-    name: "{{ owncloud_dependencies }}"
-    state: present
+- name: install packages
+  include_tasks: 01-packages.yml
 
-- name: install owncloud packages
-  apt:
-   name: "{{ owncloud_packages }}"
-   state: present
-
-- name: mark owncloud packages as held
-  command: "apt-mark hold {{ item }}"
-  with_items: "{{ owncloud_packages }}"
-
-
-- name: create owncloud database
-  mysql_db:
-    name: "{{ owncloud_config.database.name }}"
-    collation: 'utf8_general_ci'
-    encoding: 'utf8'
-    state: present
-
-- name: create owncloud database user
-  mysql_user:
-    name: "{{ owncloud_config.database.user }}"
-    password: "{{ owncloud_config.database.pass }}"
-    priv: "{{ owncloud_config.database.name }}.*:ALL"
-    host: localhost
-    append_privs: no
-    state: present
-
-- name: configure owncloud
-  shell: |
-    sudo -u www-data ./occ maintenance:install \
-      --database "{{ owncloud_config.database.type | quote }}" \
-      --database-host "{{ owncloud_config.database.host | quote }}" \
-      --database-name "{{ owncloud_config.database.name | quote }}" \
-      --database-user "{{ owncloud_config.database.user | quote }}" \
-      --database-pass "{{ owncloud_config.database.pass | quote }}" \
-      \
-      --admin-user "{{ owncloud_config.admin.user | quote }}" \
-      --admin-pass "{{ owncloud_config.admin.pass | quote }}" \
-      \
-      --data-dir "{{ owncloud_config.data_dir | quote }}"
-  args:
+- name: check if owncloud configuration exist
+  become: yes
+  become_user: www-data
+  become_method: sudo
+  shell:
     chdir: "/var/www/owncloud/"
+    cmd: ./occ maintenance:install --help 2>&1 | grep 'Usage:'
+  failed_when: False
+  register: occ_result
+
+- name: set fact about owncloud configuration
+  set_fact:
+    owncloud_need_config: "{{ occ_result.rc == 0 }}"
+
+- debug:
+    msg: |
+      Command 'occ maintenance:install' is not available. It means ownCloud considers itself as installed.
+      This playbook is not able to alter ownCloud configuration. In place setup will be keeped.
+  when: not owncloud_need_config
+
+- block:
+    - name: setup database
+      include_tasks: 02-database.yml
+
+    - name: configure
+      include_tasks: 03-configure.yml
+  when: owncloud_need_config
+
+- name: setup vhost
+  include_tasks: 04-vhost.yml

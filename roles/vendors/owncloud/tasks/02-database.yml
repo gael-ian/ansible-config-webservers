@@ -1,0 +1,16 @@
+---
+- name: create owncloud database
+  mysql_db:
+    name: "{{ owncloud_config.database.name }}"
+    collation: 'utf8_general_ci'
+    encoding: 'utf8'
+    state: present
+
+- name: create owncloud database user
+  mysql_user:
+    name: "{{ owncloud_config.database.user }}"
+    password: "{{ owncloud_config.database.pass }}"
+    priv: "{{ owncloud_config.database.name }}.*:ALL"
+    host: localhost
+    append_privs: no
+    state: present

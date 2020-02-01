@@ -1,0 +1,14 @@
+---
+- name: install dependencies
+  apt:
+    name: "{{ owncloud_dependencies }}"
+    state: present
+
+- name: install owncloud packages
+  apt:
+    name: "{{ owncloud_packages }}"
+    state: present
+
+- name: mark owncloud packages as held
+  command: "apt-mark hold {{ item }}"
+  with_items: "{{ owncloud_packages }}"

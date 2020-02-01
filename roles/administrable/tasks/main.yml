@@ -42,6 +42,11 @@
     group: root
     mode: 0440
 
+- name: install acl (used by Ansible)
+  apt:
+    name: acl
+    state: present
+
 - name: configure shell
   copy:
     src: "shell-config/{{ item }}.sh"
