@@ -19,6 +19,7 @@
 
     # Will be used by this playbook
     - vault/databases.yml
+    - vault/vendors.yml
 
   roles:
     - role: owncloud

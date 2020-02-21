@@ -16,15 +16,20 @@
 
 - name: extract vhost root path
   set_fact:
-    vhost_root_path: "{{ base64_vhost['content'] | b64decode | regex_search(root_pattern) | regex_replace(root_pattern, '\\1') }}"
+    extracted_root_path: "{{ vhost_content | regex_search(root_pattern) | regex_replace(root_pattern, '\\1') }}"
   vars:
+    vhost_content: "{{ base64_vhost['content'] | b64decode }}"
     root_pattern: "root ([^;]+);"
+
+- name: combine vhost root path
+  set_fact:
+    nginx: "{{ nginx | combine({ 'root': extracted_root_path }) }}"
 
 - name: create vhost root directory
   file:
     state: directory
-    path:  "{{ vhost_root_path }}"
-    owner: "{{ user }}"
+    path:  "{{ nginx.root }}"
+    owner: "{{ vhost.owner.name }}"
     group: applications
     mode: "u=rwX,g=rwX,o=X"
 

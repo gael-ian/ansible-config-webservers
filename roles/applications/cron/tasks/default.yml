@@ -1,0 +1,11 @@
+---
+- name: compile cron params
+  set_fact:
+    cron_params:
+      user: "{{ owner.name }}"
+      state: present
+      env:
+        MAILTO: "{{ owner.email }}"
+
+- name: setup cron job
+  cron: "{{ cron | combine(cron_params) }}"

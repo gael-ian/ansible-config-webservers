@@ -1,1 +1,24 @@
 ---
+- name: create vhost
+  include_role:
+    name: vhost
+  vars:
+    vhost:
+      name: owncloud
+      type: php-owncloud
+      root: "/var/www/owncloud/"
+      domains: "{{ owncloud_config.vhost.domains }}"
+      ssl: "{{ owncloud_config.vhost.ssl }}"
+      owner: "{{ owncloud_config.vhost.owner | combine({ 'name': 'www-data' }) }}"
+      upstream:
+        name: owncloud
+        user: www-data
+        memory_limit: "1024M" # 512M was a recommended minimum for ownCloud 9.0
+        max_post_size: "84M"
+        max_file_size: "80M"
+      rewrite: ""
+      logs:
+        vhost: "/var/log/owncloud/"
+      env_vars:
+
+      env: dont-care # Really...

@@ -6,7 +6,6 @@
   args:
     chdir: "/var/www/owncloud/"
   shell: |
-    ./occ maintenance:install >/dev/null && \
     ./occ maintenance:install \
       --database "{{ owncloud_config.database.type | quote }}" \
       --database-host "{{ owncloud_config.database.host | quote }}" \

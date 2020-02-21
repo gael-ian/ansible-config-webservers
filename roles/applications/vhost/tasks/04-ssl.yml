@@ -1,5 +1,5 @@
 ---
-- name: compile SSL options
+- name: compile certificate path
   set_fact:
     cert_path: "/etc/letsencrypt/live/{{ vhost.domains.main }}/"
 
@@ -10,14 +10,15 @@
 
 - name: compile SSL options
   set_fact:
-    certificate_needed: "{{ ssl and not cert_file.stat.exists }}"
+    certificate_needed: "{{ vhost.ssl and not cert_file.stat.exists }}"
 
 - name: create certificate
   include_role:
     role: certificate
   vars:
-    main_domain: "{{ vhost.domains.main }}"
-    root_path: "{{ vhost_root_path }}"
+    owner: "{{ vhost.owner }}"
+    domains: "{{ vhost.domains }}"
+    root: "{{ nginx.root }}"
   when: certificate_needed
 
 - name: create certificates folder

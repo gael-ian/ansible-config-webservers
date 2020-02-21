@@ -1,34 +1,28 @@
 ---
-
-- name: compile variables
-  include_tasks: 01-compile-vars.yml
-
-- name: create Capistrano directories
-  include_tasks: 02-capistrano-directories.yml
-
-- name: configure PHP pool
-  include_role:
-    name: php-fpm-pool
-    private: True
+- name: compile nginx paths
+  set_fact:
+    nginx:
+      vhost: "/etc/nginx/sites-available/{{ vhost.name }}"
+      certificate: "/etc/nginx/certificates.d/{{ vhost.name }}"
+    all_domains: "{{ mains | union(additionals) | union(assets) }}"
   vars:
-    php_fpm_pool: "{{ vhost.upstream | combine({ 'user': user, 'group': 'applications' }) }}"
+    mains: "{{ [ vhost.domains.main ] }}"
+    additionals: "{{ vhost.domains.additionals | default([]) }}"
+    assets: "{{ vhost.domains.assets | default([]) }}"
+
+- name: configure upstream
+  include_tasks: 01-upstream.yml
   when: '"upstream" in vhost'
 
 - name: configure logs
-  include_tasks: 03-logs.yml
+  include_tasks: 02-logs.yml
 
-# Configure vhost without HTTPS support
 - name: configure vhost
-  include_tasks: 04-vhost.yml
+  include_tasks: 03-vhost.yml
 
 # Ensure nginx is reloaded and support the newly created vhost
 - meta: flush_handlers
 
-- block:
-    - name: configure SSL certificate
-      include_tasks: 05-ssl.yml
-
-    # Reconfigure vhost with full HTTPS support
-    - name: configure vhost
-      include_tasks: 04-vhost.yml
-  when: ssl
+- name: configure SSL certificate
+  include_tasks: 04-ssl.yml
+  when: vhost.ssl

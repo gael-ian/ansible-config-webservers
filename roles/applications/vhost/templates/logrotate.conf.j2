@@ -1,6 +1,8 @@
 # {{ ansible_managed }}
 
-{{ log_paths.vhost }}*.log {
+{% if 'vhost' in vhost.logs %}
+
+{{ vhost.logs.vhost }}*.log {
   create 660 www-data applications
   weekly
   missingok
@@ -12,8 +14,11 @@
   nomail
 }
 
-{{ log_paths.app }}*.log {
-  create 660 {{ user }} applications
+{% endif %}
+{% if 'app' in vhost.logs %}
+
+{{ vhost.logs.app }}*.log {
+  create 660 {{ vhost.owner.name }} applications
   weekly
   missingok
   rotate 52
@@ -23,3 +28,5 @@
   notifempty
   nomail
 }
+
+{% endif %}

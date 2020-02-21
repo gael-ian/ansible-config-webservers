@@ -18,8 +18,9 @@
 
 - debug:
     msg: |
-      Command 'occ maintenance:install' is not available. It means ownCloud considers itself as installed.
-      This playbook is not able to alter ownCloud configuration. In place setup will be keeped.
+      'occ maintenance:install' is not available. It means ownCloud considers itself as installed.
+      This playbook is not able to alter ownCloud configurations such as database, data directory and admin account.
+      Previous setup has been keeped.
   when: not owncloud_need_config
 
 - block:

@@ -20,6 +20,6 @@
 
 ## Install and configure language interpreters
 # Ruby
-- import_playbook: 02.4.1-setup-ruby.yml
+- import_playbook: 02.4-setup-ruby.yml
 # PHP (and PHP-FPM)
-- import_playbook: 02.4.2-setup-php.yml
+- import_playbook: 02.5-setup-php.yml

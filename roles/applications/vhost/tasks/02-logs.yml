@@ -1,0 +1,34 @@
+---
+- name: create vhost log directory
+  file:
+    state: directory
+    path:  "{{ vhost.logs.vhost }}"
+    owner: www-data
+    group: applications
+    mode: "u=rwX,g=rX,o=rX"
+  when: '"vhost" in vhost.logs'
+
+- name: create app log directory
+  file:
+    state: directory
+    path:  "{{ vhost.logs.app }}"
+    owner: "{{ vhost.owner.name }}"
+    group: applications
+    mode: "u=rwX,g=rX,o=rX"
+  when: '"app" in vhost.logs'
+
+- name: setup log rotation
+  template:
+    src: logrotate.conf.j2
+    dest: "/etc/logrotate.d/{{ vhost.name }}"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: monitor log rotation
+  include_role:
+    name: monit-service
+  vars:
+    monit_service:
+      name: "{{ vhost.name }}"
+      template: vhost.j2

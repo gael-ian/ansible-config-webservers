@@ -1,5 +1,7 @@
 ---
 owncloud_config:
+  # domain: ""
+  # ssl: true
   database:
     type: "mysql"
     host: "localhost"
@@ -12,18 +14,41 @@ owncloud_config:
   data_dir: "/var/www/owncloud/data"
 
 owncloud_dependencies:
+  # ownCloud required packages
+  # See https://doc.owncloud.org/server/10.4/admin_manual/installation/ubuntu_18_04.html#install-the-required-packages
+  - php-imagick
+  - "php{{ php_version }}-common"
   - "php{{ php_version }}-curl"
-  - "php{{ php_version }}-xml"
   - "php{{ php_version }}-gd"
-  - "php{{ php_version }}-iconv"
+  - "php{{ php_version }}-imap"
   - "php{{ php_version }}-intl"
   - "php{{ php_version }}-json"
   - "php{{ php_version }}-mbstring"
   - "php{{ php_version }}-mysql"
+  - "php{{ php_version }}-ssh2"
+  - "php{{ php_version }}-xml"
   - "php{{ php_version }}-zip"
+  - php-apcu
+  - php-redis
+  - wget
+
+  # ownCloud recommanded packages
+  # See https://doc.owncloud.org/server/10.4/admin_manual/installation/ubuntu_18_04.html#install-the-recommended-packages
+  - ssh
+  - bzip2
+  - rsync
+  - curl
+  - jq
+  - inetutils-ping
+  - coreutils
+  - "php{{ php_version }}-ldap"
+
+  # Other PHP extensions recommended on https://doc.owncloud.org/server/10.4/admin_manual/installation/manual_installation.html#required
+  - "php{{ php_version }}-iconv"
   - "php{{ php_version }}-bz2"
   - "php{{ php_version }}-gmp"
-  - php-imagick
+  - ffmpeg
+  # - libreoffice # Nope! Comes with tons of dependencies for a graphical environment...
 
 owncloud_packages:
   - owncloud-files

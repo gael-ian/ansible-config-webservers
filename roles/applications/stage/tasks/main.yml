@@ -1,0 +1,36 @@
+---
+- name: compile common path and name fragments
+  set_fact:
+    fragments:
+      name: "{{ app_name }}_{{ stage.env }}"
+      path: "{{ app_name }}/{{ stage.env }}"
+
+- name: compile Capistrano paths
+  set_fact:
+    easy_logs_root: "/home/{{ user }}/log/{{ fragments.path }}/"
+    capistrano_root: "/home/{{ user }}/www/{{ fragments.path }}/"
+
+- name: compile logs paths
+  set_fact:
+    logs:
+      app: "{{ capistrano_root }}shared/log/"
+      vhost: "{{ easy_logs_root }}vhost/"
+
+- name: create Capistrano directories
+  include_tasks: 01-capistrano-directories.yml
+
+- name: compile vhost params
+  set_fact:
+    vhost:
+      name: "{{ fragments.name }}"
+      root: "{{ capistrano_root }}current/"
+      logs: "{{ logs }}"
+
+- name: create vhost
+  include_role:
+    name: vhost
+  vars:
+    vhost: "{{ stage | combine(vhost) }}"
+
+- name: create easy access to logs
+  include_tasks: 02-logs-easy.yml

@@ -1,8 +1,16 @@
 ---
+- name: compile certificate options
+  set_fact:
+    all_domains: "{{ mains | union(additionals) | union(assets) }}"
+  vars:
+    mains: "{{ [ domains.main ] }}"
+    additionals: "{{ domains.additionals | default([]) }}"
+    assets: "{{ domains.assets | default([]) }}"
+
 - name: create or renew certificate
   shell: |
     certbot certonly --webroot \
-      -n --agree-tos -m {{ email }} \
-      --cert-name {{ main_domain }} \
-      --webroot-path {{ root_path }} \
+      -n --agree-tos -m {{ owner.email }} \
+      --cert-name {{ domains.main }} \
+      --webroot-path {{ root }} \
       --domains {{ all_domains | join(',') }}

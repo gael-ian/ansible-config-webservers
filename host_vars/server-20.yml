@@ -1,23 +1,27 @@
 ---
 
 # System administrator
-administrator_name: "{{ administrators['server-20']['system']['name'] }}"
-administrator_password: "{{ administrators['server-20']['system']['pass'] }}"
+administrator_name: "{{ administrators['server-20'].system.name }}"
+administrator_password: "{{ administrators['server-20'].system.name }}"
 administrator_public_key: vault/keys/server-20/administrator.rsa.pub
 
 # MariaDB administrator
-mariadb_root_password: "{{ administrators['server-20']['mariadb']['pass'] }}"
+mariadb_root_password: "{{ administrators['server-20'].mariadb.pass }}"
 
 # ownCloud configuration
 owncloud_config:
+  vhost:
+    ssl: "{{ vendors['server-20'].owncloud.ssl }}"
+    domains: "{{ vendors['server-20'].owncloud.domains }}"
+    owner: "{{ vendors['server-20'].owncloud.owner }}"
   database:
     type: "mysql"
     host: "localhost"
-    name: "{{ databases['server-20']['owncloud']['name'] }}"
-    user: "{{ databases['server-20']['owncloud']['user'] }}"
-    pass: "{{ databases['server-20']['owncloud']['pass'] }}"
+    name: "{{ databases['server-20'].owncloud.name }}"
+    user: "{{ databases['server-20'].owncloud.user }}"
+    pass: "{{ databases['server-20'].owncloud.pass }}"
   admin:
-    user: "{{ administrators['server-20']['owncloud']['user'] }}"
-    pass: "{{ administrators['server-20']['owncloud']['pass'] }}"
+    user: "{{ administrators['server-20'].owncloud.user }}"
+    pass: "{{ administrators['server-20'].owncloud.pass }}"
   data_dir: "/var/www/owncloud/data"
 
