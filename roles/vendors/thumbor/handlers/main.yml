@@ -1,0 +1,10 @@
+---
+- name: restart thumbor
+  service:
+    name: thumbor
+    state: restarted
+
+- name: restart nginx
+  service:
+    name: nginx
+    state: restarted

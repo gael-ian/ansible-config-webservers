@@ -19,6 +19,5 @@
       rewrite: ""
       logs:
         vhost: "/var/log/owncloud/"
-      env_vars:
-
+      env_vars: {}
       env: dont-care # Really...

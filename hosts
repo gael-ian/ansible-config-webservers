@@ -35,3 +35,6 @@ server-20
 
 [servers_vendors_owncloud]
 server-20
+
+[servers_vendors_thumbor]
+server-20

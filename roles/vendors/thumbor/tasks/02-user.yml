@@ -1,0 +1,8 @@
+---
+- name: create system user
+  user:
+    name: thumbor
+    comment: Thumbor Server
+    system: true
+    shell: /usr/sbin/nologin
+    state: present

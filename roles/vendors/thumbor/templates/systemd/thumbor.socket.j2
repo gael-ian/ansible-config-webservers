@@ -1,0 +1,10 @@
+[Unit]
+Description=Thumbor Socket
+
+[Socket]
+SocketUser=thumbor
+SocketGroup=www-data
+ListenStream=/run/thumbor/thumbor.sock
+
+[Install]
+WantedBy=sockets.target

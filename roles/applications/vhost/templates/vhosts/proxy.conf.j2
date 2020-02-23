@@ -1,0 +1,16 @@
+# {{ ansible_managed }}
+
+{% set root = vhost.root %}
+
+server {
+  {% include './partials/main.j2' %}
+
+
+  location / {
+    proxy_pass http://{{ vhost.upstream.name }}$request_uri;
+  }
+}
+
+{% include './partials/domains-additionals.j2' %}
+{% include './partials/domains-assets.j2' %}
+{% include './partials/domains-non-ssl.j2' %}

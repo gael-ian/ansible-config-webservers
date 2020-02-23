@@ -1,0 +1,10 @@
+---
+- name: install dependencies
+  apt:
+    name: "{{ thumbor_dependencies }}"
+    state: present
+
+- name: install pip packages
+  pip:
+    name: "{{ thumbor_pip_packages }}"
+    state: present

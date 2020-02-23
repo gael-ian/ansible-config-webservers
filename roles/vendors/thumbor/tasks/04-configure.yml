@@ -1,0 +1,52 @@
+---
+- name: test if thumbor configuration file exists
+  stat:
+    path: /etc/thumbor.conf
+  register: thumbor_config_file
+
+- block:
+  - name: get thumbor default configuration
+    shell: thumbor-config
+    register: thumbor_config_command
+
+  - name: create thumbor default configuration file
+    copy:
+      content: "{{ thumbor_config_command.stdout }}"
+      dest: /etc/thumbor.conf
+      owner: root
+      group: root
+      mode: 0644
+  when: not thumbor_config_file.stat.exists
+
+- name: configure thumbor
+  lineinfile:
+    dest: /etc/thumbor.conf
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: present
+  with_items:
+    - regexp: "^#?ALLOW_UNSAFE_URL ="
+      line: "ALLOW_UNSAFE_URL = False"
+    - regexp: "^#?ALLOW_OLD_URLS ="
+      line: "ALLOW_OLD_URLS = False"
+  notify: restart thumbor
+
+- name: configure thumbor security key
+  lineinfile:
+    dest: /etc/thumbor.conf
+    regexp: "^#?SECURITY_KEY ="
+    line: "SECURITY_KEY = '{{ thumbor_config.security_key }}'"
+    state: present
+  when: "'security_key' in thumbor_config"
+  notify: restart thumbor
+
+- name: configure thumbor allowed sources
+  lineinfile:
+    dest: /etc/thumbor.conf
+    regexp: "^#?ALLOWED_SOURCES = "
+    line: "ALLOWED_SOURCES = ['{{ thumbor_config.allowed_sources | join(sep) }}']"
+    state: present
+  vars:
+    sep: "', '"
+  when: "'allowed_sources' in thumbor_config and thumbor_config.allowed_sources"
+  notify: restart thumbor

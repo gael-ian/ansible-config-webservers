@@ -1,0 +1,21 @@
+---
+thumbor_config:
+  # security_key:
+  # allowed_sources: []
+
+thumbor_dependencies:
+  - python-pip
+  # SSL support
+  - libcurl4-openssl-dev
+  - libssl-dev
+  # OpenCV support
+  - python-opencv
+  - libopencv-dev
+  # Image format packages
+  - libjpeg-dev
+  - libpng-dev
+  - libwebp-dev
+  - webp
+
+thumbor_pip_packages:
+  - thumbor

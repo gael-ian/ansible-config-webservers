@@ -1,0 +1,33 @@
+---
+- name: create nginx upstreams directory
+  file:
+    state: directory
+    path:  /etc/nginx/upstreams.d
+    owner: root
+    group: root
+    mode: 0755
+
+- name: configure nginx upstream
+  template:
+    src: upstream.conf.j2
+    dest: /etc/nginx/upstreams.d/thumbor.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart nginx
+
+- name: configure nginx vhost
+  include_role:
+    name: vhost
+  vars:
+    vhost:
+      name: thumbor
+      type: proxy
+      domains: "{{ thumbor_config.vhost.domains }}"
+      ssl: "{{ thumbor_config.vhost.ssl }}"
+      owner: "{{ thumbor_config.vhost.owner | combine({ 'name': 'www-data' }) }}"
+      upstream:
+        name: thumbor
+      root: "/var/www/thumbor/"
+      logs:
+        vhost: "/var/log/thumbor/"
