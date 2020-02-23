@@ -1,0 +1,17 @@
+---
+# **!! Please do not run as is against any remote**
+#
+# Handy playbook to ease use of `ansible-lint` and `ansible-playbook --syntax-check`.
+# This playbook is not meant to be executed against any remote server as is. It just
+# provides a shortcut to all other playbooks for linting.
+#
+# Usage:
+#
+#     ansible-lint 00.0--lint.yml
+#     ansible-playbook 00.0--lint.yml --syntax-check
+#
+
+- import_playbook: 01.0--make-remotes-administrable.yml
+- import_playbook: 02.0--setup-system-and-services.yml
+- import_playbook: 03.0--setup-vendors.yml
+- import_playbook: 04.0--setup-apps.yml
