@@ -23,3 +23,9 @@
 
   roles:
     - role: thumbor
+
+    # Configure Monit to watch over thumbor
+    - role: monit-service
+      monit_service:
+        name: thumbor
+        template: thumbor.j2

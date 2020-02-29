@@ -1,0 +1,22 @@
+# {{ ansible_managed }}
+
+check process thumbor matching thumbor
+  group vendors
+  group thumbor
+
+  start program = "/bin/systemctl start thumbor.service"
+  stop program = "/bin/systemctl stop thumbor.service"
+
+  if cpu > 60% for 2 cycles then alert
+  if 5 restarts with 5 cycles then alert
+
+  depend on thumbor_bin
+  depend on thumbor_rc
+
+check file thumbor_bin with path /usr/local/bin/thumbor
+  group thumbor
+  include /etc/monit/templates/rootbin
+
+check file thumbor_bin with path /etc/thumbor.conf
+  group thumbor
+  include /etc/monit/templates/rootrc
