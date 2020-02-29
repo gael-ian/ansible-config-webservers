@@ -1,0 +1,11 @@
+---
+##
+# External roles from https://galaxy.ansible.com/
+# To install dependencies:
+#
+#   ansible-galaxy install -r roles-requirements.yml -p ./roles/externals/
+#
+##
+- src: geerlingguy.firewall
+  version: 2.4.3
+  name: firewall

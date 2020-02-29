@@ -46,8 +46,9 @@
     # Disable SSH root login and password authentication
     - role: ssh
 
-    # Install fail2ban
+    # Configure iptables and install fail2ban
     - role: firewall
+    - role: fail2ban
 
 
     # Install and globally configure Monit for monitoring
