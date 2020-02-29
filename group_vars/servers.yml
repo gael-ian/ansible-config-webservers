@@ -9,6 +9,7 @@ apt_sources_repositories:
   buster-backports:
     repos:
       - "deb http://deb.debian.org/debian buster-backports main"
+    # Backports repos automatically gets a lower priority so no need to specify any preferences
 
 # Monit configuration
 monit_enable_status: false

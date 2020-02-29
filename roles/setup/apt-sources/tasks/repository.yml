@@ -31,3 +31,12 @@
     update_cache: yes
   with_items: "{{ repository.value.repos }}"
   when: ('repos' in repository.value)
+
+- name: set apt preferences for the added repository
+  copy:
+    content: "{{ repository.value.preferences }}"
+    dest: "/etc/apt/preferences.d/{{ repository.key }}"
+    owner: root
+    group: root
+    mode: 0644
+  when: ('preferences' in repository.value)

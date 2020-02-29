@@ -8,12 +8,7 @@ Requires=thumbor.socket
 [Service]
 Type=simple
 Restart=always
-
-ExecStart=/usr/local/bin/thumbor --ip 127.0.0.1 --port 9000
-# Socket does not seems to be fully supported
-# See Once https://github.com/thumbor/thumbor/issues/1269
-# Once this problem is solved, use:
-# ExecStart=/usr/local/bin/thumbor --fd /run/thumbor/thumbor.sock
+ExecStart=/usr/local/bin/thumbor --fd /run/thumbor/thumbor.sock
 
 [Install]
 WantedBy=multi-user.target

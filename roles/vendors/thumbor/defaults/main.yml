@@ -5,6 +5,12 @@ thumbor_config:
 
 thumbor_dependencies:
   - python-pip
+  # Required libc6 version
+  - 'libc6=2.29-*'
+  - 'libc-bin=2.29-*'
+  - 'libc6-dev=2.29-*'
+  - 'libc-dev-bin=2.29-*'
+  - 'libc6-dbg=2.29-*'
   # SSL support
   - libcurl4-openssl-dev
   - libssl-dev
