@@ -77,5 +77,10 @@
         template: openssh-server.j2
         ssh_keys: "{{ ssh_host_keys.files | json_query('[].path') }}"
 
+    - role: monit-service
+      monit_service:
+        name: firewall
+        template: firewall.j2
+
     # Install chapecron
     - role: chapecron
