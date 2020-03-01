@@ -1,10 +1,10 @@
 # {{ ansible_managed }}
 
+
 check process mysqld with pidfile /var/run/mysqld/mysqld.pid
   group servers
   group mysql
 
-  if cpu > 60% for 2 cycles then alert
   if 5 restarts with 5 cycles then alert
 
 
@@ -24,21 +24,32 @@ check process mysqld-silent with pidfile /var/run/mysqld/mysqld.pid
   depend mysql_bin
   depend mysql_rc
 
+
 check file mysql_bin with path /usr/sbin/mysqld
   group mysql
+
   include /etc/monit/templates/rootbin
+
 
 {% if mariadb_conf.logging.general.enabled %}
 check file mariadb_log_general with path {{ mariadb_conf.logging.general.file }}
+  group mysql
+
   if size > 250 MB then exec "/usr/sbin/logrotate -f /etc/logrotate.d/mariadb"
 {% endif %}
+
 
 {% if mariadb_conf.logging.error.enabled %}
 check file mariadb_log_error with path {{ mariadb_conf.logging.error.file }}
+  group mysql
+
   if size > 250 MB then exec "/usr/sbin/logrotate -f /etc/logrotate.d/mariadb"
 {% endif %}
 
+
 {% if mariadb_conf.logging.slow_query.enabled %}
 check file mariadb_log_slow_query with path {{ mariadb_conf.logging.slow_query.file }}
+  group mysql
+
   if size > 250 MB then exec "/usr/sbin/logrotate -f /etc/logrotate.d/mariadb"
 {% endif %}

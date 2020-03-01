@@ -1,14 +1,23 @@
 # {{ ansible_managed }}
 
+
 check process sshd with pidfile /var/run/sshd.pid
   group system
   group sshd
+
+  if 5 restarts with 5 cycles then alert
+
+
+check process sshd with pidfile /var/run/sshd.pid
+  group system
+  group sshd
+
+  include /etc/monit/templates/silent
 
   start program = "/bin/systemctl start ssh.service"
   stop program = "/bin/systemctl stop ssh.service"
   
   if failed host localhost port 22 with proto ssh then restart
-  if 5 restarts with 5 cycles then timeout
   
   depend on sshd_bin
   depend on sftp_bin
@@ -20,24 +29,30 @@ check process sshd with pidfile /var/run/sshd.pid
   {% endfor %}
   {% endif %}
 
+
 check file sshd_bin with path /usr/sbin/sshd
   group sshd
+
   include /etc/monit/templates/rootbin
+
 
 check file sftp_bin with path /usr/lib/openssh/sftp-server
   group sshd
+
   include /etc/monit/templates/rootbin
+
 
 check file sshd_rc with path /etc/ssh/sshd_config
   group sshd
+
   include /etc/monit/templates/rootrc
-
-
 {% if monit_service.ssh_keys | length > 0 %}
 {% for ssh_key in monit_service.ssh_keys %}
+
+
 check file sshd_{{ ssh_key | slugify('_') }} with path {{ ssh_key }}
   group sshd
-  include /etc/monit/templates/rootstrict
 
+  include /etc/monit/templates/rootstrict
 {% endfor %}
 {% endif %}

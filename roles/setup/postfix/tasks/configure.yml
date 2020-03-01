@@ -1,0 +1,43 @@
+---
+- name: configure postfix as a send-only MTA
+  lineinfile:
+    dest: /etc/postfix/main.cf
+    line: "{{ item.name }} = {{ item.value }}"
+    regexp: "^#?{{ item.name }} ="
+  with_items:
+    # Listen only to local connections
+    - name: inet_interfaces
+      value: 'loopback-only'
+    # Inbound emails are only considered for local domains
+    - name: mydestination
+      value: '$myhostname, $mydomain, , localhost.$mydomain, localhost'
+    # Enable secure connections to servers that support it
+    - name: smtp_tls_security_level
+      value: 'may'
+    - name: smtp_tls_loglevel
+      value: '1'
+    - name: smtpd_tls_security_level
+      value: 'may'
+    - name: smtpd_tls_loglevel
+      value: '1'
+  notify: restart postfix
+
+- name: configure aliases for system accounts
+  lineinfile:
+    dest: /etc/aliases
+    line: "{{ item.name }}: {{ item.value }}"
+    regexp: "^#?{{ item.name }} :"
+  with_items:
+    # Ensure proper defaults
+    - name: mailer-daemon
+      value: root
+    - name: postmaster
+      value: root
+    - name: hostmaster
+      value: root
+    - name: "{{ administrator_name }}"
+      value: root
+    # Redirect all mails sent to root
+    - name: root
+      value: "{{ notifications_recipients | join(', ') }}"
+  notify: rebuild aliases.db

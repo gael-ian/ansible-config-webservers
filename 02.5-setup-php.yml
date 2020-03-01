@@ -3,7 +3,7 @@
 # 
 # Use ansible-playbook without extra arguments:
 # 
-#     ansible-playbook 02.3.2-setup-php.yml
+#     ansible-playbook 02.5-setup-php.yml
 #
 - name: setup and configure PHP
   remote_user: "{{ administrator_name }}"

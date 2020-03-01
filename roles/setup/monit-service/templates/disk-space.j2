@@ -1,9 +1,12 @@
 # {{ ansible_managed }}
-
 {% if monit_service.partitions | length > 0 %}
 {% for uuid in monit_service.partitions %}
 
+
 check filesystem disk-{{ uuid }} with path /dev/disk/by-uuid/{{ uuid }}
+  group system
+  group disks
+
   if space usage > 95% then alert
 {% endfor %}
 {% endif %}

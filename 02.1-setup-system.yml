@@ -51,6 +51,10 @@
     - role: fail2ban
 
 
+    # Configure postfix as a send-only MTA
+    - role: postfix
+
+
     # Install and globally configure Monit for monitoring
     - role: monit
 
@@ -81,6 +85,12 @@
       monit_service:
         name: firewall
         template: firewall.j2
+
+    - role: monit-service
+      monit_service:
+        name: postfix
+        template: postfix.j2
+
 
     # Install chapecron
     - role: chapecron
