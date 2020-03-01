@@ -1,0 +1,21 @@
+#!/bin/bash
+
+frequency=$1
+keep=$2
+
+backup_base=$HOME/mysql/$frequency
+backup_name=$backup_base/$(date +"%Y-%m-%d")
+mkdir -p $backup_name
+
+for database in $(mysql -e "SHOW DATABASES" 2>/dev/null | grep -v 'Database\|mysql\|information_schema\|performance_schema' | tr $
+  mysqldump --opt --single-transaction --default-character-set=utf8 --events --routines --triggers \
+    $database > $backup_name/$database.sql
+done
+
+tar -czf $backup_name.tar.gz $backup_name/*.sql 2>/dev/null
+rm -rf $backup_name
+
+let keep++
+ls -1dt $backup_base/* | tail -n +$keep | xargs rm -f
+
+exit 0;

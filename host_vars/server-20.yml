@@ -8,6 +8,18 @@ administrator_public_key: vault/keys/server-20/administrator.rsa.pub
 # MariaDB administrator
 mariadb_root_password: "{{ administrators['server-20'].mariadb.pass }}"
 
+# MariaDB backups
+mariadb_backup:
+  user:
+    name: "{{ administrators['server-20']['mariadb-backup'].name }}"
+    pass: "{{ administrators['server-20']['mariadb-backup'].pass }}"
+  remote:
+    host: "{{ administrators['server-20']['mariadb-remote'].host }}"
+    port: "{{ administrators['server-20']['mariadb-remote'].port }}"
+    user: "{{ administrators['server-20']['mariadb-remote'].user }}"
+    pass: "{{ administrators['server-20']['mariadb-remote'].pass }}"
+
+
 # ownCloud configuration
 owncloud_config:
   vhost:

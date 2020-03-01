@@ -37,6 +37,9 @@
         name: mariadb
         template: mariadb.j2
 
+    # Configure databases backups
+    - role: mariadb-extra
+
 
 - name: Setup and configure Redis
   remote_user: "{{ administrator_name }}"

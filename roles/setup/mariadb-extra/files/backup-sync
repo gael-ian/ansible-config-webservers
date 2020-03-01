@@ -1,0 +1,8 @@
+#!/bin/bash
+
+source $HOME/.env
+
+lftp  -u $BACKUP_SYNC__USER,$BACKUP_SYNC__PASS \
+      -p $BACKUP_SYNC__PORT \
+      -e "mirror -Rec $HOME/mysql/ /$HOSTNAME/mysql/; exit" \
+      $BACKUP_SYNC__HOST > /dev/null
