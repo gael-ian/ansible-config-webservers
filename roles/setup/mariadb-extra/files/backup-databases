@@ -7,7 +7,7 @@ backup_base=$HOME/mysql/$frequency
 backup_name=$backup_base/$(date +"%Y-%m-%d")
 mkdir -p $backup_name
 
-for database in $(mysql -e "SHOW DATABASES" 2>/dev/null | grep -v 'Database\|mysql\|information_schema\|performance_schema' | tr $
+for database in $(mysql -e "SHOW DATABASES" 2>/dev/null | grep -v 'Database\|mysql\|information_schema\|performance_schema'); do
   mysqldump --opt --single-transaction --default-character-set=utf8 --events --routines --triggers \
     $database > $backup_name/$database.sql
 done
