@@ -4,11 +4,7 @@ application:
   name: ruby-dummy
 
   # Application owner
-  owner: "{{ applications['ruby-dummy'].owner }}"
-    name: ruby-dummy
-    password: "{{ application_owners_passwords['ruby-dummy'] }}"
-    key: vault/keys/apps/ruby-dummy.rsa.pub
-    email: dev@notus.sh
+  owner: "{{ applications_ruby_dummy.owner }}"
 
   # Environments
   environments:
@@ -42,8 +38,8 @@ application:
           - name: ruby_dummy_production
             collation: utf8_general_ci
             encoding: utf8
-            username: "{{ applications['ruby-dummy'].databases.production.name }}"
-            password: "{{ applications['ruby-dummy'].databases.production.pass }}"
+            username: "{{ applications_ruby_dummy.databases.production.name }}"
+            password: "{{ applications_ruby_dummy.databases.production.pass }}"
             servers:
               - server-10
 

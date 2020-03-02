@@ -16,9 +16,13 @@
     # Some vault vars have to be loaded to not let
     # host_vars files loading fail.
     - vault/administrators.yml
-
-    # Will be used by this playbook
     - vault/backups.yml
+
+  module_defaults:
+    apt:
+      autoclean: yes
+      autoremove: yes
+      cache_valid_time: 360
   
   roles:
     # Install MariaDB

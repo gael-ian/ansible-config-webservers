@@ -18,7 +18,7 @@
 - name: ensure backup user exists
   user:
     name: "{{ mariadb_backup.database.user }}"
-    group: "{{ mariadb_backup.database.pass }}"
+    group: "{{ mariadb_backup.database.user }}"
     home: "/var/backups"
     create_home: yes
     shell: /usr/sbin/nologin
@@ -63,7 +63,7 @@
     src: "env.j2"
     dest: "/var/backups/.env"
     owner: "{{ mariadb_backup.database.user }}"
-    group: "{{ mariadb_backup.database.pass }}"
+    group: "{{ mariadb_backup.database.user }}"
     mode: 0600
 
 - name: configure backup syncing cron

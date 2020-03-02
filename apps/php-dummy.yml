@@ -4,7 +4,7 @@ application:
   name: php-dummy
 
   # Application owner
-  owner: "{{ applications['php-dummy'].owner }}"
+  owner: "{{ applications_php_dummy.owner }}"
 
   # Environments
   environments:
@@ -43,8 +43,8 @@ application:
           - name: php_dummy_production
             collation: utf8_general_ci
             encoding: utf8
-            username: "{{ applications['php-dummy'].databases.production.user }}"
-            password: "{{ applications['php-dummy'].databases.production.pass }}"
+            username: "{{ applications_php_dummy.databases.production.user }}"
+            password: "{{ applications_php_dummy.databases.production.pass }}"
             servers:
               - server-20
 

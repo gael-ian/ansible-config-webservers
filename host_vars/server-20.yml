@@ -7,19 +7,19 @@ administrator: "{{ administrators['server-20'].system }}"
 mariadb_root_password: "{{ administrators['server-20'].mariadb.pass }}"
 
 # MariaDB backups
-mariadb_backup: "{{ mariadb_backup['server-20'] }}"
+mariadb_backup: "{{ backups['server-20'] }}"
 
 # ownCloud configuration
 owncloud_config:
-  vhost: "{{ vendors.owncloud['server-20'].vhost }}"
-  admin: "{{ vendors.owncloud['server-20'].admin }}"
+  vhost: "{{ vendors_owncloud['server-20'].vhost }}"
+  admin: "{{ vendors_owncloud['server-20'].admin }}"
   data_dir: "/var/www/owncloud/data"
   database:
     type: "mysql"
     host: "localhost"
-    name: "{{ vendors.owncloud['server-20'].database.name }}"
-    user: "{{ vendors.owncloud['server-20'].database.user }}"
-    pass: "{{ vendors.owncloud['server-20'].database.pass }}"
+    name: "{{ vendors_owncloud['server-20'].database.name }}"
+    user: "{{ vendors_owncloud['server-20'].database.user }}"
+    pass: "{{ vendors_owncloud['server-20'].database.pass }}"
 
 # thumbor configuration
-thumbor_config: "{{ vendors.thumbor['server-20'] }}"
+thumbor_config: "{{ vendors_thumbor['server-20'] }}"

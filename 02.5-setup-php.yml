@@ -16,7 +16,14 @@
   # host_vars files loading fail.
   vars_files:
     - vault/administrators.yml
-  
+    - vault/backups.yml
+
+  module_defaults:
+    apt:
+      autoclean: yes
+      autoremove: yes
+      cache_valid_time: 360
+
   roles:
     # Install PHP and PHP-FPM
     - role: php

@@ -16,9 +16,18 @@
     # Some vault vars have to be loaded to not let
     # host_vars files loading fail.
     - vault/administrators.yml
+    - vault/backups.yml
 
-    # Will be used by this playbook
-    - vault/vendors/owncloud.yml
+  module_defaults:
+    apt:
+      autoclean: yes
+      autoremove: yes
+      cache_valid_time: 360
+
+  pre_tasks:
+    - name: load vendors configuration
+      include_vars:
+        dir: vault/vendors
 
   roles:
     - role: owncloud
