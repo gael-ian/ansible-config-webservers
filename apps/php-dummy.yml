@@ -4,11 +4,7 @@ application:
   name: php-dummy
 
   # Application owner
-  owner:
-    name: php-dummy
-    password: "{{ application_owners_passwords['php-dummy'] }}"
-    key: vault/keys/apps/php-dummy.rsa.pub
-    email: dev@notus.sh
+  owner: "{{ applications['php-dummy'].owner }}"
 
   # Environments
   environments:
@@ -47,8 +43,8 @@ application:
           - name: php_dummy_production
             collation: utf8_general_ci
             encoding: utf8
-            username: php-dummy
-            password: "{{ database_passwords['php-dummy'] }}"
+            username: "{{ applications['php-dummy'].databases.production.user }}"
+            password: "{{ applications['php-dummy'].databases.production.pass }}"
             servers:
               - server-20
 

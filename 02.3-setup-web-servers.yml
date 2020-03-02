@@ -6,7 +6,7 @@
 #     ansible-playbook 02.3-setup-web-servers.yml
 #
 - name: setup and configure web servers
-  remote_user: "{{ administrator_name }}"
+  remote_user: "{{ administrator.user }}"
   become: yes
   
   # Configurations will be applied only on web servers

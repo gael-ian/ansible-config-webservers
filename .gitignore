@@ -1,11 +1,14 @@
 /TODO.md
 
+# External roles installed from ansible-galaxy
+roles/externals/*
+!roles/externals/.gitkeep
+
 # Failed playbook
 *.retry
 
 # Python bitcode
 *.pyc
 
-# External roles installed from ansible-galaxy
-roles/externals/*
-!roles/externals/.gitkeep
+# Temporary files
+/tmp

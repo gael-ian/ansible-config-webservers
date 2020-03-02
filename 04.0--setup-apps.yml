@@ -8,7 +8,7 @@
 #       --extra-vars "environments=['development']"
 #
 - name: setups applications
-  remote_user: "{{ administrator_name }}"
+  remote_user: "{{ administrator.user }}"
   become: yes
   
   # Configurations will be applied on all servers
@@ -20,8 +20,7 @@
     - vault/administrators.yml
 
     # Will be used by this playbook
-    - vault/applications.yml
-    - vault/databases.yml
+    - vault/applications/*.yml
 
   
   tasks:

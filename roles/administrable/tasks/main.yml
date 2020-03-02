@@ -12,9 +12,9 @@
 
 - name: create administrator account
   user:
-    name: "{{ administrator_name }}"
+    name: "{{ administrator.user }}"
     comment: Administrator account
-    password: "{{ administrator_password | password_hash('sha512') }}"
+    password: "{{ administrator.pass | password_hash('sha512') }}"
     group: administrators
     groups:
       - applications
@@ -26,7 +26,7 @@
 - name: authorize administrator key for SSH connections
   authorized_key:
     user: administrator
-    key: "{{ lookup('file', administrator_public_key) }}"
+    key: "{{ lookup('file', administrator.key) }}"
     state: present
 
 - name: install sudo

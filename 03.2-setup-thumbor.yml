@@ -6,7 +6,7 @@
 #     ansible-playbook 03.2-setup-thumbor.yml
 #
 - name: setups thumbor
-  remote_user: "{{ administrator_name }}"
+  remote_user: "{{ administrator.user }}"
   become: yes
 
   # Configurations will be applied only on servers designated to host an ownCloud instance
@@ -18,8 +18,7 @@
     - vault/administrators.yml
 
     # Will be used by this playbook
-    - vault/databases.yml
-    - vault/vendors.yml
+    - vault/vendors/thumbor.yml
 
   roles:
     - role: thumbor

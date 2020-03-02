@@ -17,8 +17,8 @@
 
 - name: ensure backup user exists
   user:
-    name: "{{ mariadb_backup.user.name }}"
-    group: "{{ mariadb_backup.user.name }}"
+    name: "{{ mariadb_backup.database.user }}"
+    group: "{{ mariadb_backup.database.pass }}"
     home: "/var/backups"
     create_home: yes
     shell: /usr/sbin/nologin
@@ -27,8 +27,8 @@
 
 - name: create database backup user
   mysql_user:
-    name: "{{ mariadb_backup.user.name }}"
-    password: "{{ mariadb_backup.user.pass }}"
+    name: "{{ mariadb_backup.database.user }}"
+    password: "{{ mariadb_backup.database.pass }}"
     priv: "*.*:{{ privileges | join('/*.*:') }}"
     host: localhost
     append_privs: no
@@ -40,14 +40,14 @@
   template:
     src: "my.cnf.j2"
     dest: "/var/backups/.my.cnf"
-    owner: "{{ mariadb_backup.user.name }}"
-    group: "{{ mariadb_backup.user.name }}"
+    owner: "{{ mariadb_backup.database.user }}"
+    group: "{{ mariadb_backup.database.user }}"
     mode: 0600
 
 - name: configure databases backup crons
   cron:
     name: "{{ item.time }} backup of all databases"
-    user: "{{ mariadb_backup.user.name }}"
+    user: "{{ mariadb_backup.database.user }}"
     job: "backup-databases {{ item.time }} {{ item.keep }}"
     special_time: "{{ item.time }}"
   with_items:
@@ -62,13 +62,13 @@
   template:
     src: "env.j2"
     dest: "/var/backups/.env"
-    owner: "{{ mariadb_backup.user.name }}"
-    group: "{{ mariadb_backup.user.name }}"
+    owner: "{{ mariadb_backup.database.user }}"
+    group: "{{ mariadb_backup.database.pass }}"
     mode: 0600
 
 - name: configure backup syncing cron
   cron:
     name: "daily backups syncing"
-    user: "{{ mariadb_backup.user.name }}"
+    user: "{{ mariadb_backup.database.user }}"
     job: "backup-sync"
     special_time: daily

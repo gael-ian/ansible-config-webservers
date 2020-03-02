@@ -4,7 +4,7 @@ application:
   name: ruby-dummy
 
   # Application owner
-  owner:
+  owner: "{{ applications['ruby-dummy'].owner }}"
     name: ruby-dummy
     password: "{{ application_owners_passwords['ruby-dummy'] }}"
     key: vault/keys/apps/ruby-dummy.rsa.pub
@@ -42,8 +42,8 @@ application:
           - name: ruby_dummy_production
             collation: utf8_general_ci
             encoding: utf8
-            username: ruby-dummy
-            password: "{{ database_passwords['ruby-dummy'] }}"
+            username: "{{ applications['ruby-dummy'].databases.production.name }}"
+            password: "{{ applications['ruby-dummy'].databases.production.pass }}"
             servers:
               - server-10
 

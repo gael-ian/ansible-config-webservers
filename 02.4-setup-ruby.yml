@@ -6,7 +6,7 @@
 #     ansible-playbook 02.4-setup-ruby.yml
 #
 - name: setup and configure ruby
-  remote_user: "{{ administrator_name }}"
+  remote_user: "{{ administrator.user }}"
   become: yes
   
   # Configurations will be applied only on Ruby servers

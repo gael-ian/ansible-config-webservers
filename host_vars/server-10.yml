@@ -1,20 +1,10 @@
 ---
 
 # System administrator
-administrator_name: "{{ administrators['server-10'].system.name }}"
-administrator_password: "{{ administrators['server-10'].system.pass }}"
-administrator_public_key: vault/keys/server-10/administrator.rsa.pub
+administrator: "{{ administrators['server-10'].system }}"
 
 # MariaDB administrator
 mariadb_root_password: "{{ administrators['server-10'].mariadb.pass }}"
 
 # MariaDB backups
-mariadb_backup:
-  user:
-    name: "{{ administrators['server-10']['mariadb-backup'].name }}"
-    pass: "{{ administrators['server-10']['mariadb-backup'].pass }}"
-  remote:
-    host: "{{ administrators['server-10']['mariadb-remote'].host }}"
-    port: "{{ administrators['server-10']['mariadb-remote'].port }}"
-    user: "{{ administrators['server-10']['mariadb-remote'].user }}"
-    pass: "{{ administrators['server-10']['mariadb-remote'].pass }}"
+mariadb_backup: "{{ mariadb_backup['server-10'] }}"

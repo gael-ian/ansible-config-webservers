@@ -35,7 +35,7 @@
       value: root
     - name: hostmaster
       value: root
-    - name: "{{ administrator_name }}"
+    - name: "{{ administrator.user }}"
       value: root
     # Redirect all mails sent to root
     - name: root
