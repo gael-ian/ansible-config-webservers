@@ -56,3 +56,12 @@
     group: root
     mode: 0644
   notify: restart nginx
+
+- name: configure monit
+  include_role:
+    name: monit-service
+  vars:
+    monit_service:
+      name: php-fpm-pool-www
+      template: php-fpm-pool.j2
+    pool: "{{ php_fpm_pool }}"

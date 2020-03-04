@@ -42,11 +42,3 @@
       monit_service:
         name: php-fpm
         template: php-fpm.j2
-
-    # Configure Monit to watch over PHP-FPM default pool
-    - role: monit-service
-      monit_service:
-        name: php-fpm-pool-www
-        template: php-fpm-pool.j2
-      php_fpm_pool:
-        name: www
