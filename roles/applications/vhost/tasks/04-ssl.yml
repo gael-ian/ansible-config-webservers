@@ -32,7 +32,7 @@
 - name: create SSL config file
   template:
     src: certificate.j2
-    dest: "{{ nginx.certificate }}/ssl.conf"
+    dest: "{{ nginx.certificate }}.ssl.conf"
     owner: root
     group: root
     mode: 0644
