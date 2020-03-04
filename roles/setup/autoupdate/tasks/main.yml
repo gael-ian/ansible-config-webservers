@@ -1,7 +1,7 @@
 ---
 - name: install packages
   apt:
-    name: unattended-upgrades
+    name: apt-config-auto-update unattended-upgrades
     state: present
 
 - name: ensure unattended-upgrades are enabled
