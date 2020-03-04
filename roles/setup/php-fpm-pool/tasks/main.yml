@@ -24,6 +24,14 @@
     group: "{{ php_fpm_pool.group | default('www-data') }}"
     mode: 0644
 
+- name: create pool's slow log
+  file:
+    state: touch
+    path:  "/var/log/php/{{ php_fpm_pool.name }}/slow.log"
+    owner: "{{ php_fpm_pool.user }}"
+    group: "{{ php_fpm_pool.group | default('www-data') }}"
+    mode: 0644
+
 - name: configure log rotation
   template:
     src: logrotate.conf.j2
