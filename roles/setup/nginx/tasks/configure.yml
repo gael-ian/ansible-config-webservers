@@ -11,7 +11,8 @@
     - conf.d/additionals
     - partials.d
     - upstreams.d
-    
+    - certificates.d
+
 - name: copy additional configuration files
   copy:
     src: "{{ item }}"

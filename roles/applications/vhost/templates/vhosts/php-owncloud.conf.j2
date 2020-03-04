@@ -5,6 +5,7 @@
 # Adapted from https://central.owncloud.org/t/nginx-documentation-unofficial-community/22365
 server {
   {% include './partials/main.j2' %}
+
   include /etc/nginx/partials.d/disable/crawling.conf;
   include /etc/nginx/partials.d/disable/embeding.conf;
 

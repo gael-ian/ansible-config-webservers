@@ -33,6 +33,14 @@
     group: applications
     mode: "u=rwX,g=rwX,o=X"
 
+- name: create vhost certificate directory
+  file:
+    state: directory
+    path:  "{{ nginx.vhost }}"
+    owner: root
+    group: root
+    mode: 0755
+
 - name: enable vhost
   file:
     state: link
