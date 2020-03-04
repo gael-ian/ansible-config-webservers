@@ -1,5 +1,5 @@
 ---
 - name: upgrade system
   apt:
-    upgrade: yes
+    upgrade: 'safe'
     update_cache: yes
