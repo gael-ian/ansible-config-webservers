@@ -3,13 +3,3 @@
   apt:
     name: certbot
     state: present
-
-- name: setup cron for auto-renewal
-  copy:
-    src: letsencrypt
-    dest: /etc/cron.daily/letsencrypt
-    owner: root
-    group: root
-    mode: 0755
-  notify:
-    - reload cron
