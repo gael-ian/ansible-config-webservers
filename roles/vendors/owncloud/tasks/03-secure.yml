@@ -1,0 +1,18 @@
+---
+- name: hide version
+  become: yes
+  become_user: www-data
+  become_method: sudo
+  args:
+    chdir: "/var/www/owncloud/"
+  shell: |
+    ./occ config:system:set version.hide --value 1
+
+- name: hide server name
+  become: yes
+  become_user: www-data
+  become_method: sudo
+  args:
+    chdir: "/var/www/owncloud/"
+  shell: |
+    ./occ config:system:set show_server_hostname --value 0
