@@ -16,7 +16,6 @@
         memory_limit: "1024M" # 512M was a recommended minimum for ownCloud 9.0
         max_post_size: "84M"
         max_file_size: "80M"
-      rewrite: ""
       logs:
         vhost: "/var/log/owncloud/"
       env_vars: {}

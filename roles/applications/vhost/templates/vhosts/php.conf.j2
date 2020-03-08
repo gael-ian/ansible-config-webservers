@@ -12,7 +12,7 @@ server {
   }
 
   location @rewrite {
-    rewrite {{ vhost.rewrite }};
+    rewrite {{ vhost.rewrite if 'rewrite' in vhost else '^ /index.php$uri' }};
   }
   
   location ~ \.php$ {
