@@ -5,4 +5,5 @@
     comment: Thumbor Server
     system: true
     shell: /usr/sbin/nologin
+    create_home: no
     state: present
