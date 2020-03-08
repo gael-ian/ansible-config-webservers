@@ -17,9 +17,12 @@ User=www-data
 Group=www-data
 
 # Security
-ProtectSystem=full  # Prevent writes to /usr, /boot and /etc
-ProtectHome=true    # Prevent accessing /home, /root and /run/user
-PrivateTmp=true     # Namespaced temp files
+# Prevent writes to /usr, /boot and /etc
+ProtectSystem=full
+# Prevent accessing /home, /root and /run/user
+ProtectHome=true
+# Namespaced temp files
+PrivateTmp=true
 
 [Install]
 WantedBy=multi-user.target
