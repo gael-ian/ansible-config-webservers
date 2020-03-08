@@ -4,3 +4,4 @@ base_packages:
   - rsync
   - bindfs
   - htop
+  - curl
