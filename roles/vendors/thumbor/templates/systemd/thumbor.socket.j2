@@ -7,5 +7,11 @@ SocketGroup=www-data
 SocketMode=0666
 ListenStream=/run/thumbor/thumbor.sock
 
+# thumbor use Tornado internaly, that first destroy a socket and recreate it before listening to it.
+# This is required so Tornado can deal with the socket. However, as socket is destroyed and created
+# on every launch, requests that happened in between will be losts when the whole point of managing
+# socket with systemd was to keep the socket open and be able to resume them once (re)started.
+DirectoryMode=0777
+
 [Install]
 WantedBy=sockets.target
