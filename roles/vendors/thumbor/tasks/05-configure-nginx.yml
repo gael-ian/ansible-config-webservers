@@ -22,7 +22,7 @@
   vars:
     vhost:
       name: thumbor
-      type: proxy
+      type: python-tornado
       domains: "{{ thumbor_config.vhost.domains }}"
       ssl: "{{ thumbor_config.vhost.ssl }}"
       owner: "{{ thumbor_config.vhost.owner | combine({ 'name': 'www-data' }) }}"
