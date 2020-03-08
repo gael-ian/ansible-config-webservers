@@ -10,5 +10,14 @@ Type=simple
 Restart=always
 ExecStart=/usr/local/bin/thumbor --fd /run/thumbor/thumbor.sock
 
+# Process owner identity
+User=thumbor
+Group=www-data
+
+# Security
+ProtectSystem=full  # Prevent writes to /usr, /boot and /etc
+ProtectHome=true    # Prevent accessing /home, /root and /run/user
+PrivateTmp=true     # Namespaced temp files
+
 [Install]
 WantedBy=multi-user.target
