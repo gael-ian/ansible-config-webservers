@@ -8,10 +8,10 @@ Requires=thumbor.socket
 [Service]
 Type=simple
 Restart=always
-ExecStart=/usr/local/bin/thumbor --fd /run/thumbor/thumbor.sock
+ExecStart=/usr/local/bin/thumbor --fd /run/thumbor/thumbor.sock --conf /etc/thumbor.conf
 
 # Process owner identity
-User=thumbor
+User=www-data
 Group=www-data
 
 # Security
