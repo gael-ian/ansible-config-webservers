@@ -2,7 +2,9 @@
 
 - name: install packages
   apt:
-    name: nginx
+    name:
+      - nginx
+      - apache2-utils # For htpasswd
     state: present
 
 - name: configure nginx
