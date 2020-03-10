@@ -23,3 +23,11 @@
     - regexp: "^X11Forwarding"
       line: "X11Forwarding {{ ssh_x11_forwarding }}"
   notify: restart ssh
+
+- name: configure SSH to not freeze
+  blockinfile:
+    dest: /etc/ssh/ssh_config
+    content: |
+      Host *
+        ClientAliveInterval {{ ssh_client_alive_interval }}
+  notify: restart ssh

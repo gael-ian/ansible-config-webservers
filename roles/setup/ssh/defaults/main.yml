@@ -1,4 +1,5 @@
 ---
+# /etc/ssh/sshd_config
 ssh_port: 22
 ssh_password_authentication: "no"
 ssh_permit_root_login: "no"
@@ -7,3 +8,6 @@ ssh_permit_empty_password: "no"
 ssh_challenge_response_auth: "no"
 ssh_gss_api_authentication: "no"
 ssh_x11_forwarding: "no"
+
+# /etc/ssh/ssh_config
+ssh_client_alive_interval: 60
