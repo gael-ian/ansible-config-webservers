@@ -4,8 +4,7 @@
 check process php-fpm with pidfile /run/php/php{{ php_version }}-fpm.pid
   group servers
   group php
-  
-  if cpu > 60% for 2 cycles then alert
+
   if 5 restarts with 5 cycles then alert
 
 
