@@ -17,6 +17,7 @@ check process thumbor-silent matching thumbor
   stop program = "/bin/systemctl stop thumbor.service"
 
   if cpu > 60% for 2 cycles then alert
+  if failed unixsocket /run/thumbor/thumbor.sock for 3 times within 4 cycles then restart
 
   depend on thumbor_bin
   depend on thumbor_rc
