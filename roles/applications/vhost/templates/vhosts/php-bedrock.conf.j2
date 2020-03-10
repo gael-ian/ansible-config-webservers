@@ -5,6 +5,8 @@
 server {
   {% include './partials/main.j2' %}
 
+  {% if 'prepend' in vhost %}{{ vhost.prepend }}{% endif %}
+
   index index.html index.htm index.php;
 
   location / {
@@ -30,6 +32,9 @@ server {
 
     fastcgi_pass php_fpm_{{ vhost.upstream.name | slugify('_') }};
   }
+
+  {% if 'append' in vhost %}{{ vhost.append }}{% endif %}
+
 }
 
 {% include './partials/domains-additionals.j2' %}

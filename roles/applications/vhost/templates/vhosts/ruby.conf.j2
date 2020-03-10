@@ -5,6 +5,8 @@
 server {
   {% include './partials/main.j2' %}
 
+  {% if 'prepend' in vhost %}{{ vhost.prepend }}{% endif %}
+
   index index.html;
   
   # Phusion Passenger
@@ -19,6 +21,9 @@ server {
 
   # Explicit domain required for rack / sinatra apps
   passenger_env_var SERVER_NAME {{ vhost.domains.main }};
+
+  {% if 'append' in vhost %}{{ vhost.append }}{% endif %}
+
 }
 
 passenger_pre_start http://{{ vhost.domains.main }};

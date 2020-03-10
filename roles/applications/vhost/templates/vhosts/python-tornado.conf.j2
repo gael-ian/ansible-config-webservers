@@ -5,6 +5,7 @@
 server {
   {% include './partials/main.j2' %}
 
+  {% if 'prepend' in vhost %}{{ vhost.prepend }}{% endif %}
 
   location / {
     proxy_redirect off;
@@ -15,6 +16,9 @@ server {
 
     proxy_pass http://{{ vhost.upstream.name }};
   }
+
+  {% if 'append' in vhost %}{{ vhost.append }}{% endif %}
+
 }
 
 {% include './partials/domains-additionals.j2' %}

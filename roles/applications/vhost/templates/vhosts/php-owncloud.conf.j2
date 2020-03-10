@@ -9,6 +9,8 @@ server {
   include /etc/nginx/partials.d/disable/crawling.conf;
   include /etc/nginx/partials.d/disable/embeding.conf;
 
+  {% if 'prepend' in vhost %}{{ vhost.prepend }}{% endif %}
+
   location = /.well-known/carddav {
     return 301 $scheme://$host:$server_port/remote.php/dav;
   }
@@ -84,6 +86,9 @@ server {
     include /etc/nginx/partials.d/disable/embeding.conf;
     include /etc/nginx/partials.d/disable/logging.conf;
   }
+
+  {% if 'append' in vhost %}{{ vhost.append }}{% endif %}
+
 }
 
 {% include './partials/domains-additionals.j2' %}
