@@ -5,3 +5,4 @@ base_packages:
   - bindfs
   - htop
   - curl
+  - python-passlib # Used by Ansible
