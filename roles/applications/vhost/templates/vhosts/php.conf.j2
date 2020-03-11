@@ -10,12 +10,14 @@ server {
   index index.html index.htm index.php;
   
   location / {
-    try_files $uri $uri/ @rewrite;
+    try_files $uri $uri/{{ ' @rewrite' if 'rewrite' in vhost }};
   }
 
+  {% if 'rewrite' in vhost %}
   location @rewrite {
-    rewrite {{ vhost.rewrite if 'rewrite' in vhost else '^ /index.php$uri' }};
+    rewrite {{ vhost.rewrite }};
   }
+  {% endif %}
   
   location ~ \.php$ {
     # Default PHP configuration
