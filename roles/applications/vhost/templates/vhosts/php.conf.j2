@@ -10,10 +10,10 @@ server {
   index index.html index.htm index.php;
   
   location / {
-    try_files $uri $uri/{{ ' @rewrite' if 'rewrite' in vhost }};
+    try_files $uri $uri/{{ ' @rewrite' if 'rewrite' in vhost and vhost.rewrite != '' }};
   }
 
-  {% if 'rewrite' in vhost %}
+  {% if 'rewrite' in vhost and vhost.rewrite != '' %}
   location @rewrite {
     rewrite {{ vhost.rewrite }};
   }
