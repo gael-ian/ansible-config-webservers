@@ -1,10 +1,10 @@
 # Color definition
-FONT_BOLD='\e[1m'
-FONT_RESET='\e[0m'
-COLOR_GREEN='\e[92m'
-COLOR_BLUE='\e[94m'
-COLOR_RED='\e[91m'
-COLOR_RESET='\e[39m'
+FONT_BOLD='\e[1m\]'
+FONT_RESET='\e[0m\]'
+COLOR_GREEN='\e[0;92m\]'
+COLOR_BLUE='\e[0;94m\]'
+COLOR_RED='\e[0;91m\]'
+COLOR_RESET='\e[0;39m\]'
 
 ps1() {
   # Check the exit code of the previous command and display different
@@ -29,7 +29,7 @@ ps1() {
   local host="@${COLOR_GREEN}\h${COLOR_RESET}"
   local cwd="${COLOR_BLUE}\w${COLOR_RESET}"
 
-  PS1="[${status}] ${FONT_BOLD}${user}${host}:${FONT_RESET}${cwd} \$ "
+  PS1="[${status}] ${FONT_BOLD}${user}${host}:${FONT_RESET}${cwd} \n\$ "
 }
 
 export PROMPT_DIRTRIM=3
