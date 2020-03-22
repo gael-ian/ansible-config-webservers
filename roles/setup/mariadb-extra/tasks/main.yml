@@ -87,3 +87,19 @@
     user: "{{ mariadb_backup.database.user }}"
     job: "backup-sync"
     special_time: daily
+
+- name: ensure log directory exists
+  file:
+    state: directory
+    path: /var/backups/log/
+    owner: "{{ mariadb_backup.database.user }}"
+    group: "{{ mariadb_backup.database.user }}"
+    mode: "u=rwX,g=rX,o=rX"
+
+- name: configure log rotation
+  template:
+    src: "logrotate.conf.j2"
+    dest: "/etc/logrotate.d/mariadb-backups"
+    owner: root
+    group: root
+    mode: 0644

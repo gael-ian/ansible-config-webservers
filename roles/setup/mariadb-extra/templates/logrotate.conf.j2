@@ -1,0 +1,13 @@
+# {{ ansible_managed }}
+
+/var/backups/log/*.log {
+  create 660 {{ mariadb_backup.database.user }} {{ mariadb_backup.database.user }}
+  weekly
+  missingok
+  rotate 52
+  copytruncate
+  compress
+  delaycompress
+  notifempty
+  nomail
+}
