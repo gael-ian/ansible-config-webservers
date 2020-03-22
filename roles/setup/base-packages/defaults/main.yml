@@ -1,8 +1,14 @@
 ---
 base_packages:
-  - git
   - rsync
   - bindfs
   - htop
   - curl
-  - python-passlib # Used by Ansible
+
+  # Used by Ansible
+  - python-passlib
+
+  # Used by Capistrano
+  - git
+  - ruby
+  - bundler
