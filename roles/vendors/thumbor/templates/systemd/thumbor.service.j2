@@ -10,11 +10,16 @@ Requires=thumbor.socket
 [Service]
 Type=simple
 Restart=always
-ExecStart=/usr/local/bin/thumbor --fd /run/thumbor/thumbor.sock --conf /etc/thumbor.conf
-
-# Process owner identity
-User=www-data
+User=thumbor
 Group=www-data
+
+# See https://www.freedesktop.org/software/systemd/man/sd_listen_fds.html#Description
+# Sockets declared in .socket units are passed to their associated services as
+# incremental file descriptors, starting from 3.
+ExecStart=/usr/local/bin/thumbor --fd 3 --conf /etc/thumbor.conf
+
+# Sockets options
+NonBlocking=true
 
 # Security
 # Prevent writes to /usr, /boot and /etc

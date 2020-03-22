@@ -6,19 +6,9 @@ Description=Thumbor Socket
 [Socket]
 ListenStream=/run/thumbor/thumbor.sock
 
-# thumbor uses Tornado internaly, that first destroys a socket and recreates it before listening to it.
-# Setting DirectoryMode is required so Tornado can do that in a directory owned by root (as there's no
-# way to set socket's directory owner in systemd).
-#
-# However, as socket is destroyed and recreated on every launch, requests that happened in between will
-# be losts when the whole point of managing socket with systemd is to keep the socket open and be able
-# to resume them once (re)started.
-DirectoryMode=0777
-
-# Mimic owner, group and permissions of sockets created by Tornado
-SocketUser=www-data
+SocketUser=thumbor
 SocketGroup=www-data
-SocketMode=0600
+SocketMode=0660
 
 [Install]
 WantedBy=sockets.target
