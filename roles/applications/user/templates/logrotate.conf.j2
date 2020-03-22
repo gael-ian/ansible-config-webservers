@@ -1,0 +1,13 @@
+# {{ ansible_managed }}
+
+/home/{{ user.name }}/log/crons.log {
+  create 660 {{ user.name }} applications
+  weekly
+  missingok
+  rotate 52
+  copytruncate
+  compress
+  delaycompress
+  notifempty
+  nomail
+}

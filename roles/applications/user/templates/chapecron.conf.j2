@@ -1,0 +1,7 @@
+# {{ ansible_managed }}
+
+# chapecron configuration
+# See <https://github.com/notus-sh/chapecron> for documentation.
+
+middlewares=chapecron::log
+log.path=/home/{{ user.name }}/log/crons/crons.log

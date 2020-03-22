@@ -19,3 +19,28 @@
     user: "{{ user.name }}"
     key: "{{ lookup('file', '{{ user.key }}') }}"
     state: present
+
+- name: configure chapecron
+  template:
+    src: chapecron.conf.j2
+    dest: "/home/{{ user.name }}/.config/chapecron/chapecron.conf"
+    user: "{{ user.name }}"
+    group: applications
+    mode: "u=rwX,g=rX,o=rX"
+    state: present
+
+- name: ensure chapecron logs directory exists
+  file:
+    state: directory
+    path: "/home/{{ user.name }}/log/crons"
+    user: "{{ user.name }}"
+    group: applications
+    mode: "u=rwX,g=rX,o=rX"
+
+- name: configure chapecron log rotation
+  template:
+    src: logrotate.conf.j2
+    dest: "/etc/logrotate.d/chapecron.{{ user.name }}"
+    owner: root
+    group: root
+    mode: 0644
