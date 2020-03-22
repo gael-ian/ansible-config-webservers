@@ -25,16 +25,31 @@
     system: yes
     state: present
 
+- name: ensure backup directory exists
+  file:
+    state: directory
+    path: /var/backups/mysql/
+    owner: "{{ mariadb_backup.database.user }}"
+    group: "{{ mariadb_backup.database.user }}"
+    mode: "u=rwX,g=rX,o=rX"
+
 - name: create database backup user
   mysql_user:
     name: "{{ mariadb_backup.database.user }}"
     password: "{{ mariadb_backup.database.pass }}"
-    priv: "*.*:{{ privileges | join('/*.*:') }}"
+    priv: "*.*:USAGE"
     host: localhost
     append_privs: no
     state: present
-  vars:
-    privileges: ['SELECT', 'SHOW VIEW', 'TRIGGER', 'EVENT', 'LOCK TABLES', 'RELOAD']
+
+- name: grant privileges on database user
+  mysql_user:
+    name: "{{ mariadb_backup.database.user }}"
+    priv: "*.*:{{ item }}"
+    host: localhost
+    append_privs: yes
+    state: present
+  with_items: ['SELECT', 'SHOW VIEW', 'TRIGGER', 'EVENT', 'LOCK TABLES', 'RELOAD']
 
 - name: configure backup credentials
   template:
