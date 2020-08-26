@@ -14,6 +14,7 @@
     host: localhost
     append_privs: no
     state: present
+  no_log: True
 
 - name: configure owncloud
   become: yes

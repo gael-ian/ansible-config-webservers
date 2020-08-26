@@ -41,6 +41,7 @@
     host: localhost
     append_privs: no
     state: present
+  no_log: True
 
 - name: grant privileges on database user
   mysql_user:
@@ -49,6 +50,7 @@
     host: localhost
     append_privs: yes
     state: present
+  no_log: True
   with_items: ['SELECT', 'SHOW VIEW', 'TRIGGER', 'EVENT', 'LOCK TABLES', 'RELOAD']
 
 - name: configure backup credentials

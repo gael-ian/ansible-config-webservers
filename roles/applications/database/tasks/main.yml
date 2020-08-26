@@ -15,4 +15,5 @@
       host: localhost
       append_privs: no
       state: present
+    no_log: True
   when: inventory_hostname in database.servers
