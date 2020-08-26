@@ -21,6 +21,7 @@
       get_url:
         url: "{{composer.url}}"
         dest: "{{composer.temp_installer_path}}"
+        mode: 0644
 
     - name: get Composer installer signature
       shell: |

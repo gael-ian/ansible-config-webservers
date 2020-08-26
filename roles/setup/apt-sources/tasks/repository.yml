@@ -28,6 +28,7 @@
     filename: "{{ repository.key }}"
     repo: "{{ item }}"
     state: present
+    mode: 0644
     update_cache: yes
   with_items: "{{ repository.value.repos }}"
   when: ('repos' in repository.value)
