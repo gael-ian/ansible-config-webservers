@@ -1,6 +1,6 @@
 ---
 
-mariadb_version: 10.4
+mariadb_version: 10.5
 
 # Additional repositories for MariaDB
 apt_sources_repositories:
