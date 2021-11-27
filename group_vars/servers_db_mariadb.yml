@@ -1,6 +1,6 @@
 ---
 
-mariadb_version: 10.5
+mariadb_version: 10.6
 
 # Additional repositories for MariaDB
 apt_sources_repositories:
@@ -8,7 +8,8 @@ apt_sources_repositories:
     dependencies:
       - software-properties-common
       - dirmngr
+      - apt-transport-https
     signing_keys:
-      - url: https://downloads.mariadb.com/MariaDB/mariadb-keyring-2019.gpg
+      - url: https://mariadb.org/mariadb_release_signing_key.asc
     repos:
-      - "deb http://downloads.mariadb.com/MariaDB/mariadb-{{ mariadb_version }}/repo/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} main"
+      - "deb https://ftp.igh.cnrs.fr/pub/mariadb/repo/{{ mariadb_version }}/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} main"
