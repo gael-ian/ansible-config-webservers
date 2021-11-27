@@ -7,7 +7,7 @@
 #
 # Please refer to included playbooks for details about
 # installed services and their configuration. Each of
-# them can be run independantly.
+# them can be run independently.
 
 ## Basic setup for every machine
 - import_playbook: 02.1-setup-system.yml
