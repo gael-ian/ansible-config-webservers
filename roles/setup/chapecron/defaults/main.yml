@@ -1,0 +1,7 @@
+apt_sources_repositories:
+  notus.sh-bintray:
+    signing_keys:
+      - id: "379CE192D401AB61"
+        url: https://bintray.com/user/downloadSubjectPublicKey?username=bintray
+    repos:
+      - "deb https://dl.bintray.com/notus-sh/oss-debian {{ ansible_distribution_release }} main"
