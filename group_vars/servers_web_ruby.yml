@@ -1,6 +1,6 @@
 ---
 
-ruby_version: 2.7.1
+ruby_version: 3.0.3
 
 # Additional repositories for Ruby
 apt_sources_repositories:
@@ -22,7 +22,7 @@ apt_sources_repositories:
     signing_keys:
       - url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
     repos:
-      - "deb https://deb.nodesource.com/node_14.x {{ ansible_distribution_release }} main"
+      - "deb https://deb.nodesource.com/node_16.x {{ ansible_distribution_release }} main"
   yarnpkg.com:
     signing_keys:
       - url: https://dl.yarnpkg.com/debian/pubkey.gpg
