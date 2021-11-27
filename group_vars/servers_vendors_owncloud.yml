@@ -4,6 +4,6 @@
 apt_sources_repositories:
   owncloud-official:
     signing_keys:
-      - url: "https://download.owncloud.org/download/repositories/production/Debian_10/Release.key"
+      - url: "https://download.opensuse.org/repositories/isv:ownCloud:server:10/Debian_11/Release.key"
     repos:
-      - "deb http://download.owncloud.org/download/repositories/production/Debian_10/ /"
+      - "deb http://download.opensuse.org/repositories/isv:/ownCloud:/server:/10/Debian_11/ /"
