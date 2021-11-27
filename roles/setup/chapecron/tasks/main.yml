@@ -1,5 +1,16 @@
 ---
-- name: install package
-  apt:
-    name: chapecron
-    state: present
+- name: test if chapecron is installed
+  command: 'chapecron --help 1>&2 2>/dev/null'
+  register: chapecron_installed
+  changed_when: false
+
+- name: install chapecron
+  command: |
+    git clone {{ chapecron_repository }} chapecron && \
+    cd chapecron && \
+    make && \
+    make install
+  when: (chapecron_installed | bool)
+
+- name: ensure chapecron installation files do not exist
+  command: '[[ -d chapecron ]] && rm -rf chapecron'
