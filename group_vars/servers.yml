@@ -4,13 +4,6 @@ notifications_recipients: []
 
 administrable_update_administrator_password: false
 
-# Additional repositories for monit
-apt_sources_repositories:
-  buster-backports:
-    repos:
-      - "deb http://deb.debian.org/debian buster-backports main"
-    # Backports repos automatically gets a lower priority (100) so no need to specify any preferences
-
 # Monit configuration
 monit_enable_status: false
 
