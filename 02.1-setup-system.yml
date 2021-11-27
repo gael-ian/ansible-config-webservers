@@ -97,7 +97,3 @@
       monit_service:
         name: postfix
         template: postfix.j2
-
-
-    # Install chapecron
-    - role: chapecron
