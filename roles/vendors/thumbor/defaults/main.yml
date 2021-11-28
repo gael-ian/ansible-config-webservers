@@ -4,7 +4,7 @@ thumbor_config:
   # allowed_sources: []
 
 thumbor_dependencies:
-  - python-pip
+  - python3-pip
   # Required libc6 version
   - 'libc6=2.29-*'
   - 'libc-bin=2.29-*'
@@ -15,7 +15,7 @@ thumbor_dependencies:
   - libcurl4-openssl-dev
   - libssl-dev
   # OpenCV support
-  - python-opencv
+  - python3-opencv
   - libopencv-dev
   # Image format packages
   - libjpeg-dev

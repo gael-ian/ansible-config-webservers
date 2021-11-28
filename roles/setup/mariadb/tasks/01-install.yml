@@ -1,7 +1,7 @@
 ---
 - name: install packages
   apt:
-    name: "{{ mariadb_packages | union(['python-mysqldb']) }}"
+    name: "{{ mariadb_packages | union(['python3-mysqldb']) }}"
     state: present
   register: mariadb_install_packages_task
 
