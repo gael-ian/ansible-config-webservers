@@ -6,7 +6,7 @@ base_packages:
   - curl
 
   # Used by Ansible
-  - python-passlib
+  - python3-passlib
 
   # Used by Capistrano
   - git
