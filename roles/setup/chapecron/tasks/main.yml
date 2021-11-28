@@ -1,16 +1,38 @@
 ---
-- name: test if chapecron is installed
-  command: 'chapecron --help 1>&2 2>/dev/null'
-  register: chapecron_installed
-  changed_when: false
+- name: check if chapecron is installed
+  stat:
+    path: "{{chapecron.path}}"
+  register: chapecron_path
 
-- name: install chapecron
-  command: |
-    git clone {{ chapecron_repository }} chapecron && \
-    cd chapecron && \
-    make && \
-    make install
-  when: (chapecron_installed | bool)
+- block:
+  - name: download archive
+    get_url:
+      url: "{{chapecron.archive_url}}"
+      dest: "{{chapecron.archive_path}}"
 
-- name: ensure chapecron installation files do not exist
-  command: '[[ -d chapecron ]] && rm -rf chapecron'
+  - name: extract archive
+    ansible.builtin.unarchive:
+      remote_src: yes
+      src: "{{chapecron.archive_path}}"
+      dest: "{{chapecron.extract_path}}"
+
+  - name: build chapecron
+    community.general.make:
+      chdir: "{{chapecron.installer_path}}"
+
+  - name: install chapecron
+    become: yes
+    community.general.make:
+      chdir: "{{chapecron.installer_path}}"
+      target: install
+
+  - name: remove installer
+    file:
+      path: "{{chapecron.installer_path}}"
+      state: absent
+
+  - name: remove archive
+    file:
+      path: "{{chapecron.archive_path}}"
+      state: absent
+  when: "chapecron_path.stat.exists == False"

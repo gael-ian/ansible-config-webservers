@@ -1,1 +1,8 @@
-chapecron_repository: https://github.com/notus-sh/chapecron.git
+chapecron_version: 1.2.0
+
+chapecron:
+  archive_url: "https://github.com/notus-sh/chapecron/archive/refs/tags/v{{chapecron_version}}.tar.gz"
+  archive_path: /tmp/chapecron.tar.gz
+  extract_path: /tmp/
+  installer_path: "/tmp/chapecron-{{chapecron_version}}"
+  path: /usr/local/bin/chapecron
