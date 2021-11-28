@@ -1,6 +1,6 @@
 ---
 - name: create vhost
-  include_role:
+  ansible.builtin.include_role:
     name: vhost
   vars:
     vhost:

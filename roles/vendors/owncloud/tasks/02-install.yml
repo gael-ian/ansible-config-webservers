@@ -1,13 +1,13 @@
 ---
 - name: create owncloud database
-  mysql_db:
+  community.mysql.mysql_db:
     name: "{{ owncloud_config.database.name }}"
     collation: 'utf8_general_ci'
     encoding: 'utf8'
     state: present
 
 - name: create owncloud database user
-  mysql_user:
+  community.mysql.mysql_user:
     name: "{{ owncloud_config.database.user }}"
     password: "{{ owncloud_config.database.pass }}"
     priv: "{{ owncloud_config.database.name }}.*:ALL"
@@ -22,7 +22,7 @@
   become_method: sudo
   args:
     chdir: "/var/www/owncloud/"
-  shell: |
+  ansible.builtin.shell: |
     ./occ maintenance:install \
       --database "{{ owncloud_config.database.type | quote }}" \
       --database-host "{{ owncloud_config.database.host | quote }}" \

@@ -1,6 +1,6 @@
 ---
 - name: create configuration directories
-  file:
+  ansible.builtin.file:
     path: "/etc/nginx/{{ item }}"
     state: directory
     owner: root
@@ -14,7 +14,7 @@
     - certificates.d
 
 - name: copy additional configuration files
-  copy:
+  ansible.builtin.copy:
     src: "{{ item }}"
     dest: "/etc/nginx/{{ item }}"
     owner: root
@@ -35,7 +35,7 @@
     - reload nginx    
 
 - name: copy configuration partials
-  synchronize:
+  ansible.posix.synchronize:
     src: partials.d/
     dest: /etc/nginx/partials.d/
     delete: yes
@@ -43,7 +43,7 @@
     - reload nginx
 
 - name: set permissions on configuration directories
-  file:
+  ansible.builtin.file:
     path: "/etc/nginx/{{ item }}"
     state: directory
     owner: root
@@ -55,7 +55,7 @@
     - partials.d
 
 - name: copy main configuration file
-  copy:
+  ansible.builtin.copy:
     src: nginx.conf
     dest: /etc/nginx/nginx.conf
     owner: root
@@ -65,7 +65,7 @@
     - reload nginx
 
 - name: create default vhost directory
-  file:
+  ansible.builtin.file:
     path: /var/www/default
     state: directory
     owner: root
@@ -74,12 +74,12 @@
     recurse: yes
 
 - name: remove default vhost configuration
-  file:
+  ansible.builtin.file:
     path: /etc/nginx/conf.d/default.conf
     state: absent
 
 - name: setup default vhost
-  copy:
+  ansible.builtin.copy:
     src: default
     dest: /etc/nginx/sites-available/default
     owner: root
@@ -87,7 +87,7 @@
     mode: 0644
 
 - name: enable default vhost
-  file:
+  ansible.builtin.file:
     state: link
     src: /etc/nginx/sites-available/default
     dest: /etc/nginx/sites-enabled/default

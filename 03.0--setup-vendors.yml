@@ -10,7 +10,7 @@
 # them can be run independantly.
 
 ## ownCloud
-- import_playbook: 03.1-setup-owncloud.yml
+- ansible.builtin.import_playbook: 03.1-setup-owncloud.yml
 
 ## thumbor
-- import_playbook: 03.2-setup-thumbor.yml
+- ansible.builtin.import_playbook: 03.2-setup-thumbor.yml

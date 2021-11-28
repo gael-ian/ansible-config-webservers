@@ -1,11 +1,11 @@
 ---
 - name: install packages
-  apt:
+  ansible.builtin.apt:
     name: "{{ redis_packages }}"
     state: present
 
 - name: enable service at boot and start it
-  service:
+  ansible.builtin.service:
     name: redis-server
     state: started
     enabled: yes

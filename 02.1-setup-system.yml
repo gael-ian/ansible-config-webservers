@@ -19,14 +19,14 @@
     - vault/backups.yml
 
   module_defaults:
-    apt:
+    ansible.builtin.apt:
       autoclean: yes
       autoremove: yes
       cache_valid_time: 360
 
   pre_tasks:
     - name: list SSH hosts keys
-      find:
+      ansible.builtin.find:
         paths: /etc/ssh
         patterns: 'ssh_host_*_key*'
         file_type: file

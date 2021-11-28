@@ -1,6 +1,6 @@
 ---
 - name: configure postfix as a send-only MTA
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: /etc/postfix/main.cf
     line: "{{ item.name }} = {{ item.value }}"
     regexp: "^#?{{ item.name }} ="
@@ -23,7 +23,7 @@
   notify: restart postfix
 
 - name: configure aliases for system accounts
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: /etc/aliases
     line: "{{ item.name }}: {{ item.value }}"
     regexp: "^#?{{ item.name }} :"

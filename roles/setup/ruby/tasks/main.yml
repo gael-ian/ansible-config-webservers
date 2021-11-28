@@ -1,22 +1,22 @@
 ---
 - name: define default ruby version
-  set_fact:
+  ansible.builtin.set_fact:
     rvm_default_ruby_version: "ruby-{{ ruby_version }}"
 
 - name: check rvm installation
-  stat:
+  ansible.builtin.stat:
     path: /etc/profile.d/rvm.sh
   ignore_errors: True
   register: rvm_install_result
 
 - name: install rvm
-  include_tasks: 01-install-rvm.yml
+  ansible.builtin.include_tasks: 01-install-rvm.yml
   when: rvm_install_result.stat.exists != true
 
 - name: update rvm
-  shell: "{{ rvm.path }} get stable executable=/bin/bash"
+  ansible.builtin.shell: "{{ rvm.path }} get stable executable=/bin/bash"
   when: rvm_auto_update_rvm and rvm_install_result.stat.exists == true
 
 - name: install ruby
-  include_tasks: 02-install-ruby.yml
+  ansible.builtin.include_tasks: 02-install-ruby.yml
   when: rvm_install_result.stat.exists != true

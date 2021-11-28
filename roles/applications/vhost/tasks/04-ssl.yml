@@ -1,19 +1,19 @@
 ---
 - name: compile certificate path
-  set_fact:
+  ansible.builtin.set_fact:
     cert_path: "/etc/letsencrypt/live/{{ vhost.domains.main }}/"
 
 - name: check certificate
-  stat:
+  ansible.builtin.stat:
     path: "{{ cert_path }}"
   register: cert_file
 
 - name: compile SSL options
-  set_fact:
+  ansible.builtin.set_fact:
     certificate_needed: "{{ vhost.ssl and not cert_file.stat.exists }}"
 
 - name: create certificate
-  include_role:
+  ansible.builtin.include_role:
     role: certificate
   vars:
     owner: "{{ vhost.owner }}"
@@ -22,7 +22,7 @@
   when: certificate_needed
 
 - name: create certificates folder
-  file:
+  ansible.builtin.file:
     state: directory
     path:  "{{ nginx.certificate | dirname }}"
     owner: root
@@ -30,7 +30,7 @@
     mode:  0755
 
 - name: create SSL config file
-  template:
+  ansible.builtin.template:
     src: certificate.j2
     dest: "{{ nginx.certificate }}.ssl.conf"
     owner: root

@@ -1,14 +1,14 @@
 ---
 - name: install packages
-  package:
+  ansible.builtin.apt:
     name: postfix
     state: present
 
 - name: configure postfix
-  import_tasks: configure.yml
+  ansible.builtin.import_tasks: configure.yml
 
 - name: enable postfix at boot and start it
-  service:
+  ansible.builtin.service:
     name: postfix
     state: started
     enabled: yes

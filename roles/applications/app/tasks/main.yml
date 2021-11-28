@@ -1,15 +1,15 @@
 ---
 - name: load application configuration file
-  include_vars:
+  ansible.builtin.include_vars:
     file: "{{ application_config_file }}"
     name: __application_config
 
 - name: extract application configuration
-  set_fact:
+  ansible.builtin.set_fact:
     application_config: "{{ __application_config.application }}"
 
 - name: configure environment
-  include_role:
+  ansible.builtin.include_role:
     name: environment
   with_items: "{{ application_environments }}"
   loop_control:

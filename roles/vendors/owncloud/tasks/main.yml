@@ -1,22 +1,22 @@
 ---
 - name: install packages
-  include_tasks: 01-packages.yml
+  ansible.builtin.include_tasks: 01-packages.yml
 
 - name: check if owncloud configuration exist
   become: yes
   become_user: www-data
   become_method: sudo
-  shell:
+  ansible.builtin.shell:
     chdir: "/var/www/owncloud/"
     cmd: ./occ maintenance:install --help 2>&1 | grep 'Usage:'
   failed_when: False
   register: occ_result
 
 - name: set fact about owncloud configuration
-  set_fact:
+  ansible.builtin.set_fact:
     owncloud_needs_to_be_installed: "{{ occ_result.rc == 0 }}"
 
-- debug:
+- ansible.builtin.debug:
     msg: |
       'occ maintenance:install' is not available. It means ownCloud considers itself as installed.
       This playbook is not able to alter ownCloud configurations such as database, data directory and admin account.
@@ -24,14 +24,14 @@
   when: not owncloud_needs_to_be_installed
 
 - name: install owncloud
-  include_tasks: 02-install.yml
+  ansible.builtin.include_tasks: 02-install.yml
   when: owncloud_needs_to_be_installed
 
 - name: secure owncloud
-  include_tasks: 03-secure.yml
+  ansible.builtin.include_tasks: 03-secure.yml
 
 - name: configure owncloud
-  include_tasks: 04-configure.yml
+  ansible.builtin.include_tasks: 04-configure.yml
 
 - name: setup vhost
-  include_tasks: 05-vhost.yml
+  ansible.builtin.include_tasks: 05-vhost.yml

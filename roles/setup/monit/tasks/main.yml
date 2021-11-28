@@ -1,11 +1,11 @@
 ---
 - name: install packages
-  apt:
+  ansible.builtin.apt:
     pkg: monit
     state: present
 
 - name: configure alerts
-  template:
+  ansible.builtin.template:
     src: mail.conf.j2
     dest: /etc/monit/conf.d/mail.conf
     owner: root
@@ -15,7 +15,7 @@
     - restart monit
 
 - name: create a template for silent services
-  template:
+  ansible.builtin.template:
     src: silent.j2
     dest: /etc/monit/templates/silent
     owner: root
@@ -25,7 +25,7 @@
     - restart monit
 
 - name: configure status server
-  copy:
+  ansible.builtin.copy:
     src: web.conf
     dest: /etc/monit/conf.d/web.conf
     owner: root
@@ -36,7 +36,7 @@
     - restart monit
 
 - name: create a directory for services definition
-  file:
+  ansible.builtin.file:
     state: directory
     path: /etc/monit/services.d/
     owner: root
@@ -44,7 +44,7 @@
     mode: 0755
 
 - name: autoload services from the dedicated directory
-  copy:
+  ansible.builtin.copy:
     src: services.conf
     dest: /etc/monit/conf.d/services.conf
     owner: root

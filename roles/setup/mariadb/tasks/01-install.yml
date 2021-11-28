@@ -1,30 +1,30 @@
 ---
 - name: install packages
-  apt:
+  ansible.builtin.apt:
     name: "{{ mariadb_packages | union(['python3-mysqldb']) }}"
     state: present
   register: mariadb_install_packages_task
 
 - name: check packages installation
-  set_fact:
+  ansible.builtin.set_fact:
     mariadb_packages_installed: "{{ (mariadb_install_packages_task is defined and mariadb_install_packages_task.changed) }}"
 
 - block:
     # Because Ubuntu starts MySQL as part of the install process, we need to stop
     # mysql and remove the logfiles in case the user set a custom log file size.
     - name: stop after initial install
-      service:
+      ansible.builtin.service:
         name: mysql
         state: stopped
 
     - name: delete innodb log files created by apt package
-      file:
+      ansible.builtin.file:
         path: "/var/lib/mysql/{{item}}"
         state: absent
       with_items: [ "ib_logfile0", "ib_logfile1" ]
 
     - name: delete binary log files
-      file:
+      ansible.builtin.file:
         path: "/var/log/mysql/{{item}}"
         state: absent
       with_items: [ "mariadb-bin.000001", "mariadb-bin.index", "mariadb-bin.state" ]

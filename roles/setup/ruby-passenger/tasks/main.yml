@@ -1,21 +1,21 @@
 ---
 - name: install packages
-  apt:
+  ansible.builtin.apt:
     name: libnginx-mod-http-passenger
     state: present
 
 - name: check nginx installation
-  stat:
+  ansible.builtin.stat:
     path: /usr/sbin/nginx
   ignore_errors: True
   register: nginx_install_result
 
 - name: set fact about nginx
-  set_fact:
+  ansible.builtin.set_fact:
     nginx_installed: "{{ nginx_install_result.stat.exists == true }}"
 
 - name: create log directory
-  file:
+  ansible.builtin.file:
     state: directory
     path: /var/log/passenger/
     owner: www-data
@@ -23,7 +23,7 @@
     mode: 0750
 
 - name: configure log rotation
-  template:
+  ansible.builtin.template:
     src: logrotate.conf.j2
     dest: /etc/logrotate.d/passenger
     owner: root
@@ -32,19 +32,19 @@
   notify: restart nginx if exists
 
 - name: get passenger_root
-  shell: "passenger-config --root"
+  ansible.builtin.shell: "passenger-config --root"
   register: passenger_root_path
 
 - name: get passenger_ruby
-  shell: "passenger-config about ruby-command | egrep 'Command:' | cut -d':' -f2"
+  ansible.builtin.shell: "passenger-config about ruby-command | egrep 'Command:' | cut -d':' -f2"
   register: passenger_ruby_path
 
 - name: get rvm_ruby
-  shell: "/usr/local/rvm/bin/rvm info {{ ruby_version }} | grep -A4 binaries: | grep ruby: | cut -d'\"' -f2"
+  ansible.builtin.shell: "/usr/local/rvm/bin/rvm info {{ ruby_version }} | grep -A4 binaries: | grep ruby: | cut -d'\"' -f2"
   register: rvm_ruby_path
 
 - name: enable Passenger module for nginx
-  file:
+  ansible.builtin.file:
     src: /usr/share/nginx/modules-available/mod-http-passenger.load
     dest: /etc/nginx/modules-enabled/50-mod-http-passenger.conf
     state: link
@@ -54,7 +54,7 @@
   notify: restart nginx if exists
 
 - name: create nginx additional configurations directory
-  file:
+  ansible.builtin.file:
     path: /etc/nginx/conf.d/additionals/
     state: directory
     owner: root
@@ -62,7 +62,7 @@
     mode: 0755
 
 - name: configure Passenger for nginx
-  template:
+  ansible.builtin.template:
     src: nginx.conf.j2
     dest: /etc/nginx/conf.d/additionals/passenger.conf
     owner: root

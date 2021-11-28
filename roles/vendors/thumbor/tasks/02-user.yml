@@ -1,6 +1,6 @@
 ---
 - name: create system user
-  user:
+  ansible.builtin.user:
     name: thumbor
     comment: Thumbor Server
     system: true

@@ -1,6 +1,6 @@
 ---
 - name: install packages
-  apt:
+  ansible.builtin.apt:
     name:
       - curl
       - gnupg
@@ -8,32 +8,36 @@
     state: present
 
 - name: add GPG key
-  command: gpg --keyserver hkp://pool.sks-keyservers.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+  ansible.builtin.command: |
+    gpg --keyserver hkp://pool.sks-keyservers.net \
+        --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 \
+        7D2BAF1CF37B13E2069D6956105BD0E739499BDB
 
 - name: download installer
-  get_url:
+  ansible.builtin.get_url:
     url: "{{rvm.url}}"
     dest: "{{rvm.temp_installer_path}}"
 
 - name: set the installer as executable
-  file:
+  ansible.builtin.file:
     path: "{{rvm.temp_installer_path}}"
     mode: 0755
 
 - name: install rvm
-  command: "{{rvm.temp_installer_path}} stable"
+  ansible.builtin.command: "{{rvm.temp_installer_path}} stable"
 
 - name: remove installer
-  file:
+  ansible.builtin.file:
     path: "{{rvm.temp_installer_path}}"
     state: absent
 
 - name: enable rvm autolibs as root
-  command: "/usr/local/rvm/bin/rvm autolibs 3"
+  ansible.builtin.command: "/usr/local/rvm/bin/rvm autolibs 3"
 
 - name: add current user to the rvm group
-  shell: usermod -a -G rvm `whoami`
+  ansible.builtin.shell: usermod -a -G rvm `whoami`
   
 - name: configure rvmsudo_secure_path
-  shell: if sudo grep -q secure_path /etc/sudoers; then sudo sh -c "echo export rvmsudo_secure_path=1 >> /etc/profile.d/rvm_secure_path.sh"; fi
+  ansible.builtin.shell: |
+    if sudo grep -q secure_path /etc/sudoers; then sudo sh -c "echo export rvmsudo_secure_path=1 >> /etc/profile.d/rvm_secure_path.sh"; fi
 

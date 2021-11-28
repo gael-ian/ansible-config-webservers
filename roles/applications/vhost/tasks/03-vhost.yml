@@ -1,6 +1,6 @@
 ---
 - name: create vhost
-  template:
+  ansible.builtin.template:
     src: "vhosts/{{ vhost.type }}.conf.j2"
     dest: "{{ nginx.vhost }}"
     owner: root
@@ -10,23 +10,23 @@
     - reload nginx
 
 - name: extract vhost root path
-  slurp:
+  ansible.builtin.slurp:
     src: "{{ nginx.vhost }}"
   register: base64_vhost
 
 - name: extract vhost root path
-  set_fact:
+  ansible.builtin.set_fact:
     extracted_root_path: "{{ vhost_content | regex_search(root_pattern) | regex_replace(root_pattern, '\\1') }}"
   vars:
     vhost_content: "{{ base64_vhost['content'] | b64decode }}"
     root_pattern: "root ([^;]+);"
 
 - name: combine vhost root path
-  set_fact:
+  ansible.builtin.set_fact:
     nginx: "{{ nginx | combine({ 'root': extracted_root_path }) }}"
 
 - name: create vhost root directory
-  file:
+  ansible.builtin.file:
     state: directory
     path:  "{{ nginx.root }}"
     owner: "{{ vhost.owner.name }}"
@@ -34,7 +34,7 @@
     mode: "u=rwX,g=rwX,o=X"
 
 - name: enable vhost
-  file:
+  ansible.builtin.file:
     state: link
     src: "{{ nginx.vhost }}"
     dest: "/etc/nginx/sites-enabled/{{ nginx.vhost | basename }}"

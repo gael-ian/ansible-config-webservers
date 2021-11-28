@@ -1,16 +1,16 @@
 ---
 - name: create group 'administrators'
-  group:
+  ansible.builtin.group:
     name: administrators
     state: present
 
 - name: create group 'applications'
-  group:
+  ansible.builtin.group:
     name: applications
     state: present
 
 - name: create administrator account
-  user:
+  ansible.builtin.user:
     name: "{{ administrator.user }}"
     comment: Administrator account
     password: "{{ administrator.pass | password_hash('sha512') }}"
@@ -23,18 +23,18 @@
     update_password: "{{ ('always' if administrable_update_administrator_password else 'on_create') }}"
 
 - name: authorize administrator key for SSH connections
-  authorized_key:
+  ansible.posix.authorized_key:
     user: administrator
     key: "{{ lookup('file', administrator.key) }}"
     state: present
 
 - name: install sudo
-  apt:
+  ansible.builtin.apt:
     name: sudo
     state: present
 
 - name: allow members of 'administrators' to use sudo
-  copy:
+  ansible.builtin.copy:
     src: administrators
     dest: /etc/sudoers.d/administrators
     owner: root
@@ -42,12 +42,12 @@
     mode: 0440
 
 - name: install acl (used by Ansible)
-  apt:
+  ansible.builtin.apt:
     name: acl
     state: present
 
 - name: configure shell
-  copy:
+  ansible.builtin.copy:
     src: "shell-config/{{ item }}.sh"
     dest: "/etc/profile.d/{{ item }}.sh"
     owner: root

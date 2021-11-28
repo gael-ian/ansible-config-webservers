@@ -1,17 +1,17 @@
 ---
 
 - name: install packages
-  apt:
+  ansible.builtin.apt:
     name:
       - nginx
       - apache2-utils # For htpasswd
     state: present
 
 - name: configure nginx
-  import_tasks: configure.yml
+  ansible.builtin.import_tasks: configure.yml
 
 - name: enable nginx at boot and start it
-  service:
+  ansible.builtin.service:
     name: nginx
     state: started
     enabled: yes

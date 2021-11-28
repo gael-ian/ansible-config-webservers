@@ -1,6 +1,6 @@
 ---
 - name: compile cron params
-  set_fact:
+  ansible.builtin.set_fact:
     cron_params:
       user: "{{ owner.name }}"
       state: present
@@ -8,4 +8,4 @@
         MAILTO: "{{ owner.email }}"
 
 - name: setup cron job
-  cron: "{{ cron | combine(cron_params) }}"
+  ansible.builtin.cron: "{{ cron | combine(cron_params) }}"

@@ -10,16 +10,16 @@
 # them can be run independently.
 
 ## Basic setup for every machine
-- import_playbook: 02.1-setup-system.yml
+- ansible.builtin.import_playbook: 02.1-setup-system.yml
 
 ## Install and configure MariaDB and Redis on databases servers
-- import_playbook: 02.2-setup-databases.yml
+- ansible.builtin.import_playbook: 02.2-setup-databases.yml
 
 ## Install and configure nginx as web server
-- import_playbook: 02.3-setup-web-servers.yml
+- ansible.builtin.import_playbook: 02.3-setup-web-servers.yml
 
 ## Install and configure language interpreters
 # Ruby
-- import_playbook: 02.4-setup-ruby.yml
+- ansible.builtin.import_playbook: 02.4-setup-ruby.yml
 # PHP (and PHP-FPM)
-- import_playbook: 02.5-setup-php.yml
+- ansible.builtin.import_playbook: 02.5-setup-php.yml

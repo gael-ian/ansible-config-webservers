@@ -1,6 +1,6 @@
 ---
 - name: create log directory
-  file:
+  ansible.builtin.file:
     state: directory
     path:  "{{ easy_logs_root }}"
     owner: "{{ user }}"
@@ -8,7 +8,7 @@
     mode: "u=rwX,g=rwX,o=rX"
 
 - name: compile log paths from other services
-  set_fact:
+  ansible.builtin.set_fact:
     easy_logs:
       application:  "{{ logs.app }}"
       nginx:        /var/log/nginx
@@ -17,22 +17,22 @@
 
 - block:
   - name: compile log paths for PHP upstream
-    set_fact:
+    ansible.builtin.set_fact:
       php_upstream_logs: "/var/log/php/{{ stage.upstream.name if 'upstream' in stage else 'www' }}"
 
   - name: combine log paths
-    set_fact:
+    ansible.builtin.set_fact:
       easy_logs: "{{ { 'php': php_upstream_logs } | combine(easy_logs) }}"
   when: stage.type.startswith("php")
 
 - block:
   - name: combine log paths
-    set_fact:
+    ansible.builtin.set_fact:
       easy_logs: "{{ { 'passenger': '/var/log/passenger' } | combine(easy_logs) }}"
   when: stage.type.startswith("ruby")
 
 - name: bind logs from other services
-  mount:
+  ansible.posix.mount:
     src: "{{ item.value }}"
     path: "{{ easy_logs_root }}{{ item.key }}"
     fstype: fuse.bindfs

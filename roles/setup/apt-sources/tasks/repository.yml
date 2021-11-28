@@ -1,20 +1,20 @@
 ---
 - name: install packages
-  apt:
+  ansible.builtin.apt:
     name: "{{ repository.value.dependencies }}"
     state: present
   when: ('dependencies' in repository.value)
 
 - block:
     - name: add GPG key, if defined by (url)
-      apt_key:
+      ansible.builtin.apt_key:
         state: present
         url: "{{ item.url }}"
       with_items: "{{ repository.value.signing_keys | json_query('[*].{ url: url }') }}"
       when: (item.url)
 
     - name: add GPG key, if defined by (keyserver, id)
-      apt_key:
+      ansible.builtin.apt_key:
         state: present
         keyserver: "{{ item.keyserver }}"
         id: "{{ item.id }}"
@@ -24,7 +24,7 @@
   when: ('signing_keys' in repository.value)
 
 - name: add repository to apt sources
-  apt_repository:
+  ansible.builtin.apt_repository:
     filename: "{{ repository.key }}"
     repo: "{{ item }}"
     state: present
@@ -34,7 +34,7 @@
   when: ('repos' in repository.value)
 
 - name: set apt preferences for the added repository
-  copy:
+  ansible.builtin.copy:
     content: "{{ repository.value.preferences }}"
     dest: "/etc/apt/preferences.d/{{ repository.key }}"
     owner: root

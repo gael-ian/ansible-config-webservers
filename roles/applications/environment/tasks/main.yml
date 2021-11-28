@@ -1,36 +1,36 @@
 ---
 - block:
   - name: extract application environment configuration
-    set_fact:
+    ansible.builtin.set_fact:
       environment_config: "{{ application_config | json_query(environment_query) | first }}"
     vars:
       environment_query: "environments[?name=='{{ application_environment }}']"
 
   - name: extract application servers
-    set_fact:
+    ansible.builtin.set_fact:
       app_servers: "{{ environment_config.servers }}"
 
   - name: extract database servers
-    set_fact:
+    ansible.builtin.set_fact:
       db_servers: "{{ environment_config | json_query(db_servers_query) }}"
     vars:
       db_servers_query: "databases.mariadb[].servers | []"
 
   - block:
       - name: create owner account
-        include_role:
+        ansible.builtin.include_role:
           role: user
         vars:
           user: "{{ application_config.owner }}"
 
       - name: install packages
-        apt:
+        ansible.builtin.apt:
           name: "{{ environment_config.packages }}"
           state: present
         when: '"packages" in environment_config and environment_config.packages | length > 0'
 
       - name: setup stage
-        include_role:
+        ansible.builtin.include_role:
           role: stage
         vars:
           app_name: "{{ application_config.name }}"
@@ -45,7 +45,7 @@
             redirections: "{{ environment_config.vhost.redirections }}"
 
       - name: setup crons
-        include_role:
+        ansible.builtin.include_role:
           role: cron
         vars:
           owner: "{{ application_config.owner.name }}"
@@ -56,7 +56,7 @@
     when: inventory_hostname in app_servers
 
   - name: setup databases
-    include_role:
+    ansible.builtin.include_role:
       role: database
     with_items: "{{ environment_config.databases.mariadb }}"
     loop_control:

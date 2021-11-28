@@ -1,6 +1,6 @@
 ---
 - name: create Capistrano directories
-  file:
+  ansible.builtin.file:
     state: directory
     path:  "{{ capistrano_root }}{{ item }}"
     owner: "{{ user }}"
@@ -9,14 +9,14 @@
   with_items: [ "shared", "releases" ]
 
 - name: list releases
-  find:
+  ansible.builtin.find:
     path: "{{ capistrano_root }}releases"
     file_type: directory
   register: releases
 
 - block:
     - name: create initial release directory
-      file:
+      ansible.builtin.file:
         state: directory
         path:  "{{ capistrano_root }}releases/0"
         owner: "{{ user }}"
@@ -24,7 +24,7 @@
         mode: "u=rwX,g=rwX,o=X"
 
     - name: link initial release to current release
-      file:
+      ansible.builtin.file:
         state: link
         src: "{{ capistrano_root }}releases/0"
         dest:  "{{ capistrano_root }}current"

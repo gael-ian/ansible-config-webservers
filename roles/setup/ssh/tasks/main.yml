@@ -1,6 +1,6 @@
 ---
 - name: configure SSH to be more secure
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: /etc/ssh/sshd_config
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
@@ -25,7 +25,7 @@
   notify: restart ssh
 
 - name: configure SSH to not freeze
-  blockinfile:
+  ansible.builtin.blockinfile:
     dest: /etc/ssh/ssh_config
     content: |
       Host *

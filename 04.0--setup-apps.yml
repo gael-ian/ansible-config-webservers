@@ -21,7 +21,7 @@
     - vault/backups.yml
 
   module_defaults:
-    apt:
+    ansible.builtin.apt:
       autoclean: yes
       autoremove: yes
       cache_valid_time: 360
@@ -34,7 +34,7 @@
   tasks:
 
     - name: define configured environments
-      set_fact:
+      ansible.builtin.set_fact:
         application_environments: "{{ environments | default(['production']) }}"
 
     # Create application user account, used for application deployment and execution.
@@ -46,7 +46,7 @@
     # Setup crons.
     # Configure Monit to watch over application services.
     - name: configure applications
-      include_role:
+      ansible.builtin.include_role:
         role: app
       with_fileglob:
         - 'apps/*.yml'

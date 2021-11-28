@@ -1,11 +1,11 @@
 ---
 - name: install packages
-  apt:
+  ansible.builtin.apt:
     pkg: lftp
     state: present
 
 - name: install backup scripts
-  copy:
+  ansible.builtin.copy:
     src: "{{ item }}"
     dest: "/usr/local/bin/{{ item }}"
     owner: root
@@ -16,7 +16,7 @@
     - backup-sync
 
 - name: ensure backup user exists
-  user:
+  ansible.builtin.user:
     name: "{{ mariadb_backup.database.user }}"
     group: "{{ mariadb_backup.database.user }}"
     home: "/var/backups"
@@ -26,7 +26,7 @@
     state: present
 
 - name: ensure backup directory exists
-  file:
+  ansible.builtin.file:
     state: directory
     path: /var/backups/mysql/
     owner: "{{ mariadb_backup.database.user }}"
@@ -34,7 +34,7 @@
     mode: "u=rwX,g=rX,o=rX"
 
 - name: create database backup user
-  mysql_user:
+  community.mysql.mysql_user:
     name: "{{ mariadb_backup.database.user }}"
     password: "{{ mariadb_backup.database.pass }}"
     priv: "*.*:USAGE"
@@ -44,7 +44,7 @@
   no_log: True
 
 - name: grant privileges on database user
-  mysql_user:
+  community.mysql.mysql_user:
     name: "{{ mariadb_backup.database.user }}"
     priv: "*.*:{{ item }}"
     host: localhost
@@ -54,7 +54,7 @@
   with_items: ['SELECT', 'SHOW VIEW', 'TRIGGER', 'EVENT', 'LOCK TABLES', 'RELOAD']
 
 - name: configure backup credentials
-  template:
+  ansible.builtin.template:
     src: "my.cnf.j2"
     dest: "/var/backups/.my.cnf"
     owner: "{{ mariadb_backup.database.user }}"
@@ -62,7 +62,7 @@
     mode: 0600
 
 - name: configure databases backup crons
-  cron:
+  ansible.builtin.cron:
     name: "{{ item.time }} backup of all databases"
     user: "{{ mariadb_backup.database.user }}"
     job: "backup-databases {{ item.time }} {{ item.keep }}"
@@ -76,7 +76,7 @@
       keep: 3
 
 - name: configure backup remote credentials
-  template:
+  ansible.builtin.template:
     src: "env.j2"
     dest: "/var/backups/.env"
     owner: "{{ mariadb_backup.database.user }}"
@@ -84,14 +84,14 @@
     mode: 0600
 
 - name: configure backup syncing cron
-  cron:
+  ansible.builtin.cron:
     name: "daily backups syncing"
     user: "{{ mariadb_backup.database.user }}"
     job: "backup-sync"
     special_time: daily
 
 - name: ensure log directory exists
-  file:
+  ansible.builtin.file:
     state: directory
     path: /var/backups/log/
     owner: "{{ mariadb_backup.database.user }}"
@@ -99,7 +99,7 @@
     mode: "u=rwX,g=rX,o=rX"
 
 - name: configure log rotation
-  template:
+  ansible.builtin.template:
     src: "logrotate.conf.j2"
     dest: "/etc/logrotate.d/mariadb-backups"
     owner: root

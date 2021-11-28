@@ -1,6 +1,6 @@
 ---
 - name: create nginx upstreams directory
-  file:
+  ansible.builtin.file:
     state: directory
     path:  /etc/nginx/upstreams.d
     owner: root
@@ -8,7 +8,7 @@
     mode: 0755
 
 - name: configure nginx upstream
-  template:
+  ansible.builtin.template:
     src: upstream.conf.j2
     dest: /etc/nginx/upstreams.d/thumbor.conf
     owner: root
@@ -17,7 +17,7 @@
   notify: restart nginx
 
 - name: configure nginx vhost
-  include_role:
+  ansible.builtin.include_role:
     name: vhost
   vars:
     vhost:

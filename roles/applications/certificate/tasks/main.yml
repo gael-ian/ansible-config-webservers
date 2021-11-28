@@ -1,6 +1,6 @@
 ---
 - name: compile certificate options
-  set_fact:
+  ansible.builtin.set_fact:
     all_domains: "{{ mains | union(additionals) | union(assets) }}"
   vars:
     mains: "{{ [ domains.main ] }}"
@@ -8,7 +8,7 @@
     assets: "{{ domains.assets | default([]) }}"
 
 - name: create or renew certificate
-  shell: |
+  ansible.builtin.shell: |
     certbot certonly --webroot \
       -n --agree-tos -m {{ owner.email }} \
       --cert-name {{ domains.main }} \

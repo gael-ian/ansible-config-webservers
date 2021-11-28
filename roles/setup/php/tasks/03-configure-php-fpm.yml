@@ -1,6 +1,6 @@
 ---
 - name: configure PHP-FPM
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: "/etc/php/{{ php_version }}/fpm/php-fpm.conf"
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
@@ -11,7 +11,7 @@
   notify: restart php-fpm
 
 - name: enable service at boot and start it
-  service:
+  ansible.builtin.service:
     name: "php{{ php_version }}-fpm"
     state: started
     enabled: yes

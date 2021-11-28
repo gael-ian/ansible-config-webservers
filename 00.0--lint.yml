@@ -11,7 +11,7 @@
 #     ansible-playbook 00.0--lint.yml --syntax-check
 #
 
-- import_playbook: 01.0--make-remotes-administrable.yml
-- import_playbook: 02.0--setup-system-and-services.yml
-- import_playbook: 03.0--setup-vendors.yml
-- import_playbook: 04.0--setup-apps.yml
+- ansible.builtin.import_playbook: 01.0--make-remotes-administrable.yml
+- ansible.builtin.import_playbook: 02.0--setup-system-and-services.yml
+- ansible.builtin.import_playbook: 03.0--setup-vendors.yml
+- ansible.builtin.import_playbook: 04.0--setup-apps.yml

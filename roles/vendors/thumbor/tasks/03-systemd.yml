@@ -1,6 +1,6 @@
 ---
 - name: create socket unit for systemd
-  template:
+  ansible.builtin.template:
     src: systemd/thumbor.socket.j2
     dest: /etc/systemd/system/thumbor.socket
     owner: root
@@ -9,7 +9,7 @@
   notify: restart thumbor
 
 - name: create service unit for systemd
-  template:
+  ansible.builtin.template:
     src: systemd/thumbor.service.j2
     dest: /etc/systemd/system/thumbor.service
     owner: root
@@ -18,7 +18,7 @@
   notify: restart thumbor
 
 - name: enable service at boot and start it
-  service:
+  ansible.builtin.service:
     name: thumbor
     state: started
     enabled: yes

@@ -1,6 +1,6 @@
 ---
 - name: configure apt repositories
-  include_tasks: repository.yml
+  ansible.builtin.include_tasks: repository.yml
   with_dict: "{{ apt_sources_repositories }}"
   loop_control:
     loop_var: repository

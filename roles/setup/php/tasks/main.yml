@@ -1,10 +1,10 @@
 ---
 
 - name: install PHP
-  import_tasks: 01-install.yml
+  ansible.builtin.import_tasks: 01-install.yml
 
 - name: configure PHP
-  import_tasks: 02-configure-php.yml
+  ansible.builtin.import_tasks: 02-configure-php.yml
 
 - name: configure PHP-FPM
-  import_tasks: 03-configure-php-fpm.yml
+  ansible.builtin.import_tasks: 03-configure-php-fpm.yml

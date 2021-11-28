@@ -1,13 +1,13 @@
 ---
 - name: install packages
-  apt:
+  ansible.builtin.apt:
     name:
       - apt-config-auto-update
       - unattended-upgrades
     state: present
 
 - name: ensure unattended-upgrades are enabled
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: /etc/apt/apt.conf.d/10periodic
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
@@ -25,7 +25,7 @@
       line: 'APT::Periodic::Unattended-Upgrade "1";'
 
 - name: configure unattended-upgrades
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: /etc/apt/apt.conf.d/50unattended-upgrades
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"

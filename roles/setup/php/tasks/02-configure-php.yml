@@ -1,11 +1,11 @@
 ---
 - name: remove default log file
-  file:
+  ansible.builtin.file:
     path: "/var/log/php{{ php_version }}-fpm.log"
     state: absent
 
 - name: create log directory
-  file:
+  ansible.builtin.file:
     state: directory
     path: /var/log/php/
     owner: root
@@ -13,7 +13,7 @@
     mode: 0755
 
 - name: configure log rotation
-  template:
+  ansible.builtin.template:
     src: logrotate.conf.j2
     dest: /etc/logrotate.d/php
     owner: root
@@ -21,7 +21,7 @@
     mode: 0644
 
 - name: configure PHP for php-fpm
-  template:
+  ansible.builtin.template:
     src: php-fpm.ini.j2
     dest: "/etc/php/{{ php_version }}/fpm/conf.d/90-php-fpm.ini"
     owner: root
@@ -30,7 +30,7 @@
   notify: restart php-fpm
   
 - name: configure PHP for php-cli
-  template:
+  ansible.builtin.template:
     src: php-cli.ini.j2
     dest: "/etc/php/{{ php_version }}/cli/conf.d/90-php-cli.ini"
     owner: root

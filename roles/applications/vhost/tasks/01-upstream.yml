@@ -1,6 +1,6 @@
 ---
 - name: configure PHP pool
-  include_role:
+  ansible.builtin.include_role:
     name: php-fpm-pool
   vars:
     php_fpm_pool: "{{ vhost.upstream | combine({ 'user': vhost.owner.name, 'group': 'applications' }) }}"

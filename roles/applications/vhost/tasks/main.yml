@@ -1,6 +1,6 @@
 ---
 - name: compile nginx paths
-  set_fact:
+  ansible.builtin.set_fact:
     nginx:
       vhost: "/etc/nginx/sites-available/{{ vhost.name }}"
       certificate: "/etc/nginx/certificates.d/{{ vhost.name }}"
@@ -11,18 +11,18 @@
     assets: "{{ vhost.domains.assets | default([]) }}"
 
 - name: configure upstream
-  include_tasks: 01-upstream.yml
+  ansible.builtin.include_tasks: 01-upstream.yml
   when: '"upstream" in vhost'
 
 - name: configure logs
-  include_tasks: 02-logs.yml
+  ansible.builtin.include_tasks: 02-logs.yml
 
 - name: configure vhost
-  include_tasks: 03-vhost.yml
+  ansible.builtin.include_tasks: 03-vhost.yml
 
 # Ensure nginx is reloaded and support the newly created vhost
 - meta: flush_handlers
 
 - name: configure SSL certificate
-  include_tasks: 04-ssl.yml
+  ansible.builtin.include_tasks: 04-ssl.yml
   when: vhost.ssl

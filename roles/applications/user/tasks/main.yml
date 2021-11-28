@@ -1,11 +1,11 @@
 ---
 - name: create group 'applications'
-  group:
+  ansible.builtin.group:
     name: applications
     state: present
 
 - name: create user account
-  user:
+  ansible.builtin.user:
     name: "{{ user.name }}"
     password: "{{ user.password | password_hash('sha512') }}"
     groups:
@@ -15,13 +15,13 @@
     state: present
 
 - name: authorize owner key for SSH connections
-  authorized_key:
+  ansible.posix.authorized_key:
     user: "{{ user.name }}"
     key: "{{ lookup('file', '{{ user.key }}') }}"
     state: present
 
 - name: configure chapecron
-  template:
+  ansible.builtin.template:
     src: chapecron.conf.j2
     dest: "/home/{{ user.name }}/.config/chapecron/chapecron.conf"
     user: "{{ user.name }}"
@@ -30,7 +30,7 @@
     state: present
 
 - name: ensure chapecron logs directory exists
-  file:
+  ansible.builtin.file:
     state: directory
     path: "/home/{{ user.name }}/log/crons"
     user: "{{ user.name }}"
@@ -38,7 +38,7 @@
     mode: "u=rwX,g=rX,o=rX"
 
 - name: configure chapecron log rotation
-  template:
+  ansible.builtin.template:
     src: logrotate.conf.j2
     dest: "/etc/logrotate.d/chapecron.{{ user.name }}"
     owner: root

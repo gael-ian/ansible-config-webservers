@@ -1,6 +1,6 @@
 ---
 - name: install packages
-  apt:
+  ansible.builtin.apt:
     name:
       - "php{{ php_version }}-dev"
       - "php{{ php_version }}-common"

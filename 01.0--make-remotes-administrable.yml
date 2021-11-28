@@ -39,7 +39,7 @@
     - vault/backups.yml
 
   module_defaults:
-    apt:
+    ansible.builtin.apt:
       autoclean: yes
       autoremove: yes
       cache_valid_time: 360

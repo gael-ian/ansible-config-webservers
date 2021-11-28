@@ -1,6 +1,6 @@
 ---
 - name: disable default binary logging
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: /etc/mysql/my.cnf
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
@@ -14,7 +14,7 @@
   notify: restart mariadb
 
 - name: create a directory for configurations
-  file:
+  ansible.builtin.file:
     path: /etc/mysql/mariadb.conf.d
     state: directory
     owner: root
@@ -22,7 +22,7 @@
     mode: 0755
 
 - name: configure MariaDB
-  template:
+  ansible.builtin.template:
     src: "{{ item }}"
     dest: "/etc/mysql/mariadb.conf.d/{{ item }}"
     owner: root
@@ -32,7 +32,7 @@
   notify: restart mariadb
 
 - name: create log files
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: touch
     owner: mysql
@@ -41,7 +41,7 @@
   with_items: "{{ mariadb_conf.logging | json_query('* | [?enabled==`1`].file') }}"
 
 - name: configure log rotation
-  template:
+  ansible.builtin.template:
     src: "logrotate.conf.j2"
     dest: "/etc/logrotate.d/mariadb"
     owner: root
@@ -51,19 +51,19 @@
 
 - block:
   - name: check log rotation configuration
-    stat:
+    ansible.builtin.stat:
       path: /etc/logrotate.d/mariadb
     register: mariadb_logrotate
 
   - name: configure log rotation
-    file:
+    ansible.builtin.file:
       path: /etc/logrotate.d/mariadb
       state: absent
     when: mariadb_logrotate.stat.exists
   when: mariadb_conf.logging | json_query('* | [?enabled==`1`].file') | length == 0
 
 - name: enable service at boot and start it
-  service:
+  ansible.builtin.service:
     name: mysql
     state: started
     enabled: yes

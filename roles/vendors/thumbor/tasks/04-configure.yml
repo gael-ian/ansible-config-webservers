@@ -1,16 +1,16 @@
 ---
 - name: test if thumbor configuration file exists
-  stat:
+  ansible.builtin.stat:
     path: /etc/thumbor.conf
   register: thumbor_config_file
 
 - block:
   - name: get thumbor default configuration
-    shell: thumbor-config
+    ansible.builtin.shell: thumbor-config
     register: thumbor_config_command
 
   - name: create thumbor default configuration file
-    copy:
+    ansible.builtin.copy:
       content: "{{ thumbor_config_command.stdout }}"
       dest: /etc/thumbor.conf
       owner: root
@@ -19,7 +19,7 @@
   when: not thumbor_config_file.stat.exists
 
 - name: configure thumbor
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: /etc/thumbor.conf
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
@@ -32,7 +32,7 @@
   notify: restart thumbor
 
 - name: configure thumbor security key
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: /etc/thumbor.conf
     regexp: "^#?SECURITY_KEY ="
     line: "SECURITY_KEY = '{{ thumbor_config.security_key }}'"
@@ -41,7 +41,7 @@
   notify: restart thumbor
 
 - name: configure thumbor allowed sources
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: /etc/thumbor.conf
     regexp: "^#?ALLOWED_SOURCES = "
     line: "ALLOWED_SOURCES = ['{{ thumbor_config.allowed_sources | join(sep) }}']"

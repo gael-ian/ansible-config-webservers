@@ -1,12 +1,12 @@
 ---
 - name: check if chapecron is installed
-  stat:
+  ansible.builtin.stat:
     path: "{{chapecron.path}}"
   register: chapecron_path
 
 - block:
   - name: download archive
-    get_url:
+    ansible.builtin.get_url:
       url: "{{chapecron.archive_url}}"
       dest: "{{chapecron.archive_path}}"
 
@@ -27,12 +27,12 @@
       target: install
 
   - name: remove installer
-    file:
+    ansible.builtin.file:
       path: "{{chapecron.installer_path}}"
       state: absent
 
   - name: remove archive
-    file:
+    ansible.builtin.file:
       path: "{{chapecron.archive_path}}"
       state: absent
   when: "chapecron_path.stat.exists == False"

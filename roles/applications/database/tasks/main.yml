@@ -1,14 +1,14 @@
 ---
 - block:
   - name: create database
-    mysql_db:
+    community.mysql.mysql_db:
       name: "{{ database.name }}"
       collation: "{{ database.collation | default('utf8_general_ci') }}"
       encoding: "{{ database.encoding | default('utf8') }}"
       state: present
 
   - name: create database user
-    mysql_user:
+    community.mysql.mysql_user:
       name: "{{ database.username }}"
       password: "{{ database.password }}"
       priv: "{{ database.name }}.*:ALL"
